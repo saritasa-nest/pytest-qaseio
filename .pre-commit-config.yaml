@@ -1,0 +1,72 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: check-yaml
+      - id: check-toml
+      - id: check-json
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: detect-aws-credentials
+        args: [--allow-missing-credentials]
+      - id: debug-statements
+      - id: check-merge-conflict
+      - id: detect-private-key
+
+  - repo: https://github.com/pycqa/isort
+    rev: 5.12.0
+    hooks:
+      - id: isort
+        name: isort (python)
+
+  - repo: https://github.com/pycqa/flake8
+    rev: 6.0.0
+    hooks:
+      - id: flake8
+        exclude: .venv|__init__.py
+        additional_dependencies: [
+          # A plugin for Flake8 finding likely bugs and design problems in your program.
+          # https://github.com/PyCQA/flake8-bugbear
+          flake8-bugbear,
+          # Extension to enforce better comma placement.
+          # https://github.com/PyCQA/flake8-commas
+          flake8-commas,
+          # A flake8 plugin that warn about backslashes usage.
+          # https://github.com/wemake-services/flake8-broken-line
+          # Disabled until support of flake8>=6.0.0, see
+          # https://github.com/wemake-services/flake8-broken-line/pull/280
+          # flake8-broken-line,
+          # A simple module that adds an extension for the fantastic pydocstyle tool to flake8.
+          # https://github.com/PyCQA/flake8-docstrings
+          flake8-docstrings,
+          # McCabe complexity checker.
+          # https://github.com/PyCQA/mccabe
+          mccabe,
+          # Configuring flake8 using pyproject.toml
+          Flake8-pyproject,
+        ]
+
+  - repo: https://github.com/asottile/add-trailing-comma
+    rev: v2.4.0
+    hooks:
+      - id: add-trailing-comma
+
+  - repo: https://github.com/pycqa/docformatter
+    rev: v1.5.1
+    hooks:
+      - id: docformatter
+        args: [
+          --wrap-descriptions=0,
+          --in-place,
+          --blank
+        ]
+
+  - repo: local
+    hooks:
+      - id: checks
+        name: run checks
+        entry: make check
+        language: system
+        pass_filenames: false
+        types: [ python ]
+        stages: [ push ]

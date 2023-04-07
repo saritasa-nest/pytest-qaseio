@@ -28,7 +28,7 @@ filelock = "^3.10.7"
 pytest = "^7.2.2"
 
 [tool.poetry.group.test.dependencies]
-mypy = "^1.1.1"
+mypy = "^1.2.0"
 safety = "^2.3.5"
 
 [build-system]

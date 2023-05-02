@@ -4,19 +4,31 @@ description = "Pytest plugin for Qase.io integration"
 version = "1.0.0"
 license = "MIT"
 
-authors = []
+authors = [
+  "Saritasa <pypi@saritasa.com>",
+]
 
 readme = "README.md"
 
+homepage = "https://pypi.org/project/pytest-qaseio/"
 repository = "https://github.com/saritasa-nest/pytest-qaseio"
 
-keywords = []
+keywords = [
+  "pytest",
+  "qase",
+  "qaseio",
+  "selenium",
+  "autotests",
+]
 
 classifiers = [
   "Development Status :: 4 - Beta",
   "Intended Audience :: Developers",
   "Operating System :: OS Independent",
+  "Framework :: Pytest",
   "Topic :: Software Development :: Libraries :: Python Modules",
+  "Topic :: Software Development :: Bug Tracking",
+  "Topic :: Software Development :: Testing",
 ]
 
 [tool.poetry.plugins."pytest11"]

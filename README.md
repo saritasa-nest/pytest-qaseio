@@ -54,10 +54,16 @@ def test_demo():
     """Check qaseio plugin works as expected."""
 ```
 
-Then run your tests with flag `--qase-enabled`:
+Since this package is mostly used for selenium tests, you need to provide a
+value for `--webdriver` flag. If you set `--webdriver=remote` and want to specify
+name of remote browser (not just Remote), use `--remote-browser`
+flag or set capabilities via `variables`. This will be used in test run name and
+in attachments path.
+
+To enable plugin use flag `--qase-enabled`.
 
 ```bash
-pytest tests/ --qase-enabled
+pytest tests/ --qase-enabled --webdriver=chrome
 ```
 
 ## Work with Selenium

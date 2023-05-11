@@ -62,6 +62,20 @@ def pytest_qase_file_storages() -> dict[str, storage.FileStorage]:
     }
 
 
+def _get_browser_name(config: pytest.Config, default: str = "remote"):
+    """Try to get browser name from options and variables.
+
+    Since `pytest-selenium` uses `pytest-variables` and recommends to put
+    capabilities there we try to get `browserName` from `config._variables`.
+
+    """
+    browser_name = getattr(config, "_variables", {}).get("capabilities", {}).get(
+        "browserName",
+        None,
+    )
+    return browser_name or config.getoption("--remote-browser", default=default)
+
+
 @pytest.hookimpl(trylast=True)
 def pytest_configure(config: pytest.Config):
     """Configure pytest-qaseio plugin.
@@ -80,10 +94,7 @@ def pytest_configure(config: pytest.Config):
         return
     browser = config.getoption("--webdriver")
     if browser == "remote":
-        browser = config._variables.get(  # type: ignore
-            "capabilities",
-            {},
-        ).get("browserName", "chrome")
+        browser = _get_browser_name(config, default=browser)
 
     config.pluginmanager.register(
         plugin=QasePlugin(

@@ -46,7 +46,7 @@ jobs:
 
     - name: Install dependencies
       if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
-      run: poetry install --no-interaction --only="test"
+      run: poetry install --no-interaction
 
     - name: Run pre-commit hooks
       uses: pre-commit/action@v3.0.0

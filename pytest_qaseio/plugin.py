@@ -66,13 +66,13 @@ def _get_browser_name(config: pytest.Config, default: str = "remote"):
     """Try to get browser name from options and variables.
 
     Since `pytest-selenium` uses `pytest-variables` and recommends to put
-    capabilities there we try to get `browserName` from `config._variables`.
+    capabilities there. So we try to get `browserName` from `config.stash` (and
+    `config._variables` for older version of `pytest-variables`).
 
     """
-    browser_name = getattr(config, "_variables", {}).get("capabilities", {}).get(
-        "browserName",
-        None,
-    )
+    stash = getattr(config, "stash", getattr(config, "_variables", {}))
+    browser_name = stash.get("capabilities", {}).get("browserName", None)
+
     return browser_name or config.getoption("--remote-browser", default=default)
 
 

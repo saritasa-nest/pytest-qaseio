@@ -227,7 +227,7 @@ class QasePlugin:
             # Qase closes runs, once every case got result. So if try to report any other result,
             # we'll get an error `Test run is not active`.
             terminal_reporter: TerminalReporter = item.config.pluginmanager.get_plugin(
-                "terminalreporter",
+                "terminalreporter",  # type: ignore
             )
             terminal_reporter.ensure_newline()
             terminal_reporter.section(

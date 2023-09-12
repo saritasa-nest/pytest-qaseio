@@ -107,7 +107,7 @@ class QaseConverter:
         if hasattr(report, "wasxfail"):
             skip_reason = report.wasxfail
         else:
-            *_, skip_reason = report.longrepr  # type: ignore
+            *_, skip_reason = report.longrepr
         return models.ResultCreate(
             case_id=case_id,
             status="skipped",

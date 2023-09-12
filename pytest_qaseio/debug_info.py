@@ -35,7 +35,7 @@ class DebugInfo:
         logs = []
         try:
             for name in self.webdriver.log_types:
-                logs.append(self._format_log(self.webdriver.get_log(name)))  # type: ignore
+                logs.append(self._format_log(self.webdriver.get_log(name)))
         except WebDriverException:
             # https://github.com/mozilla/geckodriver/issues/284
             return ""

@@ -44,7 +44,7 @@ pytest = "^7.2.2"
 
 [tool.poetry.group.test.dependencies]
 mypy = "^1.1.1"
-safety = "^2.3.5"
+safety = ">=2.3.5,<4.0.0"
 
 [build-system]
 requires = ["poetry-core>=1.2.0"]

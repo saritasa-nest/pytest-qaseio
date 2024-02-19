@@ -40,7 +40,7 @@ qaseio = "^3.2.1"
 selenium = "^4.8.3"
 arrow = "^1.2.3"
 filelock = "^3.10.7"
-pytest = "^7.2.2"
+pytest = ">=7.2.2,<9.0.0"
 
 [tool.poetry.group.test.dependencies]
 mypy = "^1.1.1"

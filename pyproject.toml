@@ -36,7 +36,7 @@ pytest_qaseio = "pytest_qaseio.plugin"
 
 [tool.poetry.dependencies]
 python = "^3.10"
-qaseio = "^3.2.1"
+qaseio = ">=3.2.1,<5.0.0"
 selenium = "^4.8.3"
 arrow = "^1.2.3"
 filelock = "^3.10.7"

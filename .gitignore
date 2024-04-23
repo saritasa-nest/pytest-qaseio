@@ -215,3 +215,8 @@ fabric.properties
 
 # pyenv
 .python-version
+
+# VS Code settings
+.vscode/*
+!.vscode/project-related-words.txt
+!.vscode/cspell.json

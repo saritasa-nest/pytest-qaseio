@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "pytest-qaseio"
 description = "Pytest plugin for Qase.io integration"
-version = "1.2.0"
+version = "2.0.0"
 license = "MIT"
 
 authors = [
@@ -36,7 +36,7 @@ pytest_qaseio = "pytest_qaseio.plugin"
 
 [tool.poetry.dependencies]
 python = "^3.10"
-qaseio = "^3.4.1"
+qaseio = "^4.0.0"
 selenium = "^4.21.0"
 arrow = "^1.3.0"
 filelock = "^3.14.0"
@@ -60,7 +60,7 @@ enable_error_code = [
 
 allow_redefinition = false
 check_untyped_defs = true
-disallow_any_explicit = true
+disallow_any_explicit = false
 disallow_any_generics = true
 disallow_untyped_calls = true
 ignore_errors = false
@@ -76,45 +76,166 @@ warn_redundant_casts = true
 warn_unused_configs = true
 warn_unreachable = true
 
-[tool.isort]
-# isort configuration:
-# https://pycqa.github.io/isort/docs/configuration/options.html
-line_length = 79
-multi_line_output = 3
-include_trailing_comma = true
+[[tool.mypy.overrides]]
+module = "qaseio.*"
+implicit_reexport = true
 
-[tool.flake8]
-# https://www.flake8rules.com/
-ignore = [
-# https://www.flake8rules.com/rules/E126.html
-  "E12",
-# https://www.flake8rules.com/rules/W503.html
-  "W503",
-# https://www.flake8rules.com/rules/W504.html
-  "W504",
-# https://github.com/m-burst/flake8-pytest-style/blob/master/docs/rules/PT004.md
-  "PT004",
-# Missing docstring in public module
-  "D100",
-# Missing docstring in public method
-  "D102",
-# Missing docstring in public function
-  "D103",
-# Missing docstring in magic method
-  "D105",
-# Missing docstring in public nested
-  "D106",
-# Missing docstring in __init__
-  "D107",
-# Manually surrounded by quotes, consider using the `!r` conversion flag
-  "B028",
+
+[tool.ruff]
+line-length = 100
+indent-width = 4
+target-version = "py310"
+exclude = [
+    "config",
+    ".venv",
+    "venv",
+    "__init__.py",
+    "plugins/selenium_plugin",
 ]
-inline-quotes = "double"
-statistics = true
-count = true
-max-complexity = 10
-max-line-length = 100
-pytest-fixture-no-parentheses = true
-pytest-parametrize-names-type = "list"
-pytest-parametrize-values-type = "list"
-pytest-parametrize-values-row-type = "list"
+
+[tool.ruff.lint]
+extend-select = [
+    # https://docs.astral.sh/ruff/rules/#pycodestyle-e-w
+    "W",
+    "E",
+    # https://docs.astral.sh/ruff/rules/#mccabe-c90
+    "C90",
+    # https://docs.astral.sh/ruff/rules/#isort-i
+    "I",
+    # https://docs.astral.sh/ruff/rules/#pep8-naming-n
+    "N",
+    # https://docs.astral.sh/ruff/rules/#pydocstyle-d
+    "D",
+    # https://docs.astral.sh/ruff/rules/#pyupgrade-up
+    "UP",
+    # https://docs.astral.sh/ruff/rules/#flake8-annotations-ann
+    "ANN",
+    # https://docs.astral.sh/ruff/rules/#flake8-bandit-s
+    "S",
+    # https://docs.astral.sh/ruff/rules/#flake8-bugbear-b
+    "B",
+    # https://docs.astral.sh/ruff/rules/#flake8-builtins-a
+    "A",
+    # https://docs.astral.sh/ruff/rules/#flake8-commas-com
+    "COM",
+    # https://docs.astral.sh/ruff/rules/#flake8-comprehensions-c4
+    "C4",
+    # https://docs.astral.sh/ruff/rules/#flake8-datetimez-dtz
+    "DTZ",
+    # https://docs.astral.sh/ruff/rules/#flake8-debugger-t10
+    "T10",
+    # https://docs.astral.sh/ruff/rules/#flake8-django-dj
+    "DJ",
+    # https://docs.astral.sh/ruff/rules/#flake8-print-t20
+    "T20",
+    # https://docs.astral.sh/ruff/rules/#flake8-simplify-sim
+    "PT",
+    # https://docs.astral.sh/ruff/rules/#flake8-simplify-sim
+    "SIM",
+    # https://docs.astral.sh/ruff/rules/#flake8-simplify-sim
+    "PTH",
+    # https://docs.astral.sh/ruff/rules/#flake8-todos-td
+    "TD",
+    # https://docs.astral.sh/ruff/rules/#eradicate-era
+    "ERA",
+    # https://docs.astral.sh/ruff/rules/#ruff-specific-rules-ruf
+    "RUF"
+]
+
+ignore = [
+    # https://docs.astral.sh/ruff/rules/ANN101
+    "ANN101",
+    # https://docs.astral.sh/ruff/rules/ANN102
+    "ANN102",
+    # https://docs.astral.sh/ruff/rules/ANN002
+    "ANN002",
+    # https://docs.astral.sh/ruff/rules/ANN003
+    "ANN003",
+    # https://docs.astral.sh/ruff/rules/ANN401
+    "ANN401",
+    # https://docs.astral.sh/ruff/rules/ANN204
+    "ANN204",
+    # https://docs.astral.sh/ruff/rules/D100
+    "D100",
+    # https://docs.astral.sh/ruff/rules/D107
+    "D107",
+    # https://docs.astral.sh/ruff/rules/D104
+    "D104",
+    # https://docs.astral.sh/ruff/rules/D105
+    "D105",
+    # https://docs.astral.sh/ruff/rules/D106
+    "D106",
+    # https://docs.astral.sh/ruff/rules/D203
+    "D203",
+    # https://docs.astral.sh/ruff/rules/D213
+    "D213",
+    # https://docs.astral.sh/ruff/rules/D407
+    "D407",
+    # https://docs.astral.sh/ruff/rules/N818
+    "N818",
+    # https://docs.astral.sh/ruff/rules/N999
+    "N999",
+    # https://docs.astral.sh/ruff/rules/C408
+    "C408",
+    # https://docs.astral.sh/ruff/rules/RUF012
+    "RUF012",
+    # https://docs.astral.sh/ruff/rules/D100
+    "D100",
+    # https://docs.astral.sh/ruff/rules/D102
+    "D102",
+    # https://docs.astral.sh/ruff/rules/D103
+    "D103",
+    # https://docs.astral.sh/ruff/rules/D105
+    "D105",
+    # https://docs.astral.sh/ruff/rules/D106
+    "D106",
+    # https://docs.astral.sh/ruff/rules/D107
+    "D107",
+    # https://docs.astral.sh/ruff/rules/F403
+    "F403",
+    # https://docs.astral.sh/ruff/rules/D405
+    "F405",
+    # https://docs.astral.sh/ruff/rules/PT004
+    "PT004",
+    # https://docs.astral.sh/ruff/rules/B008
+    "B008",
+    # https://docs.astral.sh/ruff/rules/UP040
+    "UP040",
+    # https://docs.astral.sh/ruff/rules/assert/
+    "S101",
+    # https://docs.astral.sh/ruff/rules/missing-todo-author/
+    "TD002",
+    # https://docs.astral.sh/ruff/rules/missing-todo-link/
+    "TD003",
+]
+
+
+[tool.ruff.lint.isort]
+force-wrap-aliases = true
+split-on-trailing-comma = true
+section-order = [
+    "future",
+    "standard-library",
+    "third-party",
+    "first-party",
+    "pages",
+    "local-folder",
+]
+
+
+[tool.ruff.lint.isort.sections]
+pages = ["pages"]
+
+
+[tool.ruff.lint.flake8-pytest-style]
+fixture-parentheses = false
+parametrize-names-type = "list"
+parametrize-values-type = "list"
+parametrize-values-row-type = "list"
+
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"

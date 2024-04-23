@@ -1,8 +1,8 @@
 import io
-from typing import Protocol
+from typing import Protocol, cast
 
 import qaseio
-import qaseio.apis
+from qaseio.configuration import Configuration
 
 
 class FileStorage(Protocol):
@@ -10,6 +10,7 @@ class FileStorage(Protocol):
 
     def save_file_obj(self, content: bytes, filename: str) -> str:
         """Upload file to storage and return URL."""
+        ...
 
 
 class QaseFileStorage:
@@ -22,7 +23,7 @@ class QaseFileStorage:
     ):
         """Prepare ApiClient for qase io using credentials."""
         self._client = qaseio.ApiClient(
-            configuration=qaseio.Configuration(
+            configuration=Configuration(
                 api_key={
                     "TokenAuth": qase_token,
                 },
@@ -35,8 +36,16 @@ class QaseFileStorage:
         file_obj = io.BytesIO(content)
         file_obj.name = filename
 
-        result = qaseio.apis.AttachmentsApi(self._client).upload_attachment(
-            code=self._project_code,
-            file=[file_obj],
-        ).result[0]
-        return result["url"]
+        attachment_response_result = (
+            qaseio.AttachmentsApi(
+                self._client,
+            )
+            .upload_attachment(
+                code=self._project_code,
+                file=[file_obj],
+            )
+            .result
+        )
+        assert attachment_response_result is not None
+
+        return cast(str, attachment_response_result[0].url)

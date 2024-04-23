@@ -1,5 +1,7 @@
 import base64
 import logging
+import typing
+from collections.abc import Iterable
 
 import arrow
 from _pytest.python import Function
@@ -42,19 +44,19 @@ class DebugInfo:
         return "\n".join(logs)
 
     @staticmethod
-    def _format_log(log) -> str:
+    def _format_log(log: Iterable[dict[str, typing.Any]]) -> str:
         """Format logs.
 
         Copied from pytest-selenium.
 
         """
         timestamp_format = "%Y-%m-%d %H:%M:%S.%f"
-        entries = []
+        entries: list[str] = []
         for entry in log:
             timestamp = arrow.get(entry["timestamp"] / 1000.0).strftime(timestamp_format)
             entries.append(f"{timestamp} {entry['level']} - {entry['message']}")
-        log = "\n".join(entries)
-        return log
+        str_log = "\n".join(entries)
+        return str_log
 
     def generate_debug_comment(
         self,
@@ -63,7 +65,8 @@ class DebugInfo:
     ) -> str:
         try:
             screenshot_url = file_storage.save_file_obj(
-                content=self.screenshot, filename=f"{folder}/screenshot.png",
+                content=self.screenshot,
+                filename=f"{folder}/screenshot.png",
             )
         except Exception:
             self.logger.error(msg="Can't save screenshot to storage", exc_info=True)
@@ -71,7 +74,8 @@ class DebugInfo:
 
         try:
             html_url = file_storage.save_file_obj(
-                content=self.html, filename=f"{folder}/html.html",
+                content=self.html,
+                filename=f"{folder}/html.html",
             )
         except Exception:
             self.logger.error(msg="Can't save HTML to storage", exc_info=True)

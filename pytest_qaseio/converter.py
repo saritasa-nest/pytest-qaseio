@@ -43,7 +43,7 @@ class QaseConverter:
         title = constants.RUN_NAME_TEMPLATE.format(
             env=self._env.capitalize(),
             browser=self._browser.capitalize(),
-            date=datetime.datetime.utcnow().strftime("%m/%d/%Y %H:%M:%S"),
+            date=datetime.datetime.now(tz=datetime.UTC).strftime("%m/%d/%Y %H:%M:%S"),
         )
         run_data = models.RunCreate(
             title=title,
@@ -200,8 +200,7 @@ class QaseConverter:
             cases_ids.append(case_id)
 
         duplicating_ids = [
-            case_id for case_id, counter in collections.Counter(cases_ids).items()
-            if counter > 1
+            case_id for case_id, counter in collections.Counter(cases_ids).items() if counter > 1
         ]
         if duplicating_ids:
             raise plugin_exceptions.DuplicatingCaseId(duplicating_ids)
@@ -215,10 +214,7 @@ class QaseConverter:
         item: pytest.Function,
     ) -> pytest.Mark | None:
         """Extract qase's `Mark` object from test item."""
-        qase_markers = [
-            marker for marker in item.own_markers
-            if marker.name == "qase"
-        ]
+        qase_markers = [marker for marker in item.own_markers if marker.name == "qase"]
         if not qase_markers:
             return None
 
@@ -234,7 +230,7 @@ class QaseConverter:
         self,
         project_code: str,
         marker: pytest.Mark,
-    ):
+    ) -> None | int:
         """Shortcut to extract qase case ID from marker."""
         if len(marker.args) != 1:
             return None

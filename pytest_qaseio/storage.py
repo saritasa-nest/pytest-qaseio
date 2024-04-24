@@ -13,6 +13,21 @@ class FileStorage(Protocol):
         ...
 
 
+class FileIO(io.BytesIO):
+    """Represent file object to pass in Qase API methods.
+
+    Set `name` and `mime` attributes to objects since it's required in
+    https://github.com/qase-tms/qase-python/blob/44d19a500246017a30e0fa06b35cace065135d96/qaseio/src/qaseio/api_client.py#L518
+
+    """
+
+    mime = "application/octet-stream"
+
+    def __init__(self, *args, filename: str, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
+        self.name = filename
+
+
 class QaseFileStorage:
     """Upload files to Qase S3 bucket as attachment."""
 
@@ -33,8 +48,7 @@ class QaseFileStorage:
 
     def save_file_obj(self, content: bytes, filename: str) -> str:
         """Upload file to Qase.io S3 bucket via attachment API."""
-        file_obj = io.BytesIO(content)
-        file_obj.name = filename
+        file_obj = FileIO(content, filename=filename)
 
         attachment_response_result = (
             qaseio.AttachmentsApi(

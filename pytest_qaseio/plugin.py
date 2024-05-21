@@ -139,12 +139,12 @@ class QasePlugin:
         self._qase_results: dict[str, tuple[str, models.ResultCreate]] = dict()
 
     def pytest_sessionstart(self, session: pytest.Session):
-        """Remove lock files."""
+        """Clear previously saved run, prepare lock file."""
         if hasattr(session.config, "workerinput"):
             # Do nothing if it is not master thread
             return
         self.__run_file.unlink(missing_ok=True)
-        self.__run_file_lock.unlink(missing_ok=True)
+        self.__run_file_lock.touch(exist_ok=True)
 
     @pytest.hookimpl(trylast=True)
     def pytest_collection_modifyitems(

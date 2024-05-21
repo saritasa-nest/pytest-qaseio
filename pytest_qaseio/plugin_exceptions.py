@@ -3,7 +3,7 @@ class BaseQasePluginException(Exception):
 
     message: str = ""
 
-    def __init__(self, message: str = "", *args: object) -> None:
+    def __init__(self, *args, message: str = "") -> None:
         super().__init__(*args)
         if message:
             self.message = message
@@ -18,11 +18,11 @@ class InvalidCaseId(BaseQasePluginException):
 class DuplicatingCaseId(BaseQasePluginException):
     """Exception that signifies that incorrect case was set for test."""
 
-    def __init__(self, duplicating_ids: list[int], *args: object) -> None:
+    def __init__(self, duplicating_ids: list[int], *args) -> None:
         ids = ", ".join(str(i) for i in duplicating_ids)
         super().__init__(
+            *args,
             message=f"Duplicating qase IDs found: {ids}",
-            *args,   # type: ignore
         )
 
 

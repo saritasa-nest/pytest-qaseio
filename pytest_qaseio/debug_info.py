@@ -65,7 +65,7 @@ class DebugInfo:
             screenshot_url = file_storage.save_file_obj(
                 content=self.screenshot, filename=f"{folder}/screenshot.png",
             )
-        except BaseException:
+        except Exception:
             self.logger.error(msg="Can't save screenshot to storage", exc_info=True)
             screenshot_url = ""
 
@@ -73,7 +73,7 @@ class DebugInfo:
             html_url = file_storage.save_file_obj(
                 content=self.html, filename=f"{folder}/html.html",
             )
-        except BaseException:
+        except Exception:
             self.logger.error(msg="Can't save HTML to storage", exc_info=True)
             html_url = ""
 
@@ -82,7 +82,7 @@ class DebugInfo:
                 content=self.browser_log.encode("utf-8"),
                 filename=f"{folder}/browser_log.txt",
             )
-        except BaseException:
+        except Exception:
             self.logger.error(msg="Can't save browser log to storage", exc_info=True)
             browser_log_url = ""
 

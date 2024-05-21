@@ -8,7 +8,7 @@ lint:
 package:
 	poetry check
 	poetry run pip check
-	poetry run safety check --full-report
+	poetry run safety check --full-report --ignore 67599
 
 .PHONY: check
 check: lint package

@@ -139,12 +139,12 @@ class QasePlugin:
         self._qase_results: dict[str, tuple[str, models.ResultCreate]] = dict()
 
     def pytest_sessionstart(self, session: pytest.Session):
-        """Remove lock files."""
+        """Clear previously saved run, prepare lock file."""
         if hasattr(session.config, "workerinput"):
             # Do nothing if it is not master thread
             return
         self.__run_file.unlink(missing_ok=True)
-        self.__run_file_lock.unlink(missing_ok=True)
+        self.__run_file_lock.touch(exist_ok=True)
 
     @pytest.hookimpl(trylast=True)
     def pytest_collection_modifyitems(
@@ -183,7 +183,7 @@ class QasePlugin:
                 self._current_run = self._client.create_run(
                     run_data=run_data,
                 )
-                with open(self.__run_file, "w") as lock_file:
+                with pathlib.Path(self.__run_file).open(mode="w") as lock_file:
                     lock_file.write(str(self._current_run.id))
             except plugin_exceptions.BaseQasePluginException as e:
                 pytest.exit(e.message)
@@ -242,11 +242,8 @@ class QasePlugin:
         """Load run id and then load it from qase."""
         if not self.__run_file.exists():
             return None
-        with open(self.__run_file, "r") as lock_file:
-            try:
-                run_id = int(lock_file.read())
-                return self._client.get_run(
-                    run_id=run_id,
-                )
-            except ValueError:
-                return None
+        with pathlib.Path(self.__run_file).open() as lock_file:
+            run_id = int(lock_file.read())
+            return self._client.get_run(
+                run_id=run_id,
+            )

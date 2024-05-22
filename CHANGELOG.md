@@ -2,6 +2,10 @@
 
 We follow [Semantic Versions](https://semver.org/).
 
+# Version 1.2.0
+
+- Fix `filelock` blocking for parallel tests run
+
 # Version 1.1.1
 
 - The remote browser name is now also looked up in the `stash` attribute

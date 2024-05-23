@@ -139,7 +139,7 @@ class QasePlugin:
         # Mapping of case ids and result hash from qase with status
         self._qase_results: dict[str, tuple[str, models.ResultCreate]] = dict()
 
-    def pytest_sessionstart(self, session: pytest.Session):
+    def pytest_sessionstart(self, session: pytest.Session) -> None:
         """Clear previously saved run, prepare lock file."""
         if hasattr(session.config, "workerinput"):
             # Do nothing if it is not master thread

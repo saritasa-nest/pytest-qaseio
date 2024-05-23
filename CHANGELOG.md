@@ -2,6 +2,13 @@
 
 We follow [Semantic Versions](https://semver.org/).
 
+# Version 2.0.0
+
+- Use updated `qaseio` sdk (^4.0.0)
+- Drop `Python 3.10` support
+- Drop `pytest-variables` support (now use pytest options to provide browser name)
+- Small code and structure improvements
+
 # Version 1.2.0
 
 - Fix `filelock` blocking for parallel tests run

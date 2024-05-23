@@ -57,8 +57,7 @@ def test_demo():
 Since this package is mostly used for selenium tests, you need to provide a
 value for `--webdriver` flag. If you set `--webdriver=remote` and want to specify
 name of remote browser (not just Remote), use `--remote-browser`
-flag or set capabilities via `variables`. This will be used in test run name and
-in attachments path.
+flag. This will be used in test run name and in attachments path.
 
 To enable plugin use flag `--qase-enabled`.
 

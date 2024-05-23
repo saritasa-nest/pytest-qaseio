@@ -35,7 +35,7 @@ classifiers = [
 pytest_qaseio = "pytest_qaseio.plugin"
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = "^3.11"
 qaseio = "^4.0.0"
 selenium = "^4.21.0"
 arrow = "^1.3.0"

@@ -55,8 +55,7 @@ class DebugInfo:
         for entry in log:
             timestamp = arrow.get(entry["timestamp"] / 1000.0).strftime(timestamp_format)
             entries.append(f"{timestamp} {entry['level']} - {entry['message']}")
-        str_log = "\n".join(entries)
-        return str_log
+        return "\n".join(entries)
 
     def generate_debug_comment(
         self,

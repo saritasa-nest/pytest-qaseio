@@ -2,7 +2,7 @@ import io
 from typing import Protocol, cast
 
 import qaseio
-from qaseio.configuration import Configuration
+from qaseio import configuration as qaseio_config
 
 
 class FileStorage(Protocol):
@@ -21,7 +21,7 @@ class FileIO(io.BytesIO):
 
     """
 
-    mime = "application/octet-stream"
+    mime = "image/png"
 
     def __init__(self, *args, filename: str, **kwargs) -> None:
         super().__init__(*args, **kwargs)
@@ -38,7 +38,7 @@ class QaseFileStorage:
     ):
         """Prepare ApiClient for qase io using credentials."""
         self._client = qaseio.ApiClient(
-            configuration=Configuration(
+            configuration=qaseio_config.Configuration(
                 api_key={
                     "TokenAuth": qase_token,
                 },

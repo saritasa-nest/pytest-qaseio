@@ -7,6 +7,7 @@ We follow [Semantic Versions](https://semver.org/).
 - Use updated `qaseio` sdk (^4.0.0)
 - Drop `Python 3.10` support
 - Drop `pytest-variables` support (now use pytest options to provide browser name)
+- Add `ruff` and `cspell` linters
 - Small code and structure improvements
 
 # Version 1.2.0

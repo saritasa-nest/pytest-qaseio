@@ -84,13 +84,11 @@ implicit_reexport = true
 [tool.ruff]
 line-length = 100
 indent-width = 4
-target-version = "py310"
+target-version = "py311"
 exclude = [
-    "config",
     ".venv",
     "venv",
     "__init__.py",
-    "plugins/selenium_plugin",
 ]
 
 [tool.ruff.lint]
@@ -143,63 +141,63 @@ extend-select = [
 ]
 
 ignore = [
-    # https://docs.astral.sh/ruff/rules/ANN101
+    # https://docs.astral.sh/ruff/rules/missing-type-self/
     "ANN101",
-    # https://docs.astral.sh/ruff/rules/ANN102
+    # https://docs.astral.sh/ruff/rules/missing-type-cls/
     "ANN102",
-    # https://docs.astral.sh/ruff/rules/ANN002
+    # https://docs.astral.sh/ruff/rules/missing-type-args/
     "ANN002",
-    # https://docs.astral.sh/ruff/rules/ANN003
+    # https://docs.astral.sh/ruff/rules/missing-type-kwargs/
     "ANN003",
-    # https://docs.astral.sh/ruff/rules/ANN401
+    # https://docs.astral.sh/ruff/rules/any-type/
     "ANN401",
-    # https://docs.astral.sh/ruff/rules/ANN204
+    # https://docs.astral.sh/ruff/rules/missing-return-type-special-method/
     "ANN204",
-    # https://docs.astral.sh/ruff/rules/D100
+    # https://docs.astral.sh/ruff/rules/undocumented-public-module/
     "D100",
-    # https://docs.astral.sh/ruff/rules/D107
+    # https://docs.astral.sh/ruff/rules/undocumented-public-init/
     "D107",
-    # https://docs.astral.sh/ruff/rules/D104
+    # https://docs.astral.sh/ruff/rules/undocumented-public-package/
     "D104",
-    # https://docs.astral.sh/ruff/rules/D105
+    # https://docs.astral.sh/ruff/rules/undocumented-magic-method/
     "D105",
-    # https://docs.astral.sh/ruff/rules/D106
+    # https://docs.astral.sh/ruff/rules/undocumented-public-nested-class/
     "D106",
-    # https://docs.astral.sh/ruff/rules/D203
+    # https://docs.astral.sh/ruff/rules/one-blank-line-before-class/
     "D203",
-    # https://docs.astral.sh/ruff/rules/D213
+    # https://docs.astral.sh/ruff/rules/multi-line-summary-second-line/
     "D213",
-    # https://docs.astral.sh/ruff/rules/D407
+    # https://docs.astral.sh/ruff/rules/dashed-underline-after-section/
     "D407",
-    # https://docs.astral.sh/ruff/rules/N818
+    # https://docs.astral.sh/ruff/rules/error-suffix-on-exception-name/
     "N818",
-    # https://docs.astral.sh/ruff/rules/N999
+    # https://docs.astral.sh/ruff/rules/invalid-module-name/
     "N999",
-    # https://docs.astral.sh/ruff/rules/C408
+    # https://docs.astral.sh/ruff/rules/unnecessary-collection-call/
     "C408",
-    # https://docs.astral.sh/ruff/rules/RUF012
+    # https://docs.astral.sh/ruff/rules/mutable-class-default/
     "RUF012",
-    # https://docs.astral.sh/ruff/rules/D100
+    # https://docs.astral.sh/ruff/rules/undocumented-public-module/
     "D100",
-    # https://docs.astral.sh/ruff/rules/D102
+    # https://docs.astral.sh/ruff/rules/undocumented-public-method/
     "D102",
-    # https://docs.astral.sh/ruff/rules/D103
+    # https://docs.astral.sh/ruff/rules/undocumented-public-function/
     "D103",
-    # https://docs.astral.sh/ruff/rules/D105
+    # https://docs.astral.sh/ruff/rules/undocumented-magic-method/
     "D105",
-    # https://docs.astral.sh/ruff/rules/D106
+    # https://docs.astral.sh/ruff/rules/undocumented-public-nested-class/
     "D106",
-    # https://docs.astral.sh/ruff/rules/D107
+    # https://docs.astral.sh/ruff/rules/undocumented-public-init/
     "D107",
-    # https://docs.astral.sh/ruff/rules/F403
+    # https://docs.astral.sh/ruff/rules/undefined-local-with-import-star/
     "F403",
-    # https://docs.astral.sh/ruff/rules/D405
+    # https://docs.astral.sh/ruff/rules/capitalize-section-name/
     "F405",
-    # https://docs.astral.sh/ruff/rules/PT004
+    # https://docs.astral.sh/ruff/rules/pytest-missing-fixture-name-underscore/
     "PT004",
-    # https://docs.astral.sh/ruff/rules/B008
+    # https://docs.astral.sh/ruff/rules/function-call-in-default-argument/
     "B008",
-    # https://docs.astral.sh/ruff/rules/UP040
+    # https://docs.astral.sh/ruff/rules/non-pep695-type-alias/
     "UP040",
     # https://docs.astral.sh/ruff/rules/assert/
     "S101",

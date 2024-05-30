@@ -13,3 +13,8 @@ def pytest_qase_file_storages() -> dict[str, storage.FileStorage]:  # type: igno
         }
 
     """
+
+
+@pytest.hookspec(firstresult=True)
+def pytest_qase_browser_name(config: pytest.Config) -> str:  # type: ignore
+    """Return name of browser to use in test run name and attachments path."""

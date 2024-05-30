@@ -1,6 +1,7 @@
 import logging
 import os
 import pathlib
+from typing import cast
 
 import filelock
 import pytest
@@ -11,7 +12,7 @@ from qaseio.exceptions import ApiException
 from . import api_client, converter, plugin_exceptions, storage
 
 
-def pytest_addoption(parser: pytest.Parser):
+def pytest_addoption(parser: pytest.Parser) -> None:
     """Add custom args to command line."""
     parser.addoption(
         "--qase-enabled",
@@ -26,7 +27,7 @@ def pytest_addoption(parser: pytest.Parser):
     )
 
 
-def pytest_addhooks(pluginmanager):
+def pytest_addhooks(pluginmanager: pytest.PytestPluginManager) -> None:
     """Add hooks for plugin."""
     from . import hooks
 
@@ -35,7 +36,7 @@ def pytest_addhooks(pluginmanager):
 
 def _get_file_storage(config: pytest.Config) -> storage.FileStorage | None:
     """Provide file storage via pytest config."""
-    file_storage_name = config.getoption("--qase-file-storage")
+    file_storage_name: str = config.getoption("--qase-file-storage")
     if file_storage_name.lower() == "none":
         return None
 
@@ -62,22 +63,14 @@ def pytest_qase_file_storages() -> dict[str, storage.FileStorage]:
     }
 
 
-def _get_browser_name(config: pytest.Config, default: str = "remote"):
-    """Try to get browser name from options and variables.
-
-    Since `pytest-selenium` uses `pytest-variables` and recommends to put
-    capabilities there. So we try to get `browserName` from `config.stash` (and
-    `config._variables` for older version of `pytest-variables`).
-
-    """
-    stash = getattr(config, "stash", getattr(config, "_variables", {}))
-    browser_name = stash.get("capabilities", {}).get("browserName", None)
-
-    return browser_name or config.getoption("--remote-browser", default=default)
+@pytest.hookimpl(trylast=True)
+def pytest_qase_browser_name(config: pytest.Config) -> str:
+    """Try to get browser name from `webdriver` pytest option."""
+    return config.getoption("--webdriver")
 
 
 @pytest.hookimpl(trylast=True)
-def pytest_configure(config: pytest.Config):
+def pytest_configure(config: pytest.Config) -> None:
     """Configure pytest-qaseio plugin.
 
     Add `qase` marker for pytest.
@@ -92,13 +85,12 @@ def pytest_configure(config: pytest.Config):
     qase_enabled = config.getoption("--qase-enabled")
     if not qase_enabled:
         return
-    browser = config.getoption("--webdriver")
-    if browser == "remote":
-        browser = _get_browser_name(config, default=browser)
+
+    browser_name: str = config.hook.pytest_qase_browser_name(config=config)
 
     config.pluginmanager.register(
         plugin=QasePlugin(
-            browser=browser,
+            browser=browser_name,
             file_storage=_get_file_storage(config),
         ),
         name="qase_plugin",
@@ -138,7 +130,7 @@ class QasePlugin:
         # Mapping of case ids and result hash from qase with status
         self._qase_results: dict[str, tuple[str, models.ResultCreate]] = dict()
 
-    def pytest_sessionstart(self, session: pytest.Session):
+    def pytest_sessionstart(self, session: pytest.Session) -> None:
         """Clear previously saved run, prepare lock file."""
         if hasattr(session.config, "workerinput"):
             # Do nothing if it is not master thread
@@ -150,7 +142,7 @@ class QasePlugin:
     def pytest_collection_modifyitems(
         self,
         items: list[pytest.Function],
-    ):
+    ) -> None:
         """Create test run in qase."""
         with filelock.FileLock(self.__run_file_lock):
             try:
@@ -189,7 +181,7 @@ class QasePlugin:
                 pytest.exit(e.message)
 
     @pytest.hookimpl(tryfirst=True, hookwrapper=True)
-    def pytest_runtest_makereport(self, item: pytest.Function):
+    def pytest_runtest_makereport(self, item: pytest.Function):  # noqa: ANN201
         """Represent standard pytest hook on test completion.
 
         At this hook we will report passed, skipped and failed tests.
@@ -199,7 +191,7 @@ class QasePlugin:
         report: pytest.TestReport = provided_report.get_result()
         should_report = not (
             # Passed tests should be reported only on call
-            (report.passed and report.when in ("setup", "teardown"))
+            report.passed and report.when in ("setup", "teardown")
         )
         if not should_report:
             return
@@ -214,7 +206,7 @@ class QasePlugin:
             self._qase_results[item.nodeid] = self._client.report_test_results(
                 run=self._current_run,
                 report_data=self._converter.prepare_report_data(
-                    run_id=self._current_run.id,
+                    run_id=cast(int, self._current_run.id),
                     case_id=case_id,
                     item=item,
                     report=report,

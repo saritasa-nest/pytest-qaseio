@@ -64,6 +64,12 @@ def pytest_qase_file_storages() -> dict[str, storage.FileStorage]:
 
 
 @pytest.hookimpl(trylast=True)
+def pytest_qase_browser_name(config: pytest.Config) -> str:
+    """Try to get browser name from `webdriver` pytest option."""
+    return config.getoption("--webdriver")
+
+
+@pytest.hookimpl(trylast=True)
 def pytest_configure(config: pytest.Config) -> None:
     """Configure pytest-qaseio plugin.
 
@@ -79,13 +85,12 @@ def pytest_configure(config: pytest.Config) -> None:
     qase_enabled = config.getoption("--qase-enabled")
     if not qase_enabled:
         return
-    browser: str = config.getoption("--webdriver")
-    if browser == "remote":
-        browser = config.getoption("--remote-browser", default="chrome")
+
+    browser_name: str = config.hook.pytest_qase_browser_name(config=config)
 
     config.pluginmanager.register(
         plugin=QasePlugin(
-            browser=browser,
+            browser=browser_name,
             file_storage=_get_file_storage(config),
         ),
         name="qase_plugin",

@@ -54,10 +54,19 @@ def test_demo():
     """Check qaseio plugin works as expected."""
 ```
 
-Since this package is mostly used for selenium tests, you need to provide a
-value for `--webdriver` flag. If you set `--webdriver=remote` and want to specify
-name of remote browser (not just Remote), use `--remote-browser`
-flag. This will be used in test run name and in attachments path.
+Since this package is mostly used for selenium tests, it expects to get browser
+name to use in Qase.io test run name and in attachments path. By default you can
+ provide it using `--webdriver` flag. But you can also override
+ `pytest_qase_browser_name` hook to implement some custom logic.
+ Here's default implementation of hook:
+
+ ```python
+@pytest.hookimpl(trylast=True)
+def pytest_qase_browser_name(config: pytest.Config) -> str:
+    """Try to get browser name from `webdriver` pytest option."""
+    return config.getoption("--webdriver")
+
+ ```
 
 To enable plugin use flag `--qase-enabled`.
 

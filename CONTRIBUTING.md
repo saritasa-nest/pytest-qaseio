@@ -19,13 +19,7 @@ We use `pre-commit` for quality control.
 To run checks:
 
 ```bash
-make run-hooks
-```
-
-But there are also additional checks available:
-
-```bash
-make check
+pre-commit run --hook-stage push --all-files
 ```
 
 ## Submitting your code
@@ -54,5 +48,4 @@ Before submitting your code please do the following steps:
 1. Add any changes you want
 2. Edit documentation if you have changed something significant
 3. Update `CHANGELOG.md` with a quick summary of your changes
-4. Run `make check` to ensure that types, pip and safety are correct
-5. Run `make run-hooks` to ensure that style is correct
+4. Run `pre-commit run --hook-stage push --all-files` to ensure that style and types are correct

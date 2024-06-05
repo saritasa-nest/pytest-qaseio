@@ -161,6 +161,11 @@ ENV/
 
 # mypy
 .mypy_cache/
+# pytest
+.pytest_cache/
+# ruff
+.ruff_cache/
+
 
 #### jetbrains ####
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and Webstorm

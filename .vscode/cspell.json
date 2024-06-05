@@ -14,7 +14,6 @@
   "dictionaries": [
     "python",
     "python-common",
-    "docker",
     "project-related-words"
   ]
 }

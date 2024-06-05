@@ -27,3 +27,4 @@ getfixturevalue
 conftests
 makereport
 firstresult
+ipdb

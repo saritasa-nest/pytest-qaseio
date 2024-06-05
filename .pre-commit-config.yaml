@@ -1,10 +1,11 @@
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.4.0
+    rev: v4.6.0
     hooks:
       - id: check-yaml
       - id: check-toml
       - id: check-json
+        exclude: ".*\\.vscode/"
       - id: end-of-file-fixer
       - id: trailing-whitespace
       - id: detect-aws-credentials
@@ -13,6 +14,12 @@ repos:
       - id: check-merge-conflict
       - id: detect-private-key
 
+  - repo: https://github.com/python-poetry/poetry
+    rev: 1.8.0
+    hooks:
+      - id: poetry-check
+        args: ["--lock"]
+
   # Typo search tool
   - repo: https://github.com/streetsidesoftware/cspell-cli
     rev: v8.3.0
@@ -20,18 +27,19 @@ repos:
       - id: cspell
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.1.14
+    rev: v0.3.7
     hooks:
       - id: ruff
+        args: [ --fix ]
       - id: ruff-format
 
   - repo: https://github.com/asottile/add-trailing-comma
-    rev: v2.4.0
+    rev: v3.1.0
     hooks:
       - id: add-trailing-comma
 
   - repo: https://github.com/pycqa/docformatter
-    rev: v1.5.1
+    rev: v1.7.5
     hooks:
       - id: docformatter
         args: [
@@ -42,10 +50,10 @@ repos:
 
   - repo: local
     hooks:
-      - id: checks
-        name: run checks
-        entry: make check
+      - id: mypy
+        name: Run mypy
+        entry: poetry run mypy pytest_qaseio
         language: system
         pass_filenames: false
-        types: [ python ]
+        types: [ file ]
         stages: [ push ]

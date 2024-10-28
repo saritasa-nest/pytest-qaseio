@@ -2,6 +2,10 @@
 
 We follow [Semantic Versions](https://semver.org/).
 
+# Version 2.1.0
+- Update environment tools
+- Update pyproject.toml for backward compatibility (freeze arrow on 1.2.3 version)
+
 # Version 2.0.0
 
 - Use updated `qaseio` sdk (^4.0.0)

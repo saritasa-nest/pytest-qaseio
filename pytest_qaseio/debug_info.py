@@ -5,7 +5,6 @@ from collections.abc import Iterable
 
 import arrow
 from _pytest.python import Function
-from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from . import constants, storage
@@ -24,23 +23,41 @@ class DebugInfo:
         self.browser_log = self._extract_browser_log()
         self.url = self._extract_url()
 
-    def _extract_screenshot(self) -> bytes:
-        return base64.b64decode(self.webdriver.get_screenshot_as_base64().encode("utf-8"))
+    def _extract_screenshot(self) -> bytes | None:
+        try:
+            return base64.b64decode(self.webdriver.get_screenshot_as_base64().encode("utf-8"))
+        except Exception:
+            self.logger.error(msg="Can't extract screenshot from webdriver", exc_info=True)
+            return None
 
-    def _extract_html(self) -> bytes:
-        return self.webdriver.page_source.encode("utf-8")
+    def _extract_html(self) -> bytes | None:
+        try:
+            return self.webdriver.page_source.encode("utf-8")
+        except Exception:
+            self.logger.error(msg="Can't extract html page source from webdriver", exc_info=True)
+            return None
 
     def _extract_url(self) -> str:
-        return self.webdriver.current_url
+        try:
+            return self.webdriver.current_url
+        except Exception:
+            self.logger.error(msg="Can't extract url from webdriver", exc_info=True)
+            return ""
 
     def _extract_browser_log(self) -> str:
         logs = []
         try:
             for name in self.webdriver.log_types:
                 logs.append(self._format_log(self.webdriver.get_log(name)))  # type: ignore
-        except WebDriverException:
+        except Exception:
+            # Sometimes there can be problems reading some logs from the browser here
+            # (such as `ProtocolError('Connection broken')`). So we skip them if this happens.
+
+            # Also, this method can't work correctly with Geckodriver (raises `WebDriverException`
+            # error) because of the following issue
             # https://github.com/mozilla/geckodriver/issues/284
-            return ""
+            self.logger.error(msg="Can't extract browser log", exc_info=True)
+            pass
         return "\n".join(logs)
 
     @staticmethod
@@ -62,23 +79,25 @@ class DebugInfo:
         file_storage: storage.FileStorage,
         folder: str,
     ) -> str:
-        try:
-            screenshot_url = file_storage.save_file_obj(
-                content=self.screenshot,
-                filename=f"{folder}/screenshot.png",
-            )
-        except Exception:
-            self.logger.error(msg="Can't save screenshot to storage", exc_info=True)
-            screenshot_url = ""
+        if self.screenshot:
+            try:
+                screenshot_url = file_storage.save_file_obj(
+                    content=self.screenshot,
+                    filename=f"{folder}/screenshot.png",
+                )
+            except Exception:
+                self.logger.error(msg="Can't save screenshot to storage", exc_info=True)
+                screenshot_url = ""
 
-        try:
-            html_url = file_storage.save_file_obj(
-                content=self.html,
-                filename=f"{folder}/html.html",
-            )
-        except Exception:
-            self.logger.error(msg="Can't save HTML to storage", exc_info=True)
-            html_url = ""
+        if self.html:
+            try:
+                html_url = file_storage.save_file_obj(
+                    content=self.html,
+                    filename=f"{folder}/html.html",
+                )
+            except Exception:
+                self.logger.error(msg="Can't save HTML to storage", exc_info=True)
+                html_url = ""
 
         try:
             browser_log_url = file_storage.save_file_obj(

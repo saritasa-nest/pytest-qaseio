@@ -79,6 +79,7 @@ class DebugInfo:
         file_storage: storage.FileStorage,
         folder: str,
     ) -> str:
+        screenshot_url = ""
         if self.screenshot:
             try:
                 screenshot_url = file_storage.save_file_obj(
@@ -87,8 +88,8 @@ class DebugInfo:
                 )
             except Exception:
                 self.logger.error(msg="Can't save screenshot to storage", exc_info=True)
-                screenshot_url = ""
 
+        html_url = ""
         if self.html:
             try:
                 html_url = file_storage.save_file_obj(
@@ -97,7 +98,6 @@ class DebugInfo:
                 )
             except Exception:
                 self.logger.error(msg="Can't save HTML to storage", exc_info=True)
-                html_url = ""
 
         try:
             browser_log_url = file_storage.save_file_obj(

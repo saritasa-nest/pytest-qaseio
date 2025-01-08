@@ -6,8 +6,9 @@ from typing import cast
 import filelock
 import pytest
 from _pytest.terminal import TerminalReporter
-from qaseio import models
-from qaseio.exceptions import ApiException
+from qase.api_client_v1.exceptions import ApiException
+from qase.api_client_v1.models.result_create import ResultCreate
+from qase.api_client_v1.models.run import Run
 
 from . import api_client, converter, plugin_exceptions, storage
 
@@ -117,7 +118,7 @@ class QasePlugin:
             project_code=os.environ["QASE_PROJECT_CODE"],
         )
         self._cases_ids_from_api: list[int] = self._client.load_cases_ids()
-        self._current_run: models.Run | None = None
+        self._current_run: Run | None = None
         self._converter = converter.QaseConverter(
             browser=browser,
             env=os.environ["ENVIRONMENT"],
@@ -128,7 +129,7 @@ class QasePlugin:
         # Mapping of pytest items ids and case id
         self._tests: dict[str, int | None] = dict()
         # Mapping of case ids and result hash from qase with status
-        self._qase_results: dict[str, tuple[str, models.ResultCreate]] = dict()
+        self._qase_results: dict[str, tuple[str, ResultCreate]] = dict()
 
     def pytest_sessionstart(self, session: pytest.Session) -> None:
         """Clear previously saved run, prepare lock file."""
@@ -198,7 +199,7 @@ class QasePlugin:
         case_id = self._tests[item.nodeid]
         # No need to report same passed status,
         # while skipped and failed should be always reported
-        if not case_id or item.nodeid in self._qase_results and report.passed:
+        if not case_id or (item.nodeid in self._qase_results and report.passed):
             return
         if not self._current_run:
             raise plugin_exceptions.RunNotConfigured()
@@ -230,7 +231,7 @@ class QasePlugin:
 
     def _load_run_from_file(
         self,
-    ) -> models.Run | None:
+    ) -> Run | None:
         """Load run id and then load it from qase."""
         if not self.__run_file.exists():
             return None

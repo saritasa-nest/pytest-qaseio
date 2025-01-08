@@ -1,6 +1,6 @@
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.6.0
+    rev: v5.0.0
     hooks:
       - id: check-yaml
       - id: check-toml
@@ -22,12 +22,12 @@ repos:
 
   # Typo search tool
   - repo: https://github.com/streetsidesoftware/cspell-cli
-    rev: v8.3.0
+    rev: v8.17.0
     hooks:
       - id: cspell
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.3.7
+    rev: v0.8.6
     hooks:
       - id: ruff
         args: [ --fix ]

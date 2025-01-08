@@ -4,7 +4,8 @@ import logging
 import sys
 
 import pytest
-from qaseio import models
+from qase.api_client_v1.models.result_create import ResultCreate
+from qase.api_client_v1.models.run_create import RunCreate
 
 from . import constants, debug_info, plugin_exceptions, storage
 
@@ -34,7 +35,7 @@ class QaseConverter:
         self,
         cases_ids_from_api: list[int],
         items: list[pytest.Function],
-    ) -> tuple[models.RunCreate, dict[str, int | None]]:
+    ) -> tuple[RunCreate, dict[str, int | None]]:
         """Prepare data needed to create test run."""
         cases, tests = self._prepare_cases_for_run(
             cases_ids_from_api=cases_ids_from_api,
@@ -45,7 +46,7 @@ class QaseConverter:
             browser=self._browser.capitalize(),
             date=datetime.datetime.now(tz=datetime.UTC).strftime("%m/%d/%Y %H:%M:%S"),
         )
-        run_data = models.RunCreate(
+        run_data = RunCreate(
             title=title,
             cases=cases,
         )
@@ -58,7 +59,7 @@ class QaseConverter:
         run_id: int,
         item: pytest.Function,
         report: pytest.TestReport,
-    ) -> models.ResultCreate:
+    ) -> ResultCreate:
         """Create a test result based on results from pytest."""
         if hasattr(report, "wasxfail"):
             return self._prepare_skipped_test_report(
@@ -89,9 +90,9 @@ class QaseConverter:
         self,
         case_id: int,
         report: pytest.TestReport,
-    ) -> models.ResultCreate:
+    ) -> ResultCreate:
         """Prepare result report for passed test."""
-        return models.ResultCreate(
+        return ResultCreate(
             case_id=case_id,
             status="passed",
             comment=constants.TEST_PASSED,
@@ -102,13 +103,13 @@ class QaseConverter:
         self,
         case_id: int,
         report: pytest.TestReport,
-    ) -> models.ResultCreate:
+    ) -> ResultCreate:
         """Prepare result report for skipped test."""
         if hasattr(report, "wasxfail"):
             skip_reason = report.wasxfail
         else:
             *_, skip_reason = report.longrepr  # type: ignore
-        return models.ResultCreate(
+        return ResultCreate(
             case_id=case_id,
             status="skipped",
             comment=skip_reason,
@@ -121,7 +122,7 @@ class QaseConverter:
         run_id: int,
         item: pytest.Function,
         report: pytest.TestReport,
-    ) -> models.ResultCreate:
+    ) -> ResultCreate:
         """Prepare result report for failed test."""
         comment = constants.TEST_FAILED.format(when=report.when)
         debug_information = (
@@ -145,7 +146,7 @@ class QaseConverter:
             )
             comment += f"\n{debug_comment}"
 
-        return models.ResultCreate(
+        return ResultCreate(
             case_id=case_id,
             status="failed",
             comment=comment,

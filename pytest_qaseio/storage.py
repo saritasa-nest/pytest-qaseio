@@ -1,8 +1,9 @@
 import io
 from typing import Protocol, cast
 
-import qaseio
-from qaseio import configuration as qaseio_config
+from qase.api_client_v1 import configuration as qaseio_config
+from qase.api_client_v1.api.attachments_api import AttachmentsApi
+from qase.api_client_v1.api_client import ApiClient
 
 
 class FileStorage(Protocol):
@@ -37,7 +38,7 @@ class QaseFileStorage:
         qase_project_code: str,
     ):
         """Prepare ApiClient for qase io using credentials."""
-        self._client = qaseio.ApiClient(
+        self._client = ApiClient(
             configuration=qaseio_config.Configuration(
                 api_key={
                     "TokenAuth": qase_token,
@@ -51,7 +52,7 @@ class QaseFileStorage:
         file_obj = FileIO(content, filename=filename)
 
         attachment_response_result = (
-            qaseio.AttachmentsApi(
+            AttachmentsApi(
                 self._client,
             )
             .upload_attachment(

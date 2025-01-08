@@ -2,9 +2,15 @@ import logging
 import sys
 from typing import cast
 
-import qaseio
-from qaseio import configuration as qaseio_config
-from qaseio import models
+from qase.api_client_v1 import configuration as qaseio_config
+from qase.api_client_v1.api.cases_api import CasesApi
+from qase.api_client_v1.api.results_api import ResultsApi
+from qase.api_client_v1.api.runs_api import RunsApi
+from qase.api_client_v1.api_client import ApiClient
+from qase.api_client_v1.models.id_response_all_of_result import IdResponseAllOfResult
+from qase.api_client_v1.models.result_create import ResultCreate
+from qase.api_client_v1.models.run import Run
+from qase.api_client_v1.models.run_create import RunCreate
 
 
 class QaseClient:
@@ -21,7 +27,7 @@ class QaseClient:
         self._logger.addHandler(
             logging.StreamHandler(sys.stderr),
         )
-        self._client = qaseio.ApiClient(
+        self._client = ApiClient(
             configuration=qaseio_config.Configuration(
                 api_key={
                     "TokenAuth": token,
@@ -33,23 +39,23 @@ class QaseClient:
     def get_run(
         self,
         run_id: int,
-    ) -> models.Run:
-        run_response = qaseio.RunsApi(self._client).get_run(
+    ) -> Run:
+        run_response = RunsApi(self._client).get_run(
             code=self._project_code,
             id=run_id,
         )
-        return cast(models.Run, run_response.result)
+        return cast(Run, run_response.result)
 
     def create_run(
         self,
-        run_data: models.RunCreate,
-    ) -> models.Run:
+        run_data: RunCreate,
+    ) -> Run:
         """Create test run in Qase."""
-        response = qaseio.RunsApi(self._client).create_run(
+        response = RunsApi(self._client).create_run(
             code=self._project_code,
             run_create=run_data,
         )
-        created_run = cast(models.IdResponseAllOfResult, response.result)
+        created_run = cast(IdResponseAllOfResult, response.result)
 
         return self.get_run(cast(int, created_run.id))
 
@@ -59,13 +65,13 @@ class QaseClient:
         """Load all cases ids of project."""
         limit = 100
         cases: list[int] = []
-        response = qaseio.CasesApi(self._client).get_cases(
+        response = CasesApi(self._client).get_cases(
             code=self._project_code,
             limit=limit,
             offset=len(cases),
         )
         while True:
-            response = qaseio.CasesApi(self._client).get_cases(
+            response = CasesApi(self._client).get_cases(
                 code=self._project_code,
                 limit=limit,
                 offset=len(cases),
@@ -79,12 +85,12 @@ class QaseClient:
 
     def report_test_results(
         self,
-        run: models.Run,
-        report_data: models.ResultCreate,
-    ) -> tuple[str, models.ResultCreate]:
+        run: Run,
+        report_data: ResultCreate,
+    ) -> tuple[str, ResultCreate]:
         """Report test results back to Qase."""
         result = (
-            qaseio.ResultsApi(self._client)
+            ResultsApi(self._client)
             .create_result(
                 code=self._project_code,
                 id=cast(int, run.id),
@@ -93,4 +99,4 @@ class QaseClient:
             .result
         )
         assert result
-        return cast(str, result.hash), cast(models.ResultCreate, report_data.status)
+        return cast(str, result.hash), cast(ResultCreate, report_data.status)

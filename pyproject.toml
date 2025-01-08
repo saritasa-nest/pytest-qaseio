@@ -1,4 +1,5 @@
 [tool.poetry]
+# TODO: Update pyproject.toml structure for poetry 2.0.0
 name = "pytest-qaseio"
 description = "Pytest plugin for Qase.io integration"
 version = "2.1.2"
@@ -37,11 +38,11 @@ pytest_qaseio = "pytest_qaseio.plugin"
 
 [tool.poetry.dependencies]
 python = "^3.11"
-qaseio = "^4.0.0"
 selenium = "^4.21.0"
 arrow = "^1.2.3"
 filelock = "^3.14.0"
 pytest = ">=7.2.2,<9.0.0"
+qase-api-client = "^1.1.1"
 
 [tool.poetry.group.dev.dependencies]
 # Improved REPL

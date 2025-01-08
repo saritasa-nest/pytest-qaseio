@@ -2,6 +2,9 @@
 
 We follow [Semantic Versions](https://semver.org/).
 
+# Version 2.2.0
+- Replace `qaseio` to `qase-api-client` because first one was [deprecated](https://github.com/qase-tms/qase-python#deprecated)
+
 # Version 2.1.2
 - Update `DebugInfo.generate_debug_comment`: set default values for `screenshot_url`
   and `html_url`

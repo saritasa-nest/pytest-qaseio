@@ -197,14 +197,19 @@ class QasePlugin:
         if not should_report:
             return
         case_id = self._tests[item.nodeid]
+
+        # We can't use `item.nodeid` completely because it may contain unique
+        # ids of parameterized tests. So we split it by `[` - start of id.
+        test_path = item.nodeid.split("[")[0]
+
         # No need to report same passed status,
         # while skipped and failed should be always reported
-        if not case_id or (item.nodeid in self._qase_results and report.passed):
+        if not case_id or (test_path in self._qase_results and report.passed):
             return
         if not self._current_run:
             raise plugin_exceptions.RunNotConfigured()
         try:
-            self._qase_results[item.nodeid] = self._client.report_test_results(
+            self._qase_results[test_path] = self._client.report_test_results(
                 run=self._current_run,
                 report_data=self._converter.prepare_report_data(
                     run_id=cast(int, self._current_run.id),

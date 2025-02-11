@@ -129,7 +129,7 @@ class QasePlugin:
         # Mapping of pytest items ids and case id
         self._tests: dict[str, int | None] = dict()
         # Mapping of case ids and result hash from qase with status
-        self._qase_results: dict[str, tuple[str, ResultCreate]] = dict()
+        self._qase_results: dict[int, tuple[str, ResultCreate]] = dict()
 
     def pytest_sessionstart(self, session: pytest.Session) -> None:
         """Clear previously saved run, prepare lock file."""
@@ -197,14 +197,15 @@ class QasePlugin:
         if not should_report:
             return
         case_id = self._tests[item.nodeid]
+
         # No need to report same passed status,
         # while skipped and failed should be always reported
-        if not case_id or (item.nodeid in self._qase_results and report.passed):
+        if not case_id or (case_id in self._qase_results and report.passed):
             return
         if not self._current_run:
             raise plugin_exceptions.RunNotConfigured()
         try:
-            self._qase_results[item.nodeid] = self._client.report_test_results(
+            self._qase_results[case_id] = self._client.report_test_results(
                 run=self._current_run,
                 report_data=self._converter.prepare_report_data(
                     run_id=cast(int, self._current_run.id),

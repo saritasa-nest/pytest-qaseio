@@ -2,6 +2,9 @@
 
 We follow [Semantic Versions](https://semver.org/).
 
+# Version 2.3.0
+- Fix skipping reports for already passed tests
+
 # Version 2.2.0
 - Replace `qaseio` to `qase-api-client` because first one was [deprecated](https://github.com/qase-tms/qase-python#deprecated)
 

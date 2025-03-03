@@ -295,13 +295,13 @@ ipython = {version = ">=7.31.1", markers = "python_version >= \"3.11\""}
 
 [[package]]
 name = "ipython"
-version = "8.32.0"
+version = "8.33.0"
 description = "IPython: Productive Interactive Computing"
 optional = false
 python-versions = ">=3.10"
 files = [
-    {file = "ipython-8.32.0-py3-none-any.whl", hash = "sha256:cae85b0c61eff1fc48b0a8002de5958b6528fa9c8defb1894da63f42613708aa"},
-    {file = "ipython-8.32.0.tar.gz", hash = "sha256:be2c91895b0b9ea7ba49d33b23e2040c352b33eb6a519cca7ce6e0c743444251"},
+    {file = "ipython-8.33.0-py3-none-any.whl", hash = "sha256:aa5b301dfe1eaf0167ff3238a6825f810a029c9dad9d3f1597f30bd5ff65cc44"},
+    {file = "ipython-8.33.0.tar.gz", hash = "sha256:4c3e36a6dfa9e8e3702bd46f3df668624c975a22ff340e96ea7277afbd76217d"},
 ]
 
 [package.dependencies]
@@ -750,13 +750,13 @@ files = [
 
 [[package]]
 name = "pytest"
-version = "8.3.4"
+version = "8.3.5"
 description = "pytest: simple powerful testing with Python"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "pytest-8.3.4-py3-none-any.whl", hash = "sha256:50e16d954148559c9a74109af1eaf0c945ba2d8f30f0a3d3335edde19788b6f6"},
-    {file = "pytest-8.3.4.tar.gz", hash = "sha256:965370d062bce11e73868e0335abac31b4d3de0e82f4007408d242b4f8610761"},
+    {file = "pytest-8.3.5-py3-none-any.whl", hash = "sha256:c69214aa47deac29fad6c2a4f590b9c4a9fdb16a403176fe154b79c0b4d4d820"},
+    {file = "pytest-8.3.5.tar.gz", hash = "sha256:f4efe70cc14e511565ac476b57c279e12a855b11f48f212af1080ef2263d3845"},
 ]
 
 [package.dependencies]
@@ -846,13 +846,13 @@ files = [
 
 [[package]]
 name = "qase-api-client"
-version = "1.1.2"
+version = "1.1.3"
 description = "Qase TestOps API V1 client for Python"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "qase_api_client-1.1.2-py3-none-any.whl", hash = "sha256:0620e7d8db63723ce150468e87c23c59cd016a730d96ffb9dbd12ab53d9b11a5"},
-    {file = "qase_api_client-1.1.2.tar.gz", hash = "sha256:6b2c6554733fa25f4bd29b1f2f38f8128a460113bcfae42566187801b1f1f46e"},
+    {file = "qase_api_client-1.1.3-py3-none-any.whl", hash = "sha256:16f9d9f123f9503ee64767d71547fadb0c6bbcfb405613d583041af08770204b"},
+    {file = "qase_api_client-1.1.3.tar.gz", hash = "sha256:df3b5a03d71a986f9a5f0bc53ebf2dd50f21e23fc1f03f2ca7d967b3b78c7534"},
 ]
 
 [package.dependencies]
@@ -863,13 +863,13 @@ urllib3 = ">=1.25.3,<2.3.0"
 
 [[package]]
 name = "selenium"
-version = "4.28.1"
+version = "4.29.0"
 description = "Official Python bindings for Selenium WebDriver"
 optional = false
 python-versions = ">=3.9"
 files = [
-    {file = "selenium-4.28.1-py3-none-any.whl", hash = "sha256:4238847e45e24e4472cfcf3554427512c7aab9443396435b1623ef406fff1cc1"},
-    {file = "selenium-4.28.1.tar.gz", hash = "sha256:0072d08670d7ec32db901bd0107695a330cecac9f196e3afb3fa8163026e022a"},
+    {file = "selenium-4.29.0-py3-none-any.whl", hash = "sha256:ce5d26f1ddc1111641113653af33694c13947dd36c2df09cdd33f554351d372e"},
+    {file = "selenium-4.29.0.tar.gz", hash = "sha256:3a62f7ec33e669364a6c0562a701deb69745b569c50d55f1a912bf8eb33358ba"},
 ]
 
 [package.dependencies]

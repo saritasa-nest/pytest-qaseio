@@ -46,7 +46,7 @@ qase-api-client = "^1.1.1"
 [tool.poetry.group.dev.dependencies]
 # Improved REPL
 ipdb = "^0.13.13"
-ipython = "^8.24.0"
+ipython = ">=8.24,<10.0"
 # A framework for managing and maintaining multi-language pre-commit hooks.
 # https://pre-commit.com/
 pre-commit = ">=3.7.1,<5.0.0"

@@ -2,6 +2,16 @@
 
 We follow [Semantic Versions](https://semver.org/).
 
+## Version 2.4.0
+
+- Update ``xfailed`` tests handling:
+
+  We decided to use ``blocked`` status so as not to mislead the QA team. If
+  they see a failed case, they will go to retest it. But xfail implies that the
+  case fails for some already known reason. So the blocked status will let them
+  know that the case is blocked for some reason described in the xfail comment
+  (this comment will be duplicated as a result of the case run).
+
 ## Version 2.3.0
 
 - Fix skipping reports for already passed tests

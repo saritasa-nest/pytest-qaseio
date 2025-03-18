@@ -44,7 +44,8 @@ field ID to store the [URL of the run source](#set-run-source-url)
 
 ## Usage
 
-To connect your python test with `Qase.io` just use `qase` mark and specify test case url:
+To connect your python test with `Qase.io` just use `qase` mark and specify test
+case url:
 
 ```python
 import pytest
@@ -83,10 +84,10 @@ and use the following snippet to set `_webdriver` attribute for each test:
 ```python
 @pytest.fixture(autouse=True)
 def annotate_node_with_driver(self, request: SubRequest):
-  """Add webdriver instance to test, that later will be used to generate debug info.
+  """Add webdriver instance to test, that later will be used to debug info.
 
-  This fixture detects whether a test or its parent is using a selenium webdriver, and marks
-  the node with the webdriver instance.
+  This fixture detects whether a test or its parent is using a selenium
+  webdriver, and marks the node with the webdriver instance.
 
   """
   for fixture_name in request.fixturenames:
@@ -160,9 +161,8 @@ def qase_file_storage() -> storage.FileProtocol:
 Plugin provides two pytest options:
 
 `--qase-enabled` - use turn on qase plugin and run your tests with Qase.io integration
-
-`--qase-file-storage` - allows to choose storage to upload additional debug info for failed tests.
-                        `None` and `qase` choices are available by default.
+`--qase-file-storage` - allows to choose storage to upload additional debug info
+   for failed tests. `None` and `qase` choices are available by default.
 
 ## Set run source url
 
@@ -170,12 +170,13 @@ Sometimes it might be useful to see the source that runs tests. If you need this
 you have to [create custom field](https://help.qase.io/en/articles/5563701-custom-fields)
 for your Qase.io project.
 
-Then you need to find `ID` of this field and set `QASE_URL_CUSTOM_FIELD_ID` environment variable.
-To find custom field ID:
+Then you need to find `ID` of this field and set `QASE_URL_CUSTOM_FIELD_ID`
+environment variable. To find custom field ID:
 
  1. open project -> `Test runs` -> `Start new test run`
  2. inspect custom field section with browser dev tools
- 3. find label or text area of this custom field and you will see id in next format `cf-1-31`. The last number (`31`) is ID.
+ 3. find label or text area of this custom field and you will see id in next
+    format `cf-1-31`. The last number (`31`) is ID.
 
 Finally, provide `RUN_SOURCE_URL` environment variable with URL to test run.
 

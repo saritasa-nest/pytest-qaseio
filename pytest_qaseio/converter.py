@@ -62,7 +62,7 @@ class QaseConverter:
     ) -> ResultCreate:
         """Create a test result based on results from pytest."""
         if hasattr(report, "wasxfail"):
-            return self._prepare_skipped_test_report(
+            return self._prepare_xfailed_test_report(
                 case_id=case_id,
                 report=report,
             )
@@ -105,14 +105,33 @@ class QaseConverter:
         report: pytest.TestReport,
     ) -> ResultCreate:
         """Prepare result report for skipped test."""
-        if hasattr(report, "wasxfail"):
-            skip_reason = report.wasxfail
-        else:
-            *_, skip_reason = report.longrepr  # type: ignore
+        *_, skip_reason = report.longrepr  # type: ignore
         return ResultCreate(
             case_id=case_id,
             status="skipped",
             comment=skip_reason,
+            time_ms=int(report.duration * 1000),
+        )
+
+    def _prepare_xfailed_test_report(
+        self,
+        case_id: int,
+        report: pytest.TestReport,
+    ) -> ResultCreate:
+        """Prepare result report for xfailed test.
+
+        We use the `blocked` status so as not to mislead the QA team. If they
+        see a `failed` case, they will go to retest it. But `xfail` implies
+        that the case fails for some already known reason. So the `blocked`
+        status will let them know that the case is blocked for some reason
+        described in the `xfail` comment (this comment will be duplicated as
+        a result of the case run).
+
+        """
+        return ResultCreate(
+            case_id=case_id,
+            status="blocked",
+            comment=report.wasxfail,
             time_ms=int(report.duration * 1000),
         )
 

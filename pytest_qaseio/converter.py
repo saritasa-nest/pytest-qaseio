@@ -95,7 +95,7 @@ class QaseConverter:
         return ResultCreate(
             case_id=case_id,
             status="passed",
-            comment=constants.TEST_PASSED,
+            comment=constants.TEST_PASSED.format(browser_name=self._browser.title()),
             time_ms=int(report.duration * 1000),
         )
 

@@ -26,6 +26,23 @@ def pytest_addoption(parser: pytest.Parser) -> None:
         default="qase",
         help="Choose file storage to upload debug files",
     )
+    parser.addoption(
+        "--plan-id",
+        help=(
+            "Specifying plan allows to create run `from template`. "
+            "New run will contain all cases from plan + cases that "
+            "specified in tests."
+        ),
+    )
+    parser.addoption(
+        "--run-id",
+        help="Store run result in specified test run in qase",
+    )
+    parser.addoption(
+        "--use-single-run",
+        default=False,
+        help="Turn on storing tests results from all browsers in one test run",
+    )
 
 
 def pytest_addhooks(pluginmanager: pytest.PytestPluginManager) -> None:
@@ -93,6 +110,7 @@ def pytest_configure(config: pytest.Config) -> None:
         plugin=QasePlugin(
             browser=browser_name,
             file_storage=_get_file_storage(config),
+            config=config,
         ),
         name="qase_plugin",
     )
@@ -110,6 +128,7 @@ class QasePlugin:
     def __init__(
         self,
         browser: str,
+        config: pytest.Config,
         file_storage: storage.FileStorage | None,
     ):
         """Save used browser for run's name and folder name."""
@@ -118,6 +137,13 @@ class QasePlugin:
             project_code=os.environ["QASE_PROJECT_CODE"],
         )
         self._cases_ids_from_api: list[int] = self._client.load_cases_ids()
+
+        # TODO: os.getenv("QASE_PLAN_ID")
+        # self._plan_id = int(config.getoption("--plan-id", 0))
+        self._plan_id = os.getenv("QASE_PLAN_ID")
+
+        self._run_id = int(config.getoption("--run-id", 0))
+        self._use_single_run = int(config.getoption("--use-single-run", 0))
         self._current_run: Run | None = None
         self._converter = converter.QaseConverter(
             browser=browser,
@@ -152,11 +178,8 @@ class QasePlugin:
                     items=items,
                 )
 
-                # Specifying plan allows to create run "from template".
-                # New run will contain all cases from plan + cases that
-                # specified in tests
-                if plan_id := os.getenv("QASE_PLAN_ID"):
-                    run_data.plan_id = int(plan_id)
+                if self._plan_id:
+                    run_data.plan_id = int(self._plan_id)
 
                 if environment_id := os.getenv("QASE_ENVIRONMENT_ID"):
                     run_data.environment_id = int(environment_id)
@@ -168,6 +191,13 @@ class QasePlugin:
                         # This should be provided from script that runs test, f.e jenkins script
                         qase_url_custom_field_id: os.getenv("RUN_SOURCE_URL") or "",
                     }
+
+                if self._run_id:
+                    self._current_run = self._client.get_run(run_id=int(self._run_id))
+                    return
+
+                if self._use_single_run and self._current_run:
+                    return
 
                 self._current_run = self._load_run_from_file()
                 if self._current_run:

@@ -158,11 +158,20 @@ def qase_file_storage() -> storage.FileProtocol:
 
 ## Pytest options
 
-Plugin provides two pytest options:
+Plugin provides next pytest options:
 
 `--qase-enabled` - use turn on qase plugin and run your tests with Qase.io integration
 `--qase-file-storage` - allows to choose storage to upload additional debug info
    for failed tests. `None` and `qase` choices are available by default.
+
+`--run-id` - allows specify existing test run in qase.io to store run result
+  (by default plugin creates a new test run for each result).
+
+`--single-run` - ???
+
+Note: If you run all browsers in single test run (`--run-id` or `--single-run`)
+passed tests may hide failed tests (you will only see the last attempt in test
+run tree).
 
 ## Set run source url
 

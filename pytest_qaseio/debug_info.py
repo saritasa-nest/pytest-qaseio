@@ -109,6 +109,7 @@ class DebugInfo:
             browser_log_url = ""
 
         return constants.FAILED_TEST_REPORT_TEMPLATE.format(
+            browser_name=self.webdriver.name,
             url=self.url,
             screenshot_url=screenshot_url,
             html_url=html_url,

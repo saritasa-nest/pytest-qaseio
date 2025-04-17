@@ -2,6 +2,11 @@
 
 We follow [Semantic Versions](https://semver.org/).
 
+## Version 2.4.1
+
+- Add ``--run-id`` option to save run result in an existing test run in qase.io
+- Add browser name to test result messages
+
 ## Version 2.4.0
 
 - Update ``xfailed`` tests handling:

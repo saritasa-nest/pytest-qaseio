@@ -59,7 +59,7 @@ class SeleniumDebugInfo:
         logs = []
         try:
             for name in self.webdriver.log_types:
-                logs.append(self._format_log(self.webdriver.get_log(name)))  # type: ignore
+                logs.append(self._format_log(self.webdriver.get_log(name)))
         except Exception:
             # Sometimes there can be problems reading some logs from the browser here
             # (such as `ProtocolError('Connection broken')`). So we skip them if this happens.

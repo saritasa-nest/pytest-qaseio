@@ -2,21 +2,32 @@ import base64
 import logging
 import typing
 from collections.abc import Iterable
+from typing import TYPE_CHECKING
 
 import arrow
-from _pytest.python import Function
-from selenium.webdriver.remote.webdriver import WebDriver
 
 from . import constants, storage
 
+if TYPE_CHECKING:
+    from selenium.webdriver.remote.webdriver import WebDriver
 
-class DebugInfo:
-    """Representation of debug information."""
 
-    def __init__(self, item: Function, webdriver: WebDriver):
-        """Set error log and extract data from extra."""
-        self.webdriver: WebDriver = webdriver
-        self.test_name = item.name
+class DebugInfo(typing.Protocol):
+    """Protocol for representing required debug info objects interfaces."""
+
+    def generate_debug_comment(
+        self,
+        file_storage: storage.FileStorage,
+        folder: str,
+    ) -> str: ...
+
+
+class SeleniumDebugInfo:
+    """Representation of selenium debug information."""
+
+    def __init__(self, webdriver: "WebDriver"):
+        """Set error log and extract data from webdriver."""
+        self.webdriver = webdriver
         self.logger = logging.getLogger(__name__)
         self.screenshot = self._extract_screenshot()
         self.html = self._extract_html()

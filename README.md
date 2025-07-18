@@ -69,6 +69,36 @@ def pytest_qase_browser_name(config: pytest.Config) -> str:
 
 ```
 
+Also, by default, debug message for failed tests is generated based on selenium
+webdriver. So if you are using another framework, you need to prepare your own
+debug info class that conforms to the [DebugInfo](pytest_qaseio/debug_info.py#L14-L21)
+protocol and override `pytest_get_debug_info` hook.
+
+Playwright example:
+
+```python
+@pytest.hookimpl(tryfirst=True)
+def pytest_get_debug_info(item: pytest.Function) -> DebugInfo:
+    """Return object with test debug information based on Playwright objects."""
+    return PlaywrightDebugInfo(item)
+
+...
+class PlaywrightDebugInfo:
+    """Representation of playwright debug information."""
+
+    def __init__(self, item: pytest.Function):
+        self.page = item.funcargs['page']
+        self.url = self.page.url
+        self.test_name = item.name
+
+    def generate_debug_comment(self, file_storage: FileStorage, folder: str) -> str:
+      return f"""
+          * TEST NAME: {self.test_name}
+          * URL: [URL]({self.url})
+      """
+
+```
+
 To enable plugin use flag `--qase-enabled`.
 
 ```bash

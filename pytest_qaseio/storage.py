@@ -7,7 +7,7 @@ from qase.api_client_v1.api_client import ApiClient
 
 
 class FileStorage(Protocol):
-    """Base class for file uploader."""
+    """Protocol for representing required file uploader interfaces."""
 
     def save_file_obj(self, content: bytes, filename: str) -> str:
         """Upload file to storage and return URL."""

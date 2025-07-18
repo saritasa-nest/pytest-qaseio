@@ -7,7 +7,7 @@ import pytest
 from qase.api_client_v1.models.result_create import ResultCreate
 from qase.api_client_v1.models.run_create import RunCreate
 
-from . import constants, debug_info, plugin_exceptions, storage
+from . import constants, plugin_exceptions, storage
 
 
 class QaseConverter:
@@ -19,6 +19,7 @@ class QaseConverter:
         env: str,
         project_code: str,
         file_storage: storage.FileStorage | None,
+        config: pytest.Config,
     ):
         """Init converter."""
         super().__init__()
@@ -30,6 +31,7 @@ class QaseConverter:
         self._browser = browser
         self._project_code = project_code
         self._file_storage = file_storage
+        self._config = config
 
     def prepare_run_data(
         self,
@@ -144,14 +146,7 @@ class QaseConverter:
     ) -> ResultCreate:
         """Prepare result report for failed test."""
         comment = constants.TEST_FAILED.format(when=report.when)
-        debug_information = (
-            debug_info.DebugInfo(
-                item=item,
-                webdriver=item._webdriver,
-            )
-            if hasattr(item, "_webdriver")
-            else None
-        )
+        debug_information = self._config.hook.pytest_get_debug_info(item=item)
         if debug_information and self._file_storage:
             folder = constants.REPORT_FOLDER_TEMPLATE.format(
                 env=self._env,

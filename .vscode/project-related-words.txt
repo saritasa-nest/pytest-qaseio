@@ -2,6 +2,7 @@ addhooks
 addinivalue
 addoption
 filelock
+funcargs
 hookspecs
 hookwrapper
 modifyitems

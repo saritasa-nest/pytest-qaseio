@@ -10,6 +10,8 @@ from qase.api_client_v1.exceptions import ApiException
 from qase.api_client_v1.models.result_create import ResultCreate
 from qase.api_client_v1.models.run import Run
 
+from pytest_qaseio.debug_info import DebugInfo, SeleniumDebugInfo
+
 from . import api_client, converter, plugin_exceptions, storage
 
 
@@ -71,6 +73,12 @@ def pytest_qase_browser_name(config: pytest.Config) -> str:
 
 
 @pytest.hookimpl(trylast=True)
+def pytest_get_debug_info(item: pytest.Function) -> DebugInfo | None:
+    """Try to get selenium debug info object."""
+    return SeleniumDebugInfo(item._webdriver) if hasattr(item, "_webdriver") else None
+
+
+@pytest.hookimpl(trylast=True)
 def pytest_configure(config: pytest.Config) -> None:
     """Configure pytest-qaseio plugin.
 
@@ -93,6 +101,7 @@ def pytest_configure(config: pytest.Config) -> None:
         plugin=QasePlugin(
             browser=browser_name,
             file_storage=_get_file_storage(config),
+            config=config,
         ),
         name="qase_plugin",
     )
@@ -111,8 +120,10 @@ class QasePlugin:
         self,
         browser: str,
         file_storage: storage.FileStorage | None,
+        config: pytest.Config,
     ):
         """Save used browser for run's name and folder name."""
+        self._config = config
         self._client = api_client.QaseClient(
             token=os.environ["QASE_TOKEN"],
             project_code=os.environ["QASE_PROJECT_CODE"],
@@ -124,6 +135,7 @@ class QasePlugin:
             env=os.environ["ENVIRONMENT"],
             project_code=os.environ["QASE_PROJECT_CODE"],
             file_storage=file_storage,
+            config=self._config,
         )
 
         # Mapping of pytest items ids and case id

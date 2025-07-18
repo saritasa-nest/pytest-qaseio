@@ -2,6 +2,16 @@
 
 We follow [Semantic Versions](https://semver.org/).
 
+## Version 2.5.0 (15.07.25)
+
+- Add pytest hook `pytest_get_debug_info` to override `DebugInfo`
+
+  This allows customizing `DebugInfo` for failed tests in various testing
+  frameworks. Previously it was based on selenium webdriver which is not
+  compatible with other frameworks (e.g. `Playwright`)
+
+  By default, `pytest_get_debug_info` will return `SeleniumDebugInfo`, as before.
+
 ## Version 2.4.0
 
 - Update ``xfailed`` tests handling:

@@ -7,10 +7,12 @@ We use [poetry](https://github.com/python-poetry/poetry) to manage the dependenc
 To install them you would need to run `install` command:
 
 ```bash
-poetry install
+poetry install --extras selenium
 ```
 
-To activate your `virtualenv` run `poetry shell`.
+* selenium is needed for type annotations
+
+To activate your `virtualenv` run `poetry env activate`.
 
 ## Style checks
 

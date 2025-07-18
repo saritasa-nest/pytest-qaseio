@@ -2,7 +2,7 @@
 
 We follow [Semantic Versions](https://semver.org/).
 
-## Version 2.5.0 (15.07.25)
+## Version 2.5.0 (18.07.25)
 
 - Add pytest hook `pytest_get_debug_info` to override `DebugInfo`
 
@@ -11,6 +11,12 @@ We follow [Semantic Versions](https://semver.org/).
   compatible with other frameworks (e.g. `Playwright`)
 
   By default, `pytest_get_debug_info` will return `SeleniumDebugInfo`, as before.
+
+- Make `selenium` dependency optional
+
+  `pytest-qaseio` is not only used with Selenium-based tests, so we made
+  `selenium` optional to avoid installing unused dependencies (in package it is
+  only used for type annotations)
 
 ## Version 2.4.0
 

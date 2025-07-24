@@ -10,9 +10,6 @@ authors = [
 
 readme = "README.md"
 
-homepage = "https://pypi.org/project/pytest-qaseio/"
-repository = "https://github.com/saritasa-nest/pytest-qaseio"
-
 keywords = [
   "pytest",
   "qase",
@@ -40,6 +37,12 @@ dependencies = [
     "pytest (>=7.2.2,<9.0.0)",
     "qase-api-client (>=1.1.1,<2.0.0)",
 ]
+
+[project.urls]
+homepage = "https://pypi.org/project/pytest-qaseio/"
+repository = "https://github.com/saritasa-nest/pytest-qaseio"
+changelog = "https://github.com/saritasa-nest/pytest-qaseio/blob/main/CHANGELOG.md"
+releasenotes = "https://github.com/saritasa-nest/pytest-qaseio/releases"
 
 [tool.poetry.plugins."pytest11"]
 pytest_qaseio = "pytest_qaseio.plugin"

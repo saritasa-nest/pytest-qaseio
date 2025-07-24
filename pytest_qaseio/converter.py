@@ -1,5 +1,4 @@
 import collections
-import datetime
 import logging
 import sys
 
@@ -43,10 +42,10 @@ class QaseConverter:
             cases_ids_from_api=cases_ids_from_api,
             items=items,
         )
-        title = constants.RUN_NAME_TEMPLATE.format(
-            env=self._env.capitalize(),
-            browser=self._browser.capitalize(),
-            date=datetime.datetime.now(tz=datetime.UTC).strftime("%m/%d/%Y %H:%M:%S"),
+        title = self._config.hook.pytest_get_run_name(
+            config=self._config,
+            env=self._env,
+            browser=self._browser,
         )
         run_data = RunCreate(
             title=title,

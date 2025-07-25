@@ -99,6 +99,20 @@ class PlaywrightDebugInfo:
 
 ```
 
+By default, pytest-qaseio generates Qase.io test run name based on `RUN_NAME_TEMPLATE`.
+But if you want to specify your own name, use `--qase-run-name` option.
+And if you want to specify your own generation logic, override `pytest_get_run_name`
+hook.
+
+Example:
+
+```python
+@pytest.hookimpl(tryfirst=True)
+def pytest_get_run_name(config: pytest.Config, env: str, browser: str) -> str:
+    """Return name for test run to use in Qase."""
+    return f"{config.getoption("--qase-run-name")} [{browser}] [{env}]"
+```
+
 To enable plugin use flag `--qase-enabled`.
 
 ```bash

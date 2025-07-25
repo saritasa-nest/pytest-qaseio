@@ -25,3 +25,9 @@ def pytest_qase_browser_name(config: pytest.Config) -> str:  # type: ignore
 @pytest.hookspec(firstresult=True)
 def pytest_get_debug_info(item: pytest.Function) -> DebugInfo | None:
     """Return object with test debug information."""
+
+
+@pytest.hookspec(firstresult=True)
+def pytest_get_run_name(config: pytest.Config, env: str, browser: str) -> str:
+    """Return name for test run to use in Qase."""
+    return ""

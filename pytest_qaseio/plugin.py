@@ -1,3 +1,4 @@
+import datetime
 import logging
 import os
 import pathlib
@@ -12,7 +13,7 @@ from qase.api_client_v1.models.run import Run
 
 from pytest_qaseio.debug_info import DebugInfo, SeleniumDebugInfo
 
-from . import api_client, converter, plugin_exceptions, storage
+from . import api_client, constants, converter, plugin_exceptions, storage
 
 
 def pytest_addoption(parser: pytest.Parser) -> None:
@@ -27,6 +28,11 @@ def pytest_addoption(parser: pytest.Parser) -> None:
         "--qase-file-storage",
         default="qase",
         help="Choose file storage to upload debug files",
+    )
+    parser.addoption(
+        "--qase-run-name",
+        default="",
+        help="Specify run title to use in Qase",
     )
 
 
@@ -76,6 +82,24 @@ def pytest_qase_browser_name(config: pytest.Config) -> str:
 def pytest_get_debug_info(item: pytest.Function) -> DebugInfo | None:
     """Try to get selenium debug info object."""
     return SeleniumDebugInfo(item._webdriver) if hasattr(item, "_webdriver") else None
+
+
+@pytest.hookimpl(trylast=True)
+def pytest_get_run_name(config: pytest.Config, env: str, browser: str) -> str:
+    """Return name for test run to use in Qase.
+
+    Default option if `--qase-run-name` not specified:
+        (Dev) Automated Test Run Edge 07/23/2025 18:06:37
+
+    """
+    qase_run_name: str = config.getoption("--qase-run-name")
+    if not qase_run_name or qase_run_name == "none":
+        return constants.RUN_NAME_TEMPLATE.format(
+            env=env.capitalize(),
+            browser=browser.capitalize(),
+            date=datetime.datetime.now(tz=datetime.UTC).strftime("%m/%d/%Y %H:%M:%S"),
+        )
+    return qase_run_name
 
 
 @pytest.hookimpl(trylast=True)

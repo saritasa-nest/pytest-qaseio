@@ -58,8 +58,8 @@ pre-commit = ">=3.7.1,<5.0.0"
 [tool.poetry.group.linters.dependencies]
 # Mypy is a static type checker for Python.
 # https://mypy.readthedocs.io/en/stable/
-mypy = "^1.17.0"
-ruff = "^0.12.4"
+mypy = "^1.17.1"
+ruff = "^0.12.11"
 
 [project.optional-dependencies]
 # https://github.com/SeleniumHQ/selenium/issues/15772

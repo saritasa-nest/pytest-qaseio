@@ -34,6 +34,11 @@ def pytest_addoption(parser: pytest.Parser) -> None:
         default="",
         help="Specify run title to use in Qase",
     )
+    parser.addoption(
+        "--qase-api-retries",
+        default=3,
+        help="Specify number of retries for Qase API requests",
+    )
 
 
 def pytest_addhooks(pluginmanager: pytest.PytestPluginManager) -> None:
@@ -151,6 +156,7 @@ class QasePlugin:
         self._client = api_client.QaseClient(
             token=os.environ["QASE_TOKEN"],
             project_code=os.environ["QASE_PROJECT_CODE"],
+            retries=config.getoption("--qase-api-retries"),
         )
         self._cases_ids_from_api: list[int] = self._client.load_cases_ids()
         self._current_run: Run | None = None

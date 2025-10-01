@@ -2,6 +2,15 @@
 
 We follow [Semantic Versions](https://semver.org/).
 
+## Version 2.7.0 (30.09.25)
+
+- Add retry all qase.io api requests.
+
+  Sometimes Qase.io API closes the connection without response after a large
+  number of requests, so we added retries to all qase.io API requests.
+  You can configure retries count via `--qase-api-retries` pytest argument. By
+  default there are 3 retries.
+
 ## Version 2.6.0 (24.07.25)
 
 - Add pytest hook `pytest_get_run_name` and `--qase-run-name` option to

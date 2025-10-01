@@ -1,7 +1,10 @@
 import logging
 import sys
-from typing import cast
+from collections.abc import Callable
+from functools import wraps
+from typing import ParamSpec, TypeVar, cast
 
+import tenacity
 from qase.api_client_v1 import configuration as qaseio_config
 from qase.api_client_v1.api.cases_api import CasesApi
 from qase.api_client_v1.api.results_api import ResultsApi
@@ -12,6 +15,9 @@ from qase.api_client_v1.models.result_create import ResultCreate
 from qase.api_client_v1.models.run import Run
 from qase.api_client_v1.models.run_create import RunCreate
 
+ReturnValue = TypeVar("ReturnValue")
+FuncParams = ParamSpec("FuncParams")
+
 
 class QaseClient:
     """Class for interacting with tests runs in Qase API."""
@@ -20,6 +26,7 @@ class QaseClient:
         self,
         token: str,
         project_code: str,
+        retries: int,
     ):
         """Init client."""
         super().__init__()
@@ -35,12 +42,42 @@ class QaseClient:
             ),
         )
         self._project_code: str = project_code
+        self._retries = retries
+
+    def api_retry(
+        self,
+        function: Callable[FuncParams, ReturnValue],
+    ) -> Callable[FuncParams, ReturnValue]:
+        """Retrying Qase API requests.
+
+        Sometimes Qase.io API closes the connection without response after a
+        large number of requests, so we added retries to all qase.io API requests.
+
+        """
+
+        @wraps(function)
+        def wrapper(
+            *args: FuncParams.args,
+            **kwargs: FuncParams.kwargs,
+        ) -> ReturnValue:
+            for retry in tenacity.Retrying(
+                stop=tenacity.stop_after_attempt(self._retries),
+                wait=tenacity.wait_exponential(),
+                reraise=True,
+            ):
+                with retry:
+                    return function(*args, **kwargs)
+
+            # Just hack for mypy "missing return statement" error
+            raise ValueError("No raises and no return from Qase API")
+
+        return wrapper
 
     def get_run(
         self,
         run_id: int,
     ) -> Run:
-        run_response = RunsApi(self._client).get_run(
+        run_response = self.api_retry(RunsApi(self._client).get_run)(
             code=self._project_code,
             id=run_id,
         )
@@ -51,7 +88,7 @@ class QaseClient:
         run_data: RunCreate,
     ) -> Run:
         """Create test run in Qase."""
-        response = RunsApi(self._client).create_run(
+        response = self.api_retry(RunsApi(self._client).create_run)(
             code=self._project_code,
             run_create=run_data,
         )
@@ -65,13 +102,9 @@ class QaseClient:
         """Load all cases ids of project."""
         limit = 100
         cases: list[int] = []
-        response = CasesApi(self._client).get_cases(
-            code=self._project_code,
-            limit=limit,
-            offset=len(cases),
-        )
+
         while True:
-            response = CasesApi(self._client).get_cases(
+            response = self.api_retry(CasesApi(self._client).get_cases)(
                 code=self._project_code,
                 limit=limit,
                 offset=len(cases),
@@ -89,14 +122,11 @@ class QaseClient:
         report_data: ResultCreate,
     ) -> tuple[str, ResultCreate]:
         """Report test results back to Qase."""
-        result = (
-            ResultsApi(self._client)
-            .create_result(
-                code=self._project_code,
-                id=cast(int, run.id),
-                result_create=report_data,
-            )
-            .result
-        )
+        create_result = self.api_retry(ResultsApi(self._client).create_result)
+        result = create_result(
+            code=self._project_code,
+            id=cast(int, run.id),
+            result_create=report_data,
+        ).result
         assert result
         return cast(str, result.hash), cast(ResultCreate, report_data.status)

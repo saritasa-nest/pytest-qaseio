@@ -1,7 +1,7 @@
 [project]
 name = "pytest-qaseio"
 description = "Pytest plugin for Qase.io integration"
-version = "2.6.0"
+version = "2.7.0"
 license = "MIT"
 
 authors = [
@@ -36,6 +36,7 @@ dependencies = [
     "filelock (>=3.14.0,<4.0.0)",
     "pytest (>=7.2.2,<9.0.0)",
     "qase-api-client (>=1.1.1,<2.0.0)",
+    "tenacity (>=9.1.2,<10.0.0)",
 ]
 
 [project.urls]

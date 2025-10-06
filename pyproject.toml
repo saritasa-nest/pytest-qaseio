@@ -60,7 +60,7 @@ pre-commit = ">=3.7.1,<5.0.0"
 # Mypy is a static type checker for Python.
 # https://mypy.readthedocs.io/en/stable/
 mypy = "^1.17.1"
-ruff = "^0.12.11"
+ruff = "^0.13.3"
 
 [project.optional-dependencies]
 # https://github.com/SeleniumHQ/selenium/issues/15772

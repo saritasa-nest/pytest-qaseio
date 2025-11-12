@@ -2,6 +2,10 @@
 
 We follow [Semantic Versions](https://semver.org/).
 
+## Version 2.7.1 (12.11.25)
+
+- Remove upper bound for pytest dependency
+
 ## Version 2.7.0 (30.09.25)
 
 - Add retry all qase.io api requests.

@@ -1,7 +1,7 @@
 [project]
 name = "pytest-qaseio"
 description = "Pytest plugin for Qase.io integration"
-version = "2.7.1"
+version = "2.7.2"
 license = "MIT"
 
 authors = [
@@ -31,12 +31,12 @@ classifiers = [
 
 requires-python = ">=3.11"
 dependencies = [
-    "requests (>=2.23.0,<3.0.0)",
-    "arrow (>=1.2.3,<2.0.0)",
-    "filelock (>=3.14.0,<4.0.0)",
-    "pytest>=7.2.2",
-    "qase-api-client (>=1.1.1,<2.0.0)",
-    "tenacity (>=9.1.2,<10.0.0)",
+    "requests >=2.23.0",
+    "arrow >=1.2.3",
+    "filelock >=3.14.0",
+    "pytest >=7.2.2",
+    "qase-api-client >=1.1.1",
+    "tenacity >=9.1.2",
 ]
 
 [project.urls]
@@ -51,10 +51,10 @@ pytest_qaseio = "pytest_qaseio.plugin"
 [tool.poetry.group.dev.dependencies]
 # Improved REPL
 ipdb = "^0.13.13"
-ipython = ">=8.24,<10.0"
+ipython = ">=8.24"
 # A framework for managing and maintaining multi-language pre-commit hooks.
 # https://pre-commit.com/
-pre-commit = ">=3.7.1,<5.0.0"
+pre-commit = ">=3.7.1"
 
 [tool.poetry.group.linters.dependencies]
 # Mypy is a static type checker for Python.
@@ -64,7 +64,7 @@ ruff = "^0.14.8"
 
 [project.optional-dependencies]
 # https://github.com/SeleniumHQ/selenium/issues/15772
-selenium = ["selenium>=4.21.0,<4.32.0"]
+selenium = ["selenium>=4.21.0"]
 
 [build-system]
 requires = ["poetry-core>=1.2.0"]

@@ -2,6 +2,10 @@
 
 We follow [Semantic Versions](https://semver.org/).
 
+## Version 2.7.2 (10.12.25)
+
+- Remove upper bound for all dependencies
+
 ## Version 2.7.1 (12.11.25)
 
 - Remove upper bound for pytest dependency

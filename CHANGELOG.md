@@ -2,6 +2,10 @@
 
 We follow [Semantic Versions](https://semver.org/).
 
+## Version 2.7.3 (10.12.25)
+
+- Update `qase-api-client` version
+
 ## Version 2.7.2 (10.12.25)
 
 - Remove upper bound for all dependencies

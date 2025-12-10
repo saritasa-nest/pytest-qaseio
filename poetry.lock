@@ -484,6 +484,23 @@ qa = ["flake8 (==5.0.4)", "mypy (==0.971)", "types-setuptools (==67.2.0.1)"]
 testing = ["Django", "attrs", "colorama", "docopt", "pytest (<9.0.0)"]
 
 [[package]]
+name = "lazy-imports"
+version = "1.1.0"
+description = "Tool to support lazy imports"
+optional = false
+python-versions = ">=3.9"
+groups = ["main"]
+files = [
+    {file = "lazy_imports-1.1.0-py3-none-any.whl", hash = "sha256:49fb1034ffe325fbec6e1f0e1e5b47eaaf43989b17be6c090added97c2b3ec24"},
+    {file = "lazy_imports-1.1.0.tar.gz", hash = "sha256:e6ea5a1e4f09a861357e670b7aa61efcbce6fe29361785dd253df66f8ddbc36b"},
+]
+
+[package.extras]
+all = ["black", "flake8", "isort", "mdformat", "mypy", "packaging", "pydocstyle", "pylint", "pylintfileheader", "pytest"]
+checking = ["black", "flake8", "isort", "mdformat", "mypy", "pydocstyle", "pylint", "pylintfileheader"]
+testing = ["packaging", "pytest"]
+
+[[package]]
 name = "librt"
 version = "0.7.3"
 description = "Mypyc runtime library"
@@ -1134,21 +1151,22 @@ files = [
 
 [[package]]
 name = "qase-api-client"
-version = "1.2.5"
+version = "2.0.2"
 description = "Qase TestOps API V1 client for Python"
 optional = false
-python-versions = ">=3.7"
+python-versions = ">=3.9"
 groups = ["main"]
 files = [
-    {file = "qase_api_client-1.2.5-py3-none-any.whl", hash = "sha256:6194a4b3ea493b0a0a2ce51071b45f18a26a1140651168b2d5ee5be7d39044f3"},
-    {file = "qase_api_client-1.2.5.tar.gz", hash = "sha256:88349e44b101ec1288275a76b9ac522ca7256b1ce5294077bf19fc037f5c36da"},
+    {file = "qase_api_client-2.0.2-py3-none-any.whl", hash = "sha256:34649ee6e1275a00986764a0c3a1c5890de43a9d0f8bfd6249ce3ea2e8bfc731"},
+    {file = "qase_api_client-2.0.2.tar.gz", hash = "sha256:5147f67f0a6269c7e349eb32769cb2aab07fe1af5e1366651a3b74e777eb840e"},
 ]
 
 [package.dependencies]
+lazy-imports = ">=1,<2"
 pydantic = ">=2"
 python-dateutil = "*"
 typing-extensions = ">=4.7.1"
-urllib3 = ">=1.25.3,<=2.5.0"
+urllib3 = ">=2.5.0"
 
 [[package]]
 name = "requests"
@@ -1485,4 +1503,4 @@ selenium = ["selenium"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.11"
-content-hash = "40e4ae19e030339660925335391b5d152ebfb35a1f9e85950ba26f5d4ffb88cd"
+content-hash = "bd98bbcc65a3226ff4cb02a61253dbca108d2a32c24f18f7f475616d7fd348d1"

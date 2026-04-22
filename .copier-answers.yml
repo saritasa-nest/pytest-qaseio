@@ -1,0 +1,9 @@
+# Answers what were given during boilerplate initialization
+# Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
+# https://copier.readthedocs.io/en/stable/configuring/#the-copier-answersyml-file
+_commit: 56ddfef
+_src_path: https://github.com/saritasa-nest/saritasa-python-boilerplate-open-source.git
+folder_name: pytest_qaseio
+min_python_version: 3.11
+package_description: Pytest plugin for Qase.io integration
+package_name: pytest-qaseio

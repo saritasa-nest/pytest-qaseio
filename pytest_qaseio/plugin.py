@@ -2,11 +2,10 @@ import datetime
 import logging
 import os
 import pathlib
-from typing import cast
+import typing
 
 import filelock
 import pytest
-from _pytest.terminal import TerminalReporter
 from qase.api_client_v1.exceptions import ApiException
 from qase.api_client_v1.models.result_create import ResultCreate
 from qase.api_client_v1.models.run import Run
@@ -54,7 +53,9 @@ def _get_file_storage(config: pytest.Config) -> storage.FileStorage | None:
     if file_storage_name.lower() == "none":
         return None
 
-    file_storages: dict[str, storage.FileStorage] = config.hook.pytest_qase_file_storages()
+    file_storages: dict[str, storage.FileStorage] = (
+        config.hook.pytest_qase_file_storages()
+    )
 
     if file_storage_name not in file_storages:
         logging.getLogger("qase").error(
@@ -86,7 +87,11 @@ def pytest_qase_browser_name(config: pytest.Config) -> str:
 @pytest.hookimpl(trylast=True)
 def pytest_get_debug_info(item: pytest.Function) -> DebugInfo | None:
     """Try to get selenium debug info object."""
-    return SeleniumDebugInfo(item._webdriver) if hasattr(item, "_webdriver") else None
+    return (
+        SeleniumDebugInfo(item._webdriver)  # type: ignore
+        if hasattr(item, "_webdriver")
+        else None
+    )
 
 
 @pytest.hookimpl(trylast=True)
@@ -102,7 +107,9 @@ def pytest_get_run_name(config: pytest.Config, env: str, browser: str) -> str:
         return constants.RUN_NAME_TEMPLATE.format(
             env=env.capitalize(),
             browser=browser.capitalize(),
-            date=datetime.datetime.now(tz=datetime.UTC).strftime("%m/%d/%Y %H:%M:%S"),
+            date=datetime.datetime.now(tz=datetime.UTC).strftime(
+                "%m/%d/%Y %H:%M:%S",
+            ),
         )
     return qase_run_name
 
@@ -139,8 +146,9 @@ def pytest_configure(config: pytest.Config) -> None:
 class QasePlugin:
     """Pytest plugin for reporting tests result to Qase."""
 
-    # We use .pytest-qaseio.lock to lock process, in other words make other workers wait, until
-    # worker that locked file will create run and store run's id in .pytest-qaseio. After other
+    # We use .pytest-qaseio.lock to lock process, in other words make other
+    # workers wait, until worker that locked file will create run and store
+    # run's id in .pytest-qaseio. After other
     # workers load run by id from .pytest-qaseio.
     __run_file = pathlib.Path(".pytest-qaseio")
     __run_file_lock = pathlib.Path(".pytest-qaseio.lock")
@@ -150,7 +158,7 @@ class QasePlugin:
         browser: str,
         file_storage: storage.FileStorage | None,
         config: pytest.Config,
-    ):
+    ) -> None:
         """Save used browser for run's name and folder name."""
         self._config = config
         self._client = api_client.QaseClient(
@@ -169,9 +177,9 @@ class QasePlugin:
         )
 
         # Mapping of pytest items ids and case id
-        self._tests: dict[str, int | None] = dict()
+        self._tests: dict[str, int | None] = {}
         # Mapping of case ids and result hash from qase with status
-        self._qase_results: dict[int, tuple[str, ResultCreate]] = dict()
+        self._qase_results: dict[int, tuple[str, ResultCreate]] = {}
 
     def pytest_sessionstart(self, session: pytest.Session) -> None:
         """Clear previously saved run, prepare lock file."""
@@ -207,8 +215,10 @@ class QasePlugin:
                     "QASE_URL_CUSTOM_FIELD_ID",
                 ):
                     run_data.custom_field = {
-                        # This should be provided from script that runs test, f.e jenkins script
-                        qase_url_custom_field_id: os.getenv("RUN_SOURCE_URL") or "",
+                        # This should be provided from script that runs test,
+                        # f.e jenkins script
+                        qase_url_custom_field_id: os.getenv("RUN_SOURCE_URL")
+                        or "",
                     }
 
                 self._current_run = self._load_run_from_file()
@@ -250,7 +260,7 @@ class QasePlugin:
             self._qase_results[case_id] = self._client.report_test_results(
                 run=self._current_run,
                 report_data=self._converter.prepare_report_data(
-                    run_id=cast(int, self._current_run.id),
+                    run_id=typing.cast(int, self._current_run.id),
                     case_id=case_id,
                     item=item,
                     report=report,
@@ -260,15 +270,19 @@ class QasePlugin:
         except ApiException as error:
             if report.passed:
                 return
-            # Qase closes runs, once every case got result. So if try to report any other result,
+            # Qase closes runs, once every case got result.
+            # So if try to report any other result,
             # we'll get an error `Test run is not active`.
-            terminal_reporter: TerminalReporter = item.config.pluginmanager.get_plugin(
-                "terminalreporter",  # type: ignore
+            terminal_reporter: pytest.TerminalReporter = (
+                item.config.pluginmanager.get_plugin(
+                    "terminalreporter",  # type: ignore
+                )
             )
             terminal_reporter.ensure_newline()
             terminal_reporter.section(
                 f"{error}. "
-                f"Seems that Qase closed run, and we are unable to report failed {item.name}",
+                f"Seems that Qase closed run, "
+                f"and we are unable to report failed {item.name}",
                 sep="=",
             )
 

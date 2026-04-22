@@ -1,9 +1,9 @@
-class BaseQasePluginException(Exception):
+class BaseQasePluginException(Exception):  # noqa: N818
     """Represent BaseQasePlugin exception."""
 
     message: str = ""
 
-    def __init__(self, *args, message: str = "") -> None:
+    def __init__(self, *args: object, message: str = "") -> None:
         super().__init__(*args)
         if message:
             self.message = message
@@ -18,7 +18,7 @@ class InvalidCaseId(BaseQasePluginException):
 class DuplicatingCaseId(BaseQasePluginException):
     """Exception that signifies that incorrect case was set for test."""
 
-    def __init__(self, duplicating_ids: list[int], *args) -> None:
+    def __init__(self, duplicating_ids: list[int], *args: object) -> None:
         ids = ", ".join(str(i) for i in duplicating_ids)
         super().__init__(
             *args,

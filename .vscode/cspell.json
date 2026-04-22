@@ -1,11 +1,19 @@
 {
   "ignorePaths": [
-    ".git/",
     ".gitignore",
-    ".venv"
+    "./requirements/*.txt",
+    ".tmp"
+  ],
+  "ignoreRegExpList": [
+    "GHSA-.+"
   ],
   "dictionaryDefinitions": [
-      {
+    {
+      "name": "boilerplate-words",
+      "path": "./boilerplate-words.txt",
+      "addWords": true
+    },
+    {
       "name": "project-related-words",
       "path": "./project-related-words.txt",
       "addWords": true
@@ -14,6 +22,10 @@
   "dictionaries": [
     "python",
     "python-common",
+    "docker",
+    "django",
+    "boilerplate-words",
     "project-related-words"
-  ]
+  ],
+  "useGitignore": true
 }

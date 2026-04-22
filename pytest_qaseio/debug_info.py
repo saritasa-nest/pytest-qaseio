@@ -1,14 +1,13 @@
 import base64
+import collections.abc
 import logging
 import typing
-from collections.abc import Iterable
-from typing import TYPE_CHECKING
 
 import arrow
 
 from . import constants, storage
 
-if TYPE_CHECKING:
+if typing.TYPE_CHECKING:
     from selenium.webdriver.remote.webdriver import WebDriver
 
 
@@ -19,13 +18,15 @@ class DebugInfo(typing.Protocol):
         self,
         file_storage: storage.FileStorage,
         folder: str,
-    ) -> str: ...
+    ) -> str:
+        """Generate debug comment with links to debug info files."""
+        ...
 
 
 class SeleniumDebugInfo:
     """Representation of selenium debug information."""
 
-    def __init__(self, webdriver: "WebDriver"):
+    def __init__(self, webdriver: "WebDriver") -> None:
         """Set error log and extract data from webdriver."""
         self.webdriver = webdriver
         self.logger = logging.getLogger(__name__)
@@ -36,43 +37,59 @@ class SeleniumDebugInfo:
 
     def _extract_screenshot(self) -> bytes | None:
         try:
-            return base64.b64decode(self.webdriver.get_screenshot_as_base64().encode("utf-8"))
+            return base64.b64decode(
+                self.webdriver.get_screenshot_as_base64().encode("utf-8"),
+            )
         except Exception:
-            self.logger.error(msg="Can't extract screenshot from webdriver", exc_info=True)
+            self.logger.error(
+                msg="Can't extract screenshot from webdriver",
+                exc_info=True,
+            )
             return None
 
     def _extract_html(self) -> bytes | None:
         try:
             return self.webdriver.page_source.encode("utf-8")
         except Exception:
-            self.logger.error(msg="Can't extract html page source from webdriver", exc_info=True)
+            self.logger.error(
+                msg="Can't extract html page source from webdriver",
+                exc_info=True,
+            )
             return None
 
     def _extract_url(self) -> str:
         try:
             return self.webdriver.current_url
         except Exception:
-            self.logger.error(msg="Can't extract url from webdriver", exc_info=True)
+            self.logger.error(
+                msg="Can't extract url from webdriver",
+                exc_info=True,
+            )
             return ""
 
     def _extract_browser_log(self) -> str:
-        logs = []
         try:
-            for name in self.webdriver.log_types:
-                logs.append(self._format_log(self.webdriver.get_log(name)))
+            logs = [
+                self._format_log(self.webdriver.get_log(name))  # type: ignore
+                for name in self.webdriver.log_types  # type: ignore
+            ]
         except Exception:
-            # Sometimes there can be problems reading some logs from the browser here
-            # (such as `ProtocolError('Connection broken')`). So we skip them if this happens.
+            # Sometimes there can be problems reading some logs from the
+            # browser here (such as `ProtocolError('Connection broken')`).
+            # So we skip them if this happens.
 
-            # Also, this method can't work correctly with Geckodriver (raises `WebDriverException`
-            # error) because of the following issue
+            # Also, this method can't work correctly with Geckodriver
+            # (raises `WebDriverException` error) because of
+            # the following issue
             # https://github.com/mozilla/geckodriver/issues/284
             self.logger.error(msg="Can't extract browser log", exc_info=True)
-            pass
+            logs = []
         return "\n".join(logs)
 
     @staticmethod
-    def _format_log(log: Iterable[dict[str, typing.Any]]) -> str:
+    def _format_log(
+        log: collections.abc.Iterable[dict[str, typing.Any]],
+    ) -> str:
         """Format logs.
 
         Copied from pytest-selenium.
@@ -81,8 +98,12 @@ class SeleniumDebugInfo:
         timestamp_format = "%Y-%m-%d %H:%M:%S.%f"
         entries: list[str] = []
         for entry in log:
-            timestamp = arrow.get(entry["timestamp"] / 1000.0).strftime(timestamp_format)
-            entries.append(f"{timestamp} {entry['level']} - {entry['message']}")
+            timestamp = arrow.get(entry["timestamp"] / 1000.0).strftime(
+                timestamp_format,
+            )
+            entries.append(
+                f"{timestamp} {entry['level']} - {entry['message']}",
+            )
         return "\n".join(entries)
 
     def generate_debug_comment(
@@ -90,6 +111,7 @@ class SeleniumDebugInfo:
         file_storage: storage.FileStorage,
         folder: str,
     ) -> str:
+        """Generate debug comment with links to debug info files."""
         screenshot_url = ""
         if self.screenshot:
             try:
@@ -98,7 +120,10 @@ class SeleniumDebugInfo:
                     filename=f"{folder}/screenshot.png",
                 )
             except Exception:
-                self.logger.error(msg="Can't save screenshot to storage", exc_info=True)
+                self.logger.error(
+                    msg="Can't save screenshot to storage",
+                    exc_info=True,
+                )
 
         html_url = ""
         if self.html:
@@ -108,7 +133,10 @@ class SeleniumDebugInfo:
                     filename=f"{folder}/html.html",
                 )
             except Exception:
-                self.logger.error(msg="Can't save HTML to storage", exc_info=True)
+                self.logger.error(
+                    msg="Can't save HTML to storage",
+                    exc_info=True,
+                )
 
         try:
             browser_log_url = file_storage.save_file_obj(
@@ -116,7 +144,10 @@ class SeleniumDebugInfo:
                 filename=f"{folder}/browser_log.txt",
             )
         except Exception:
-            self.logger.error(msg="Can't save browser log to storage", exc_info=True)
+            self.logger.error(
+                msg="Can't save browser log to storage",
+                exc_info=True,
+            )
             browser_log_url = ""
 
         return constants.FAILED_TEST_REPORT_TEMPLATE.format(

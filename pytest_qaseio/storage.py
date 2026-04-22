@@ -1,11 +1,11 @@
-from typing import Protocol, cast
+import typing
 
 from qase.api_client_v1 import configuration as qaseio_config
 from qase.api_client_v1.api.attachments_api import AttachmentsApi
 from qase.api_client_v1.api_client import ApiClient
 
 
-class FileStorage(Protocol):
+class FileStorage(typing.Protocol):
     """Protocol for representing required file uploader interfaces."""
 
     def save_file_obj(self, content: bytes, filename: str) -> str:
@@ -20,7 +20,7 @@ class QaseFileStorage:
         self,
         qase_token: str,
         qase_project_code: str,
-    ):
+    ) -> None:
         """Prepare ApiClient for qase io using credentials."""
         self._client = ApiClient(
             configuration=qaseio_config.Configuration(
@@ -43,6 +43,6 @@ class QaseFileStorage:
             )
             .result
         )
-        assert attachment_response_result is not None
+        assert attachment_response_result is not None  # noqa: S101
 
-        return cast(str, attachment_response_result[0].url)
+        return typing.cast(str, attachment_response_result[0].url)

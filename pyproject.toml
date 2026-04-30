@@ -51,7 +51,7 @@ pytest_qaseio = "pytest_qaseio.plugin"
 [tool.poetry.group.dev.dependencies]
 # Improved REPL
 ipdb = "^0.13.13"
-ipython = ">=8.24"
+ipython = ">=9.13.0"
 # A framework for managing and maintaining multi-language pre-commit hooks.
 # https://pre-commit.com/
 pre-commit = ">=4.6.0"
@@ -60,7 +60,7 @@ pre-commit = ">=4.6.0"
 # Mypy is a static type checker for Python.
 # https://mypy.readthedocs.io/en/stable/
 mypy = "^1.20.2"
-ruff = "^0.15.11"
+ruff = "^0.15.12"
 
 [project.optional-dependencies]
 # https://github.com/SeleniumHQ/selenium/issues/15772

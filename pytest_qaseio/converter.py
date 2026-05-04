@@ -19,7 +19,7 @@ class QaseConverter:
         project_code: str,
         file_storage: storage.FileStorage | None,
         config: pytest.Config,
-    ):
+    ) -> None:
         """Init converter."""
         super().__init__()
         self._logger = logging.getLogger("qase")
@@ -174,14 +174,15 @@ class QaseConverter:
     ) -> tuple[list[int], dict[str, int | None]]:
         """Collect test cases from test markers.
 
-        Raise InvalidCaseId in case if incorrect case id was provided. Raise DuplicatingCaseId in
-        case if duplicated cased ids were provided.
+        Raise InvalidCaseId in case if incorrect case id was provided.
+        Raise DuplicatingCaseId in case if duplicated cased ids were provided.
 
         """
         cases_ids = []
 
         case_id_invalid = False
-        # list of parsed markers to track duplicating case IDs in different tests
+        # list of parsed markers to track duplicating case IDs
+        # in different tests
         parsed_markers_ids = []
         # Mapping of pytest items ids and case id
         tests: dict[str, int | None] = {}
@@ -214,7 +215,9 @@ class QaseConverter:
             cases_ids.append(case_id)
 
         duplicating_ids = [
-            case_id for case_id, counter in collections.Counter(cases_ids).items() if counter > 1
+            case_id
+            for case_id, counter in collections.Counter(cases_ids).items()
+            if counter > 1
         ]
         if duplicating_ids:
             raise plugin_exceptions.DuplicatingCaseId(duplicating_ids)
@@ -228,7 +231,9 @@ class QaseConverter:
         item: pytest.Function,
     ) -> pytest.Mark | None:
         """Extract qase's `Mark` object from test item."""
-        qase_markers = [marker for marker in item.own_markers if marker.name == "qase"]
+        qase_markers = [
+            marker for marker in item.own_markers if marker.name == "qase"
+        ]
         if not qase_markers:
             return None
 
@@ -260,4 +265,7 @@ class QaseConverter:
         marker = self._extract_qase_marker(item=item)
         if not marker:
             return None
-        return self._extract_case_id_from_marker(project_code=project_code, marker=marker)
+        return self._extract_case_id_from_marker(
+            project_code=project_code,
+            marker=marker,
+        )

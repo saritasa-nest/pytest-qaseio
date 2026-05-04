@@ -1,8 +1,8 @@
+import collections.abc
+import functools
 import logging
 import sys
-from collections.abc import Callable
-from functools import wraps
-from typing import ParamSpec, TypeVar, cast
+import typing
 
 import tenacity
 from qase.api_client_v1 import configuration as qaseio_config
@@ -10,13 +10,15 @@ from qase.api_client_v1.api.cases_api import CasesApi
 from qase.api_client_v1.api.results_api import ResultsApi
 from qase.api_client_v1.api.runs_api import RunsApi
 from qase.api_client_v1.api_client import ApiClient
-from qase.api_client_v1.models.id_response_all_of_result import IdResponseAllOfResult
+from qase.api_client_v1.models.id_response_all_of_result import (
+    IdResponseAllOfResult,
+)
 from qase.api_client_v1.models.result_create import ResultCreate
 from qase.api_client_v1.models.run import Run
 from qase.api_client_v1.models.run_create import RunCreate
 
-ReturnValue = TypeVar("ReturnValue")
-FuncParams = ParamSpec("FuncParams")
+ReturnValue = typing.TypeVar("ReturnValue")
+FuncParams = typing.ParamSpec("FuncParams")
 
 
 class QaseClient:
@@ -27,7 +29,7 @@ class QaseClient:
         token: str,
         project_code: str,
         retries: int,
-    ):
+    ) -> None:
         """Init client."""
         super().__init__()
         self._logger = logging.getLogger("qase")
@@ -46,16 +48,17 @@ class QaseClient:
 
     def api_retry(
         self,
-        function: Callable[FuncParams, ReturnValue],
-    ) -> Callable[FuncParams, ReturnValue]:
+        function: collections.abc.Callable[FuncParams, ReturnValue],
+    ) -> collections.abc.Callable[FuncParams, ReturnValue]:
         """Retrying Qase API requests.
 
         Sometimes Qase.io API closes the connection without response after a
-        large number of requests, so we added retries to all qase.io API requests.
+        large number of requests, so we added retries to
+        all qase.io API requests.
 
         """
 
-        @wraps(function)
+        @functools.wraps(function)
         def wrapper(
             *args: FuncParams.args,
             **kwargs: FuncParams.kwargs,
@@ -77,11 +80,12 @@ class QaseClient:
         self,
         run_id: int,
     ) -> Run:
+        """Get test run from Qase."""
         run_response = self.api_retry(RunsApi(self._client).get_run)(
             code=self._project_code,
             id=run_id,
         )
-        return cast(Run, run_response.result)
+        return typing.cast(Run, run_response.result)
 
     def create_run(
         self,
@@ -92,9 +96,9 @@ class QaseClient:
             code=self._project_code,
             run_create=run_data,
         )
-        created_run = cast(IdResponseAllOfResult, response.result)
+        created_run = typing.cast(IdResponseAllOfResult, response.result)
 
-        return self.get_run(cast(int, created_run.id))
+        return self.get_run(typing.cast(int, created_run.id))
 
     def load_cases_ids(
         self,
@@ -125,8 +129,11 @@ class QaseClient:
         create_result = self.api_retry(ResultsApi(self._client).create_result)
         result = create_result(
             code=self._project_code,
-            id=cast(int, run.id),
+            id=typing.cast(int, run.id),
             result_create=report_data,
         ).result
-        assert result
-        return cast(str, result.hash), cast(ResultCreate, report_data.status)
+        assert result  # noqa: S101
+        return typing.cast(str, result.hash), typing.cast(
+            ResultCreate,
+            report_data.status,
+        )

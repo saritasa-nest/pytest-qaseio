@@ -1,23 +1,29 @@
 # pytest-qaseio
 
-[![Build Status](https://github.com/saritasa-nest/pytest-qaseio/workflows/checks/badge.svg?branch=main&event=push)](https://github.com/saritasa-nest/pytest-qaseio/actions?query=workflow%3Achecks)
-[![Python Version](https://img.shields.io/pypi/pyversions/pytest-qaseio.svg)](https://pypi.org/project/pytest-qaseio/)
+![GitHub last commit](https://img.shields.io/github/last-commit/saritasa-nest/pytest-qaseio)
+![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/saritasa-nest/pytest-qaseio/run_pre_commit.yaml)
+![PyPI](https://img.shields.io/pypi/v/pytest-qaseio)
+![PyPI - Status](https://img.shields.io/pypi/status/pytest-qaseio)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pytest-qaseio)
+![PyPI - License](https://img.shields.io/pypi/l/pytest-qaseio)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/pytest-qaseio)
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 
 Another implementation of Pytest plugin for Qase.io integration
 
 Our features:
 
-* Extended error report for Selenium (screenshot, html and browser logs)
-* Strict case ids validations
-* Instead of case ids, it uses direct links to cases
-* Custom file storage for attachments
-* Provide URL of test run starter
-* Most of configuration options use environment variables
+- Extended error report for Selenium (screenshot, html and browser logs)
+- Strict case ids validations
+- Instead of case ids, it uses direct links to cases
+- Custom file storage for attachments
+- Provide URL of test run starter
+- Most of configuration options use environment variables
 
 Not supported currently:
 
-* Adding results to existing test runs
-* Test steps
+- Adding results to existing test runs
+- Test steps
 
 ## Installation
 
@@ -29,9 +35,9 @@ pip install pytest-qaseio
 
 To work with plugin you have to provide the following environment variables:
 
-* `QASE_PROJECT_CODE` - Code of your Qase.io project
+- `QASE_PROJECT_CODE` - Code of your Qase.io project
 
-* `QASE_TOKEN` - API token to interact with Qase.io runs via API
+- `QASE_TOKEN` - API token to interact with Qase.io runs via API
 
 A few more configuration environment variables are also available:
 `QASE_PLAN_ID`, `QASE_ENVIRONMENT_ID` and `QASE_URL_CUSTOM_FIELD_ID`.
@@ -71,7 +77,7 @@ def pytest_qase_browser_name(config: pytest.Config) -> str:
 
 Also, by default, debug message for failed tests is generated based on selenium
 webdriver. So if you are using another framework, you need to prepare your own
-debug info class that conforms to the [DebugInfo](pytest_qaseio/debug_info.py#L14-L21)
+debug info class that conforms to the [DebugInfo](reference/debug_info.md#pytest_qaseio.debug_info.DebugInfo)
 protocol and override `pytest_get_debug_info` hook.
 
 Playwright example:
@@ -159,10 +165,7 @@ You can also provide your custom file storage. To do this, follow the next steps
 
 Example:
 
-```python
-
-## storages.py
-
+```python title="storages.py"
 class S3FileStorage:
 
   def __init__(self, **credentials): ...
@@ -176,19 +179,27 @@ class S3FileStorage:
         **kwargs,
     )
     return f"{self.s3_client.meta.endpoint_url}/{self.bucket}/{filename}"
+```
 
-## conftest.py
+```python title="conftest.py"
+import pytest
+
+import pytest_qaseio
+
+from storages import S3FileStorage
 
 @pytest.hookimpl(tryfirst=True)
-def pytest_qase_file_storages() -> dict[str, qase_storages.FileStorage]:
+def pytest_qase_file_storages() -> dict[str, pytest_qaseio.storage.FileStorage]:
     """Override file storages to use custom S3 bucket."""
     return {
-        "s3": S3FSStorage(),
+        "s3": S3FileStorage(),
     }
+```
 
-## Run tests
-$ pytest --qase-enabled --qase-file-storage=s3
+Run tests
 
+```bash
+pytest --qase-enabled --qase-file-storage=s3
 ```
 
 You can also override `qase_file_storage` to set storage for part of tests
@@ -196,7 +207,7 @@ You can also override `qase_file_storage` to set storage for part of tests
 
 ```python
 @pytest.fixture
-def qase_file_storage() -> storage.FileProtocol:
+def qase_file_storage() -> pytest_qaseio.storage.FileProtocol:
   return S3FileStorage()
 ```
 

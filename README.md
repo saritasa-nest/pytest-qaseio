@@ -10,6 +10,7 @@
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 [![prek](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/j178/prek/master/docs/assets/badge-v0.json)](https://github.com/j178/prek)
 
+<<<<<<< before updating
 Check out out other open-source [projects](https://github.com/orgs/saritasa-nest/repositories?q=visibility%3Apublic+archived%3Afalse+fork%3Afalse+language%3APython)
 
 Another implementation of Pytest plugin for Qase.io integration
@@ -241,3 +242,6 @@ Finally, provide `RUN_SOURCE_URL` environment variable with URL to test run.
 ## License
 
 [MIT](https://github.com/saritasa-nest/pytest-qaseio/blob/main/LICENSE)
+=======
+Check out our other open-source [projects](https://github.com/orgs/saritasa-nest/repositories?q=visibility%3Apublic+archived%3Afalse+fork%3Afalse+language%3APython)
+>>>>>>> after updating

@@ -96,7 +96,11 @@ repos:
       - id: yamllint
 
   - repo: https://github.com/renovatebot/pre-commit-hooks
+<<<<<<< before updating
     rev: 43.207.4
+=======
+    rev: 43.210.2
+>>>>>>> after updating
     hooks:
       - id: renovate-config-validator
         language: bun

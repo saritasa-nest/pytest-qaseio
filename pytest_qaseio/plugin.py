@@ -248,12 +248,11 @@ class QasePlugin:
         )
         if not should_report:
             return
-        case_id = self._tests[item.nodeid]
 
-        # No need to report same passed status,
-        # while skipped and failed should be always reported
-        if not case_id or (case_id in self._qase_results and report.passed):
+        case_id = self._tests[item.nodeid]
+        if not case_id:
             return
+
         if not self._current_run:
             raise plugin_exceptions.RunNotConfigured()
         try:

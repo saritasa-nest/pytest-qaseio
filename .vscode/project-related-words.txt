@@ -1,6 +1,8 @@
 addhooks
 addinivalue
 addoption
+argnames
+argvalues
 autotests
 autouse
 Azanov
@@ -18,6 +20,7 @@ makereport
 modifyitems
 nodeid
 Oboleninov
+parametrizing
 pluginmanager
 qase
 qase's

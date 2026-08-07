@@ -201,6 +201,12 @@ ignore = [
   "TRY003",
   # https://docs.astral.sh/ruff/rules/try-consider-else
   "TRY300",
+  # https://docs.astral.sh/ruff/rules/incorrect-blank-line-before-class/
+  # Ignored in favor of D211
+  "D203",
+  # https://docs.astral.sh/ruff/rules/multi-line-summary-second-line/
+  # Ignored in favor of D212
+  "D213",
 ]
 [tool.ruff.lint.per-file-ignores]
 "__init__.py" = [

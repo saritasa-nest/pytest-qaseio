@@ -41,9 +41,8 @@ class SeleniumDebugInfo:
                 self.webdriver.get_screenshot_as_base64().encode("utf-8"),
             )
         except Exception:
-            self.logger.error(
+            self.logger.exception(
                 msg="Can't extract screenshot from webdriver",
-                exc_info=True,
             )
             return None
 
@@ -51,9 +50,8 @@ class SeleniumDebugInfo:
         try:
             return self.webdriver.page_source.encode("utf-8")
         except Exception:
-            self.logger.error(
+            self.logger.exception(
                 msg="Can't extract html page source from webdriver",
-                exc_info=True,
             )
             return None
 
@@ -61,9 +59,8 @@ class SeleniumDebugInfo:
         try:
             return self.webdriver.current_url
         except Exception:
-            self.logger.error(
+            self.logger.exception(
                 msg="Can't extract url from webdriver",
-                exc_info=True,
             )
             return ""
 
@@ -82,7 +79,7 @@ class SeleniumDebugInfo:
             # (raises `WebDriverException` error) because of
             # the following issue
             # https://github.com/mozilla/geckodriver/issues/284
-            self.logger.error(msg="Can't extract browser log", exc_info=True)
+            self.logger.exception(msg="Can't extract browser log")
             logs = []
         return "\n".join(logs)
 
@@ -120,9 +117,8 @@ class SeleniumDebugInfo:
                     filename=f"{folder}/screenshot.png",
                 )
             except Exception:
-                self.logger.error(
+                self.logger.exception(
                     msg="Can't save screenshot to storage",
-                    exc_info=True,
                 )
 
         html_url = ""
@@ -133,9 +129,8 @@ class SeleniumDebugInfo:
                     filename=f"{folder}/html.html",
                 )
             except Exception:
-                self.logger.error(
+                self.logger.exception(
                     msg="Can't save HTML to storage",
-                    exc_info=True,
                 )
 
         try:
@@ -144,9 +139,8 @@ class SeleniumDebugInfo:
                 filename=f"{folder}/browser_log.txt",
             )
         except Exception:
-            self.logger.error(
+            self.logger.exception(
                 msg="Can't save browser log to storage",
-                exc_info=True,
             )
             browser_log_url = ""
 

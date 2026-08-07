@@ -249,7 +249,7 @@ class QaseConverter:
         self,
         project_code: str,
         marker: pytest.Mark,
-    ) -> None | int:
+    ) -> int | None:
         """Shortcut to extract qase case ID from marker."""
         if len(marker.args) != 1:
             return None

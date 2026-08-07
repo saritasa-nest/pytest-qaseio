@@ -2,7 +2,7 @@
 
 We follow [Semantic Versions](https://semver.org/).
 
-## Unreleased
+## 2.8.0 (07.08.26)
 
 - Set up docs generation with `mkdocs`
 - Update logic for reporting statuses to qaseio [#151](https://github.com/saritasa-nest/pytest-qaseio/pull/151)

@@ -5,6 +5,12 @@ We follow [Semantic Versions](https://semver.org/).
 ## Unreleased
 
 - Set up docs generation with `mkdocs`
+- Update logic for reporting statuses to qaseio [#151](https://github.com/saritasa-nest/pytest-qaseio/pull/151)
+
+  Now all statuses will be reported to qaseio, regardless of their order.
+  This changes expectation for tests implementation - now plugin supports
+  <https://github.com/pytest-dev/pytest-rerunfailures>,
+  but doesn't work well with parametrized tests.
 
 ## 2.7.3 (10.12.25)
 

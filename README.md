@@ -64,6 +64,31 @@ def test_demo():
     """Check qaseio plugin works as expected."""
 ```
 
+Each pytest item should be associated with a single Qase case.
+Avoid parametrizing a test/fixture when its parameters requires multiple
+runs of the same test with different params, but all of them required to check
+single case.
+In the meantime, it's OK to use parametrization for testing multiple cases
+using single pytest item, example:
+
+```python
+@pytest.mark.parametrize(
+    argnames="feature_enabled",
+    argvalues=[
+        pytest.param(
+            False,
+            marks=pytest.mark.qase("https://app.qase.io/case/DEMO-1"),
+        ),
+        pytest.param(
+            True,
+            marks=pytest.mark.qase("https://app.qase.io/case/DEMO-1"),
+        ),
+    ],
+)
+def test_feature_displaying(feature_enabled: bool):
+    pass
+```
+
 Since this package is mostly used for selenium tests, it expects to get browser
 name to use in Qase.io test run name and in attachments path. By default you can
 provide it using `--webdriver` flag. But you can also override

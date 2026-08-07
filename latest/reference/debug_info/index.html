@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../../_static/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
@@ -31,7 +31,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
@@ -1195,13 +1195,7 @@
 <span class="normal">149</span>
 <span class="normal">150</span>
 <span class="normal">151</span>
-<span class="normal">152</span>
-<span class="normal">153</span>
-<span class="normal">154</span>
-<span class="normal">155</span>
-<span class="normal">156</span>
-<span class="normal">157</span>
-<span class="normal">158</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">SeleniumDebugInfo</span><span class="p">:</span>
+<span class="normal">152</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">SeleniumDebugInfo</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Representation of selenium debug information.&quot;&quot;&quot;</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">webdriver</span><span class="p">:</span> <span class="s2">&quot;WebDriver&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
@@ -1219,9 +1213,8 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">webdriver</span><span class="o">.</span><span class="n">get_screenshot_as_base64</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">),</span>
             <span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span>
                 <span class="n">msg</span><span class="o">=</span><span class="s2">&quot;Can&#39;t extract screenshot from webdriver&quot;</span><span class="p">,</span>
-                <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="k">return</span> <span class="kc">None</span>
 
@@ -1229,9 +1222,8 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">webdriver</span><span class="o">.</span><span class="n">page_source</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span>
                 <span class="n">msg</span><span class="o">=</span><span class="s2">&quot;Can&#39;t extract html page source from webdriver&quot;</span><span class="p">,</span>
-                <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="k">return</span> <span class="kc">None</span>
 
@@ -1239,9 +1231,8 @@
         <span class="k">try</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">webdriver</span><span class="o">.</span><span class="n">current_url</span>
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span>
                 <span class="n">msg</span><span class="o">=</span><span class="s2">&quot;Can&#39;t extract url from webdriver&quot;</span><span class="p">,</span>
-                <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="k">return</span> <span class="s2">&quot;&quot;</span>
 
@@ -1260,7 +1251,7 @@
             <span class="c1"># (raises `WebDriverException` error) because of</span>
             <span class="c1"># the following issue</span>
             <span class="c1"># https://github.com/mozilla/geckodriver/issues/284</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">msg</span><span class="o">=</span><span class="s2">&quot;Can&#39;t extract browser log&quot;</span><span class="p">,</span> <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="n">msg</span><span class="o">=</span><span class="s2">&quot;Can&#39;t extract browser log&quot;</span><span class="p">)</span>
             <span class="n">logs</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">logs</span><span class="p">)</span>
 
@@ -1298,9 +1289,8 @@
                     <span class="n">filename</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">folder</span><span class="si">}</span><span class="s2">/screenshot.png&quot;</span><span class="p">,</span>
                 <span class="p">)</span>
             <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span>
                     <span class="n">msg</span><span class="o">=</span><span class="s2">&quot;Can&#39;t save screenshot to storage&quot;</span><span class="p">,</span>
-                    <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                 <span class="p">)</span>
 
         <span class="n">html_url</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
@@ -1311,9 +1301,8 @@
                     <span class="n">filename</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">folder</span><span class="si">}</span><span class="s2">/html.html&quot;</span><span class="p">,</span>
                 <span class="p">)</span>
             <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span>
                     <span class="n">msg</span><span class="o">=</span><span class="s2">&quot;Can&#39;t save HTML to storage&quot;</span><span class="p">,</span>
-                    <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                 <span class="p">)</span>
 
         <span class="k">try</span><span class="p">:</span>
@@ -1322,9 +1311,8 @@
                 <span class="n">filename</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">folder</span><span class="si">}</span><span class="s2">/browser_log.txt&quot;</span><span class="p">,</span>
             <span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span>
                 <span class="n">msg</span><span class="o">=</span><span class="s2">&quot;Can&#39;t save browser log to storage&quot;</span><span class="p">,</span>
-                <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="n">browser_log_url</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 
@@ -1403,7 +1391,10 @@
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>pytest_qaseio/debug_info.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">109</span>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
 <span class="normal">110</span>
 <span class="normal">111</span>
 <span class="normal">112</span>
@@ -1446,13 +1437,7 @@
 <span class="normal">149</span>
 <span class="normal">150</span>
 <span class="normal">151</span>
-<span class="normal">152</span>
-<span class="normal">153</span>
-<span class="normal">154</span>
-<span class="normal">155</span>
-<span class="normal">156</span>
-<span class="normal">157</span>
-<span class="normal">158</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">generate_debug_comment</span><span class="p">(</span>
+<span class="normal">152</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">generate_debug_comment</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">file_storage</span><span class="p">:</span> <span class="n">storage</span><span class="o">.</span><span class="n">FileStorage</span><span class="p">,</span>
     <span class="n">folder</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
@@ -1466,9 +1451,8 @@
                 <span class="n">filename</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">folder</span><span class="si">}</span><span class="s2">/screenshot.png&quot;</span><span class="p">,</span>
             <span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span>
                 <span class="n">msg</span><span class="o">=</span><span class="s2">&quot;Can&#39;t save screenshot to storage&quot;</span><span class="p">,</span>
-                <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="p">)</span>
 
     <span class="n">html_url</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
@@ -1479,9 +1463,8 @@
                 <span class="n">filename</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">folder</span><span class="si">}</span><span class="s2">/html.html&quot;</span><span class="p">,</span>
             <span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span>
                 <span class="n">msg</span><span class="o">=</span><span class="s2">&quot;Can&#39;t save HTML to storage&quot;</span><span class="p">,</span>
-                <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="p">)</span>
 
     <span class="k">try</span><span class="p">:</span>
@@ -1490,9 +1473,8 @@
             <span class="n">filename</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">folder</span><span class="si">}</span><span class="s2">/browser_log.txt&quot;</span><span class="p">,</span>
         <span class="p">)</span>
     <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span>
             <span class="n">msg</span><span class="o">=</span><span class="s2">&quot;Can&#39;t save browser log to storage&quot;</span><span class="p">,</span>
-            <span class="n">exc_info</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">browser_log_url</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 
@@ -1578,7 +1560,7 @@
       <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["search.suggest", "search.highlight", "search.share", "navigation.instant", "navigation.instant.progress", "navigation.tracking", "navigation.path", "content.code.annotate", "content.code.copy", "content.tooltips"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"provider": "mike"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
     
   </body>

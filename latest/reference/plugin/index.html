@@ -1257,8 +1257,7 @@
 <span class="normal">295</span>
 <span class="normal">296</span>
 <span class="normal">297</span>
-<span class="normal">298</span>
-<span class="normal">299</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">QasePlugin</span><span class="p">:</span>
+<span class="normal">298</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">QasePlugin</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Pytest plugin for reporting tests result to Qase.&quot;&quot;&quot;</span>
 
     <span class="c1"># We use .pytest-qaseio.lock to lock process, in other words make other</span>
@@ -1363,12 +1362,11 @@
         <span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">should_report</span><span class="p">:</span>
             <span class="k">return</span>
-        <span class="n">case_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tests</span><span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">nodeid</span><span class="p">]</span>
 
-        <span class="c1"># No need to report same passed status,</span>
-        <span class="c1"># while skipped and failed should be always reported</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">case_id</span> <span class="ow">or</span> <span class="p">(</span><span class="n">case_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_qase_results</span> <span class="ow">and</span> <span class="n">report</span><span class="o">.</span><span class="n">passed</span><span class="p">):</span>
+        <span class="n">case_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tests</span><span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">nodeid</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">case_id</span><span class="p">:</span>
             <span class="k">return</span>
+
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_run</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">plugin_exceptions</span><span class="o">.</span><span class="n">RunNotConfigured</span><span class="p">()</span>
         <span class="k">try</span><span class="p">:</span>
@@ -1677,8 +1675,7 @@
 <span class="normal">283</span>
 <span class="normal">284</span>
 <span class="normal">285</span>
-<span class="normal">286</span>
-<span class="normal">287</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">hookimpl</span><span class="p">(</span><span class="n">tryfirst</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">hookwrapper</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="normal">286</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">hookimpl</span><span class="p">(</span><span class="n">tryfirst</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">hookwrapper</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">pytest_runtest_makereport</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">:</span> <span class="n">pytest</span><span class="o">.</span><span class="n">Function</span><span class="p">):</span>  <span class="c1"># noqa: ANN201</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Represent standard pytest hook on test completion.</span>
 
@@ -1693,12 +1690,11 @@
     <span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">should_report</span><span class="p">:</span>
         <span class="k">return</span>
-    <span class="n">case_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tests</span><span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">nodeid</span><span class="p">]</span>
 
-    <span class="c1"># No need to report same passed status,</span>
-    <span class="c1"># while skipped and failed should be always reported</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">case_id</span> <span class="ow">or</span> <span class="p">(</span><span class="n">case_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_qase_results</span> <span class="ow">and</span> <span class="n">report</span><span class="o">.</span><span class="n">passed</span><span class="p">):</span>
+    <span class="n">case_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tests</span><span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">nodeid</span><span class="p">]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">case_id</span><span class="p">:</span>
         <span class="k">return</span>
+
     <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_current_run</span><span class="p">:</span>
         <span class="k">raise</span> <span class="n">plugin_exceptions</span><span class="o">.</span><span class="n">RunNotConfigured</span><span class="p">()</span>
     <span class="k">try</span><span class="p">:</span>

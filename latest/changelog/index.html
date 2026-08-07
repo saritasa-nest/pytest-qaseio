@@ -1133,7 +1133,12 @@
 <h2 id="unreleased">Unreleased<a class="headerlink" href="#unreleased" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Set up docs generation with <code>mkdocs</code></li>
+<li>Update logic for reporting statuses to qaseio <a href="https://github.com/saritasa-nest/pytest-qaseio/pull/151">#151</a></li>
 </ul>
+<p>Now all statuses will be reported to qaseio, regardless of their order.
+  This changes expectation for tests implementation - now plugin supports
+  <a href="https://github.com/pytest-dev/pytest-rerunfailures">https://github.com/pytest-dev/pytest-rerunfailures</a>,
+  but doesn't work well with parametrized tests.</p>
 <h2 id="273-101225">2.7.3 (10.12.25)<a class="headerlink" href="#273-101225" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Update <code>qase-api-client</code> version</li>

@@ -971,10 +971,10 @@
 <span class="normal">11</span>
 <span class="normal">12</span>
 <span class="normal">13</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">FileStorage</span><span class="p">(</span><span class="n">typing</span><span class="o">.</span><span class="n">Protocol</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Protocol for representing required file uploader interfaces.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Protocol for representing required file uploader interfaces."""</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">save_file_obj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Upload file to storage and return URL.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Upload file to storage and return URL."""</span>
         <span class="o">...</span>
 </code></pre></div></td></tr></table></div>
               </details>
@@ -1011,7 +1011,7 @@
               <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">11</span>
 <span class="normal">12</span>
 <span class="normal">13</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">save_file_obj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Upload file to storage and return URL.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Upload file to storage and return URL."""</span>
     <span class="o">...</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -1086,25 +1086,25 @@
 <span class="normal">46</span>
 <span class="normal">47</span>
 <span class="normal">48</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">QaseFileStorage</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Upload files to Qase S3 bucket as attachment.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Upload files to Qase S3 bucket as attachment."""</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">qase_token</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">qase_project_code</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Prepare ApiClient for qase io using credentials.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Prepare ApiClient for qase io using credentials."""</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="n">ApiClient</span><span class="p">(</span>
             <span class="n">configuration</span><span class="o">=</span><span class="n">qaseio_config</span><span class="o">.</span><span class="n">Configuration</span><span class="p">(</span>
                 <span class="n">api_key</span><span class="o">=</span><span class="p">{</span>
-                    <span class="s2">&quot;TokenAuth&quot;</span><span class="p">:</span> <span class="n">qase_token</span><span class="p">,</span>
+                    <span class="s2">"TokenAuth"</span><span class="p">:</span> <span class="n">qase_token</span><span class="p">,</span>
                 <span class="p">},</span>
             <span class="p">),</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_project_code</span> <span class="o">=</span> <span class="n">qase_project_code</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">save_file_obj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Upload file to Qase.io S3 bucket via attachment API.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Upload file to Qase.io S3 bucket via attachment API."""</span>
         <span class="n">attachment_response_result</span> <span class="o">=</span> <span class="p">(</span>
             <span class="n">AttachmentsApi</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="p">,</span>
@@ -1168,11 +1168,11 @@
     <span class="n">qase_token</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">qase_project_code</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Prepare ApiClient for qase io using credentials.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Prepare ApiClient for qase io using credentials."""</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="n">ApiClient</span><span class="p">(</span>
         <span class="n">configuration</span><span class="o">=</span><span class="n">qaseio_config</span><span class="o">.</span><span class="n">Configuration</span><span class="p">(</span>
             <span class="n">api_key</span><span class="o">=</span><span class="p">{</span>
-                <span class="s2">&quot;TokenAuth&quot;</span><span class="p">:</span> <span class="n">qase_token</span><span class="p">,</span>
+                <span class="s2">"TokenAuth"</span><span class="p">:</span> <span class="n">qase_token</span><span class="p">,</span>
             <span class="p">},</span>
         <span class="p">),</span>
     <span class="p">)</span>
@@ -1214,7 +1214,7 @@
 <span class="normal">46</span>
 <span class="normal">47</span>
 <span class="normal">48</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">save_file_obj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Upload file to Qase.io S3 bucket via attachment API.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Upload file to Qase.io S3 bucket via attachment API."""</span>
     <span class="n">attachment_response_result</span> <span class="o">=</span> <span class="p">(</span>
         <span class="n">AttachmentsApi</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="p">,</span>

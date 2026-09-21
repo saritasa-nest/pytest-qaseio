@@ -912,7 +912,7 @@
 <span class="normal">26</span>
 <span class="normal">27</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">hookspec</span><span class="p">(</span><span class="n">firstresult</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">pytest_get_debug_info</span><span class="p">(</span><span class="n">item</span><span class="p">:</span> <span class="n">pytest</span><span class="o">.</span><span class="n">Function</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DebugInfo</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return object with test debug information.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return object with test debug information."""</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -940,8 +940,8 @@
 <span class="normal">32</span>
 <span class="normal">33</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">hookspec</span><span class="p">(</span><span class="n">firstresult</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">pytest_get_run_name</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n">pytest</span><span class="o">.</span><span class="n">Config</span><span class="p">,</span> <span class="n">env</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">browser</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return name for test run to use in Qase.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="s2">&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return name for test run to use in Qase."""</span>
+    <span class="k">return</span> <span class="s2">""</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -968,7 +968,7 @@
 <span class="normal">21</span>
 <span class="normal">22</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">hookspec</span><span class="p">(</span><span class="n">firstresult</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">pytest_qase_browser_name</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n">pytest</span><span class="o">.</span><span class="n">Config</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>  <span class="c1"># type: ignore</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return name of browser to use in test run name and attachments path.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return name of browser to use in test run name and attachments path."""</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -1009,14 +1009,14 @@
 <span class="normal">16</span>
 <span class="normal">17</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">hookspec</span><span class="p">(</span><span class="n">firstresult</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">pytest_qase_file_storages</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">storage</span><span class="o">.</span><span class="n">FileStorage</span><span class="p">]:</span>  <span class="c1"># type: ignore</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return mapping options to file storage instance.</span>
+<span class="w">    </span><span class="sd">"""Return mapping options to file storage instance.</span>
 
 <span class="sd">    Example:</span>
 <span class="sd">        {</span>
-<span class="sd">            &quot;qase&quot;: QaseFileStorage(),</span>
+<span class="sd">            "qase": QaseFileStorage(),</span>
 <span class="sd">        }</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>

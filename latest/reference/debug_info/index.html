@@ -975,14 +975,14 @@
 <span class="normal">21</span>
 <span class="normal">22</span>
 <span class="normal">23</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">DebugInfo</span><span class="p">(</span><span class="n">typing</span><span class="o">.</span><span class="n">Protocol</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Protocol for representing required debug info objects interfaces.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Protocol for representing required debug info objects interfaces."""</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">generate_debug_comment</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">file_storage</span><span class="p">:</span> <span class="n">storage</span><span class="o">.</span><span class="n">FileStorage</span><span class="p">,</span>
         <span class="n">folder</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate debug comment with links to debug info files.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Generate debug comment with links to debug info files."""</span>
         <span class="o">...</span>
 </code></pre></div></td></tr></table></div>
               </details>
@@ -1027,7 +1027,7 @@
     <span class="n">file_storage</span><span class="p">:</span> <span class="n">storage</span><span class="o">.</span><span class="n">FileStorage</span><span class="p">,</span>
     <span class="n">folder</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate debug comment with links to debug info files.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Generate debug comment with links to debug info files."""</span>
     <span class="o">...</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -1196,10 +1196,10 @@
 <span class="normal">150</span>
 <span class="normal">151</span>
 <span class="normal">152</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">SeleniumDebugInfo</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Representation of selenium debug information.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Representation of selenium debug information."""</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">webdriver</span><span class="p">:</span> <span class="s2">&quot;WebDriver&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Set error log and extract data from webdriver.&quot;&quot;&quot;</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">webdriver</span><span class="p">:</span> <span class="s2">"WebDriver"</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Set error log and extract data from webdriver."""</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">webdriver</span> <span class="o">=</span> <span class="n">webdriver</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">screenshot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extract_screenshot</span><span class="p">()</span>
@@ -1210,20 +1210,20 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">_extract_screenshot</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">base64</span><span class="o">.</span><span class="n">b64decode</span><span class="p">(</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">webdriver</span><span class="o">.</span><span class="n">get_screenshot_as_base64</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">webdriver</span><span class="o">.</span><span class="n">get_screenshot_as_base64</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">"utf-8"</span><span class="p">),</span>
             <span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span>
-                <span class="n">msg</span><span class="o">=</span><span class="s2">&quot;Can&#39;t extract screenshot from webdriver&quot;</span><span class="p">,</span>
+                <span class="n">msg</span><span class="o">=</span><span class="s2">"Can't extract screenshot from webdriver"</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="k">return</span> <span class="kc">None</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_extract_html</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
-            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">webdriver</span><span class="o">.</span><span class="n">page_source</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">webdriver</span><span class="o">.</span><span class="n">page_source</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">"utf-8"</span><span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span>
-                <span class="n">msg</span><span class="o">=</span><span class="s2">&quot;Can&#39;t extract html page source from webdriver&quot;</span><span class="p">,</span>
+                <span class="n">msg</span><span class="o">=</span><span class="s2">"Can't extract html page source from webdriver"</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="k">return</span> <span class="kc">None</span>
 
@@ -1232,9 +1232,9 @@
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">webdriver</span><span class="o">.</span><span class="n">current_url</span>
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span>
-                <span class="n">msg</span><span class="o">=</span><span class="s2">&quot;Can&#39;t extract url from webdriver&quot;</span><span class="p">,</span>
+                <span class="n">msg</span><span class="o">=</span><span class="s2">"Can't extract url from webdriver"</span><span class="p">,</span>
             <span class="p">)</span>
-            <span class="k">return</span> <span class="s2">&quot;&quot;</span>
+            <span class="k">return</span> <span class="s2">""</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_extract_browser_log</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
@@ -1244,77 +1244,77 @@
             <span class="p">]</span>
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
             <span class="c1"># Sometimes there can be problems reading some logs from the</span>
-            <span class="c1"># browser here (such as `ProtocolError(&#39;Connection broken&#39;)`).</span>
+            <span class="c1"># browser here (such as `ProtocolError('Connection broken')`).</span>
             <span class="c1"># So we skip them if this happens.</span>
 
-            <span class="c1"># Also, this method can&#39;t work correctly with Geckodriver</span>
+            <span class="c1"># Also, this method can't work correctly with Geckodriver</span>
             <span class="c1"># (raises `WebDriverException` error) because of</span>
             <span class="c1"># the following issue</span>
             <span class="c1"># https://github.com/mozilla/geckodriver/issues/284</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="n">msg</span><span class="o">=</span><span class="s2">&quot;Can&#39;t extract browser log&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="n">msg</span><span class="o">=</span><span class="s2">"Can't extract browser log"</span><span class="p">)</span>
             <span class="n">logs</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">logs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">logs</span><span class="p">)</span>
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">_format_log</span><span class="p">(</span>
         <span class="n">log</span><span class="p">:</span> <span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Iterable</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">typing</span><span class="o">.</span><span class="n">Any</span><span class="p">]],</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Format logs.</span>
+<span class="w">        </span><span class="sd">"""Format logs.</span>
 
 <span class="sd">        Copied from pytest-selenium.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">timestamp_format</span> <span class="o">=</span> <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">&quot;</span>
+<span class="sd">        """</span>
+        <span class="n">timestamp_format</span> <span class="o">=</span> <span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">"</span>
         <span class="n">entries</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">log</span><span class="p">:</span>
-            <span class="n">timestamp</span> <span class="o">=</span> <span class="n">arrow</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">entry</span><span class="p">[</span><span class="s2">&quot;timestamp&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="mf">1000.0</span><span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span>
+            <span class="n">timestamp</span> <span class="o">=</span> <span class="n">arrow</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">entry</span><span class="p">[</span><span class="s2">"timestamp"</span><span class="p">]</span> <span class="o">/</span> <span class="mf">1000.0</span><span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span>
                 <span class="n">timestamp_format</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="n">entries</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">timestamp</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">entry</span><span class="p">[</span><span class="s1">&#39;level&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">entry</span><span class="p">[</span><span class="s1">&#39;message&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">timestamp</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">entry</span><span class="p">[</span><span class="s1">'level'</span><span class="p">]</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">entry</span><span class="p">[</span><span class="s1">'message'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
             <span class="p">)</span>
-        <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">entries</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">entries</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">generate_debug_comment</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">file_storage</span><span class="p">:</span> <span class="n">storage</span><span class="o">.</span><span class="n">FileStorage</span><span class="p">,</span>
         <span class="n">folder</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate debug comment with links to debug info files.&quot;&quot;&quot;</span>
-        <span class="n">screenshot_url</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Generate debug comment with links to debug info files."""</span>
+        <span class="n">screenshot_url</span> <span class="o">=</span> <span class="s2">""</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">screenshot</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">screenshot_url</span> <span class="o">=</span> <span class="n">file_storage</span><span class="o">.</span><span class="n">save_file_obj</span><span class="p">(</span>
                     <span class="n">content</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">screenshot</span><span class="p">,</span>
-                    <span class="n">filename</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">folder</span><span class="si">}</span><span class="s2">/screenshot.png&quot;</span><span class="p">,</span>
+                    <span class="n">filename</span><span class="o">=</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">folder</span><span class="si">}</span><span class="s2">/screenshot.png"</span><span class="p">,</span>
                 <span class="p">)</span>
             <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span>
-                    <span class="n">msg</span><span class="o">=</span><span class="s2">&quot;Can&#39;t save screenshot to storage&quot;</span><span class="p">,</span>
+                    <span class="n">msg</span><span class="o">=</span><span class="s2">"Can't save screenshot to storage"</span><span class="p">,</span>
                 <span class="p">)</span>
 
-        <span class="n">html_url</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">html_url</span> <span class="o">=</span> <span class="s2">""</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">html</span><span class="p">:</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">html_url</span> <span class="o">=</span> <span class="n">file_storage</span><span class="o">.</span><span class="n">save_file_obj</span><span class="p">(</span>
                     <span class="n">content</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">html</span><span class="p">,</span>
-                    <span class="n">filename</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">folder</span><span class="si">}</span><span class="s2">/html.html&quot;</span><span class="p">,</span>
+                    <span class="n">filename</span><span class="o">=</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">folder</span><span class="si">}</span><span class="s2">/html.html"</span><span class="p">,</span>
                 <span class="p">)</span>
             <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span>
-                    <span class="n">msg</span><span class="o">=</span><span class="s2">&quot;Can&#39;t save HTML to storage&quot;</span><span class="p">,</span>
+                    <span class="n">msg</span><span class="o">=</span><span class="s2">"Can't save HTML to storage"</span><span class="p">,</span>
                 <span class="p">)</span>
 
         <span class="k">try</span><span class="p">:</span>
             <span class="n">browser_log_url</span> <span class="o">=</span> <span class="n">file_storage</span><span class="o">.</span><span class="n">save_file_obj</span><span class="p">(</span>
-                <span class="n">content</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">browser_log</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">),</span>
-                <span class="n">filename</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">folder</span><span class="si">}</span><span class="s2">/browser_log.txt&quot;</span><span class="p">,</span>
+                <span class="n">content</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">browser_log</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">"utf-8"</span><span class="p">),</span>
+                <span class="n">filename</span><span class="o">=</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">folder</span><span class="si">}</span><span class="s2">/browser_log.txt"</span><span class="p">,</span>
             <span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span>
-                <span class="n">msg</span><span class="o">=</span><span class="s2">&quot;Can&#39;t save browser log to storage&quot;</span><span class="p">,</span>
+                <span class="n">msg</span><span class="o">=</span><span class="s2">"Can't save browser log to storage"</span><span class="p">,</span>
             <span class="p">)</span>
-            <span class="n">browser_log_url</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+            <span class="n">browser_log_url</span> <span class="o">=</span> <span class="s2">""</span>
 
         <span class="k">return</span> <span class="n">constants</span><span class="o">.</span><span class="n">FAILED_TEST_REPORT_TEMPLATE</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
             <span class="n">url</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">,</span>
@@ -1361,8 +1361,8 @@
 <span class="normal">33</span>
 <span class="normal">34</span>
 <span class="normal">35</span>
-<span class="normal">36</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">webdriver</span><span class="p">:</span> <span class="s2">&quot;WebDriver&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Set error log and extract data from webdriver.&quot;&quot;&quot;</span>
+<span class="normal">36</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">webdriver</span><span class="p">:</span> <span class="s2">"WebDriver"</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Set error log and extract data from webdriver."""</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">webdriver</span> <span class="o">=</span> <span class="n">webdriver</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">screenshot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_extract_screenshot</span><span class="p">()</span>
@@ -1442,41 +1442,41 @@
     <span class="n">file_storage</span><span class="p">:</span> <span class="n">storage</span><span class="o">.</span><span class="n">FileStorage</span><span class="p">,</span>
     <span class="n">folder</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generate debug comment with links to debug info files.&quot;&quot;&quot;</span>
-    <span class="n">screenshot_url</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Generate debug comment with links to debug info files."""</span>
+    <span class="n">screenshot_url</span> <span class="o">=</span> <span class="s2">""</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">screenshot</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">screenshot_url</span> <span class="o">=</span> <span class="n">file_storage</span><span class="o">.</span><span class="n">save_file_obj</span><span class="p">(</span>
                 <span class="n">content</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">screenshot</span><span class="p">,</span>
-                <span class="n">filename</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">folder</span><span class="si">}</span><span class="s2">/screenshot.png&quot;</span><span class="p">,</span>
+                <span class="n">filename</span><span class="o">=</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">folder</span><span class="si">}</span><span class="s2">/screenshot.png"</span><span class="p">,</span>
             <span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span>
-                <span class="n">msg</span><span class="o">=</span><span class="s2">&quot;Can&#39;t save screenshot to storage&quot;</span><span class="p">,</span>
+                <span class="n">msg</span><span class="o">=</span><span class="s2">"Can't save screenshot to storage"</span><span class="p">,</span>
             <span class="p">)</span>
 
-    <span class="n">html_url</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">html_url</span> <span class="o">=</span> <span class="s2">""</span>
     <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">html</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">html_url</span> <span class="o">=</span> <span class="n">file_storage</span><span class="o">.</span><span class="n">save_file_obj</span><span class="p">(</span>
                 <span class="n">content</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">html</span><span class="p">,</span>
-                <span class="n">filename</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">folder</span><span class="si">}</span><span class="s2">/html.html&quot;</span><span class="p">,</span>
+                <span class="n">filename</span><span class="o">=</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">folder</span><span class="si">}</span><span class="s2">/html.html"</span><span class="p">,</span>
             <span class="p">)</span>
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span>
-                <span class="n">msg</span><span class="o">=</span><span class="s2">&quot;Can&#39;t save HTML to storage&quot;</span><span class="p">,</span>
+                <span class="n">msg</span><span class="o">=</span><span class="s2">"Can't save HTML to storage"</span><span class="p">,</span>
             <span class="p">)</span>
 
     <span class="k">try</span><span class="p">:</span>
         <span class="n">browser_log_url</span> <span class="o">=</span> <span class="n">file_storage</span><span class="o">.</span><span class="n">save_file_obj</span><span class="p">(</span>
-            <span class="n">content</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">browser_log</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">),</span>
-            <span class="n">filename</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">folder</span><span class="si">}</span><span class="s2">/browser_log.txt&quot;</span><span class="p">,</span>
+            <span class="n">content</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">browser_log</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">"utf-8"</span><span class="p">),</span>
+            <span class="n">filename</span><span class="o">=</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">folder</span><span class="si">}</span><span class="s2">/browser_log.txt"</span><span class="p">,</span>
         <span class="p">)</span>
     <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span>
-            <span class="n">msg</span><span class="o">=</span><span class="s2">&quot;Can&#39;t save browser log to storage&quot;</span><span class="p">,</span>
+            <span class="n">msg</span><span class="o">=</span><span class="s2">"Can't save browser log to storage"</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="n">browser_log_url</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">browser_log_url</span> <span class="o">=</span> <span class="s2">""</span>
 
     <span class="k">return</span> <span class="n">constants</span><span class="o">.</span><span class="n">FAILED_TEST_REPORT_TEMPLATE</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
         <span class="n">url</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">,</span>

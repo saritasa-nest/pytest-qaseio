@@ -950,11 +950,11 @@
 <span class="normal">7</span>
 <span class="normal">8</span>
 <span class="normal">9</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">BaseQasePluginException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>  <span class="c1"># noqa: N818</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Represent BaseQasePlugin exception.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Represent BaseQasePlugin exception."""</span>
 
-    <span class="n">message</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+    <span class="n">message</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">""</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="nb">object</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="nb">object</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">""</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">message</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span>
@@ -1019,13 +1019,13 @@
 <span class="normal">24</span>
 <span class="normal">25</span>
 <span class="normal">26</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">DuplicatingCaseId</span><span class="p">(</span><span class="n">BaseQasePluginException</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Exception that signifies that incorrect case was set for test.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Exception that signifies that incorrect case was set for test."""</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">duplicating_ids</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="nb">object</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">ids</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">duplicating_ids</span><span class="p">)</span>
+        <span class="n">ids</span> <span class="o">=</span> <span class="s2">", "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">duplicating_ids</span><span class="p">)</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
             <span class="o">*</span><span class="n">args</span><span class="p">,</span>
-            <span class="n">message</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Duplicating qase IDs found: </span><span class="si">{</span><span class="n">ids</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+            <span class="n">message</span><span class="o">=</span><span class="sa">f</span><span class="s2">"Duplicating qase IDs found: </span><span class="si">{</span><span class="n">ids</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
         <span class="p">)</span>
 </code></pre></div></td></tr></table></div>
               </details>
@@ -1083,9 +1083,9 @@
 <span class="normal">13</span>
 <span class="normal">14</span>
 <span class="normal">15</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">InvalidCaseId</span><span class="p">(</span><span class="n">BaseQasePluginException</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Exception that signifies that incorrect case was set for test.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Exception that signifies that incorrect case was set for test."""</span>
 
-    <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;Tests have incorrect cases ids. Please check logs&quot;</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="s2">"Tests have incorrect cases ids. Please check logs"</span>
 </code></pre></div></td></tr></table></div>
               </details>
 
@@ -1156,17 +1156,17 @@ following reasons:</p>
 <span class="normal">38</span>
 <span class="normal">39</span>
 <span class="normal">40</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">MultipleIDsForTest</span><span class="p">(</span><span class="n">BaseQasePluginException</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Exception that signifies that single test marked with multiple IDs.</span>
+<span class="w">    </span><span class="sd">"""Exception that signifies that single test marked with multiple IDs.</span>
 
 <span class="sd">    Each test should be associated with exactly 1 case from qase.io for</span>
 <span class="sd">    following reasons:</span>
 
-<span class="sd">    * Atomic checks. It&#39;s easier to debug and fix</span>
+<span class="sd">    * Atomic checks. It's easier to debug and fix</span>
 <span class="sd">    * Adding support of multiple IDs to plugin will make it more complex.</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
-    <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;Multiple qase IDs associated with single test&quot;</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="s2">"Multiple qase IDs associated with single test"</span>
 </code></pre></div></td></tr></table></div>
               </details>
 
@@ -1223,9 +1223,9 @@ following reasons:</p>
 <span class="normal">44</span>
 <span class="normal">45</span>
 <span class="normal">46</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">RunNotConfigured</span><span class="p">(</span><span class="n">BaseQasePluginException</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Exception that signifies that test run not configured.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Exception that signifies that test run not configured."""</span>
 
-    <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;Test run not configured&quot;</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="s2">"Test run not configured"</span>
 </code></pre></div></td></tr></table></div>
               </details>
 

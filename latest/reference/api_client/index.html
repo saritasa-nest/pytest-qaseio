@@ -1111,7 +1111,7 @@
 <span class="normal">137</span>
 <span class="normal">138</span>
 <span class="normal">139</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">QaseClient</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Class for interacting with tests runs in Qase API.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Class for interacting with tests runs in Qase API."""</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -1119,16 +1119,16 @@
         <span class="n">project_code</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
         <span class="n">retries</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Init client.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Init client."""</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;qase&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">"qase"</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span>
             <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">),</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="n">ApiClient</span><span class="p">(</span>
             <span class="n">configuration</span><span class="o">=</span><span class="n">qaseio_config</span><span class="o">.</span><span class="n">Configuration</span><span class="p">(</span>
                 <span class="n">api_key</span><span class="o">=</span><span class="p">{</span>
-                    <span class="s2">&quot;TokenAuth&quot;</span><span class="p">:</span> <span class="n">token</span><span class="p">,</span>
+                    <span class="s2">"TokenAuth"</span><span class="p">:</span> <span class="n">token</span><span class="p">,</span>
                 <span class="p">},</span>
             <span class="p">),</span>
         <span class="p">)</span>
@@ -1139,13 +1139,13 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">function</span><span class="p">:</span> <span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Callable</span><span class="p">[</span><span class="n">FuncParams</span><span class="p">,</span> <span class="n">ReturnValue</span><span class="p">],</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Callable</span><span class="p">[</span><span class="n">FuncParams</span><span class="p">,</span> <span class="n">ReturnValue</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Retrying Qase API requests.</span>
+<span class="w">        </span><span class="sd">"""Retrying Qase API requests.</span>
 
 <span class="sd">        Sometimes Qase.io API closes the connection without response after a</span>
 <span class="sd">        large number of requests, so we added retries to</span>
 <span class="sd">        all qase.io API requests.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
 
         <span class="nd">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">function</span><span class="p">)</span>
         <span class="k">def</span><span class="w"> </span><span class="nf">wrapper</span><span class="p">(</span>
@@ -1160,8 +1160,8 @@
                 <span class="k">with</span> <span class="n">retry</span><span class="p">:</span>
                     <span class="k">return</span> <span class="n">function</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
-            <span class="c1"># Just hack for mypy &quot;missing return statement&quot; error</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No raises and no return from Qase API&quot;</span><span class="p">)</span>
+            <span class="c1"># Just hack for mypy "missing return statement" error</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"No raises and no return from Qase API"</span><span class="p">)</span>
 
         <span class="k">return</span> <span class="n">wrapper</span>
 
@@ -1169,7 +1169,7 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">run_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Run</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get test run from Qase.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Get test run from Qase."""</span>
         <span class="n">run_response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">api_retry</span><span class="p">(</span><span class="n">RunsApi</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="p">)</span><span class="o">.</span><span class="n">get_run</span><span class="p">)(</span>
             <span class="n">code</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_project_code</span><span class="p">,</span>
             <span class="nb">id</span><span class="o">=</span><span class="n">run_id</span><span class="p">,</span>
@@ -1180,7 +1180,7 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">run_data</span><span class="p">:</span> <span class="n">RunCreate</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Run</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create test run in Qase.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Create test run in Qase."""</span>
         <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">api_retry</span><span class="p">(</span><span class="n">RunsApi</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="p">)</span><span class="o">.</span><span class="n">create_run</span><span class="p">)(</span>
             <span class="n">code</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_project_code</span><span class="p">,</span>
             <span class="n">run_create</span><span class="o">=</span><span class="n">run_data</span><span class="p">,</span>
@@ -1192,7 +1192,7 @@
     <span class="k">def</span><span class="w"> </span><span class="nf">load_cases_ids</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Load all cases ids of project.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Load all cases ids of project."""</span>
         <span class="n">limit</span> <span class="o">=</span> <span class="mi">100</span>
         <span class="n">cases</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
 
@@ -1202,7 +1202,7 @@
                 <span class="n">limit</span><span class="o">=</span><span class="n">limit</span><span class="p">,</span>
                 <span class="n">offset</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">cases</span><span class="p">),</span>
             <span class="p">)</span>
-            <span class="n">response_cases</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">result</span><span class="p">,</span> <span class="s2">&quot;entities&quot;</span><span class="p">,</span> <span class="p">[])</span>
+            <span class="n">response_cases</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">result</span><span class="p">,</span> <span class="s2">"entities"</span><span class="p">,</span> <span class="p">[])</span>
             <span class="n">new_cases</span> <span class="o">=</span> <span class="p">[</span><span class="n">case</span><span class="o">.</span><span class="n">id</span> <span class="k">for</span> <span class="n">case</span> <span class="ow">in</span> <span class="n">response_cases</span><span class="p">]</span>
             <span class="n">cases</span> <span class="o">+=</span> <span class="n">new_cases</span>
             <span class="k">if</span> <span class="ow">not</span> <span class="n">new_cases</span><span class="p">:</span>
@@ -1214,7 +1214,7 @@
         <span class="n">run</span><span class="p">:</span> <span class="n">Run</span><span class="p">,</span>
         <span class="n">report_data</span><span class="p">:</span> <span class="n">ResultCreate</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">ResultCreate</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Report test results back to Qase.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Report test results back to Qase."""</span>
         <span class="n">create_result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">api_retry</span><span class="p">(</span><span class="n">ResultsApi</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="p">)</span><span class="o">.</span><span class="n">create_result</span><span class="p">)</span>
         <span class="n">result</span> <span class="o">=</span> <span class="n">create_result</span><span class="p">(</span>
             <span class="n">code</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_project_code</span><span class="p">,</span>
@@ -1284,16 +1284,16 @@
     <span class="n">project_code</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
     <span class="n">retries</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Init client.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Init client."""</span>
     <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">&quot;qase&quot;</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">"qase"</span><span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span>
         <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">),</span>
     <span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="n">ApiClient</span><span class="p">(</span>
         <span class="n">configuration</span><span class="o">=</span><span class="n">qaseio_config</span><span class="o">.</span><span class="n">Configuration</span><span class="p">(</span>
             <span class="n">api_key</span><span class="o">=</span><span class="p">{</span>
-                <span class="s2">&quot;TokenAuth&quot;</span><span class="p">:</span> <span class="n">token</span><span class="p">,</span>
+                <span class="s2">"TokenAuth"</span><span class="p">:</span> <span class="n">token</span><span class="p">,</span>
             <span class="p">},</span>
         <span class="p">),</span>
     <span class="p">)</span>
@@ -1356,13 +1356,13 @@ all qase.io API requests.</p>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">function</span><span class="p">:</span> <span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Callable</span><span class="p">[</span><span class="n">FuncParams</span><span class="p">,</span> <span class="n">ReturnValue</span><span class="p">],</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">collections</span><span class="o">.</span><span class="n">abc</span><span class="o">.</span><span class="n">Callable</span><span class="p">[</span><span class="n">FuncParams</span><span class="p">,</span> <span class="n">ReturnValue</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Retrying Qase API requests.</span>
+<span class="w">    </span><span class="sd">"""Retrying Qase API requests.</span>
 
 <span class="sd">    Sometimes Qase.io API closes the connection without response after a</span>
 <span class="sd">    large number of requests, so we added retries to</span>
 <span class="sd">    all qase.io API requests.</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
 
     <span class="nd">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">function</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">wrapper</span><span class="p">(</span>
@@ -1377,8 +1377,8 @@ all qase.io API requests.</p>
             <span class="k">with</span> <span class="n">retry</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">function</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
-        <span class="c1"># Just hack for mypy &quot;missing return statement&quot; error</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No raises and no return from Qase API&quot;</span><span class="p">)</span>
+        <span class="c1"># Just hack for mypy "missing return statement" error</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"No raises and no return from Qase API"</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="n">wrapper</span>
 </code></pre></div></td></tr></table></div>
@@ -1418,7 +1418,7 @@ all qase.io API requests.</p>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">run_data</span><span class="p">:</span> <span class="n">RunCreate</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Run</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create test run in Qase.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Create test run in Qase."""</span>
     <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">api_retry</span><span class="p">(</span><span class="n">RunsApi</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="p">)</span><span class="o">.</span><span class="n">create_run</span><span class="p">)(</span>
         <span class="n">code</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_project_code</span><span class="p">,</span>
         <span class="n">run_create</span><span class="o">=</span><span class="n">run_data</span><span class="p">,</span>
@@ -1461,7 +1461,7 @@ all qase.io API requests.</p>
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">run_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Run</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Get test run from Qase.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Get test run from Qase."""</span>
     <span class="n">run_response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">api_retry</span><span class="p">(</span><span class="n">RunsApi</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="p">)</span><span class="o">.</span><span class="n">get_run</span><span class="p">)(</span>
         <span class="n">code</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_project_code</span><span class="p">,</span>
         <span class="nb">id</span><span class="o">=</span><span class="n">run_id</span><span class="p">,</span>
@@ -1510,7 +1510,7 @@ all qase.io API requests.</p>
 <span class="normal">121</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">load_cases_ids</span><span class="p">(</span>
     <span class="bp">self</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Load all cases ids of project.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Load all cases ids of project."""</span>
     <span class="n">limit</span> <span class="o">=</span> <span class="mi">100</span>
     <span class="n">cases</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
 
@@ -1520,7 +1520,7 @@ all qase.io API requests.</p>
             <span class="n">limit</span><span class="o">=</span><span class="n">limit</span><span class="p">,</span>
             <span class="n">offset</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">cases</span><span class="p">),</span>
         <span class="p">)</span>
-        <span class="n">response_cases</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">result</span><span class="p">,</span> <span class="s2">&quot;entities&quot;</span><span class="p">,</span> <span class="p">[])</span>
+        <span class="n">response_cases</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">result</span><span class="p">,</span> <span class="s2">"entities"</span><span class="p">,</span> <span class="p">[])</span>
         <span class="n">new_cases</span> <span class="o">=</span> <span class="p">[</span><span class="n">case</span><span class="o">.</span><span class="n">id</span> <span class="k">for</span> <span class="n">case</span> <span class="ow">in</span> <span class="n">response_cases</span><span class="p">]</span>
         <span class="n">cases</span> <span class="o">+=</span> <span class="n">new_cases</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">new_cases</span><span class="p">:</span>
@@ -1569,7 +1569,7 @@ all qase.io API requests.</p>
     <span class="n">run</span><span class="p">:</span> <span class="n">Run</span><span class="p">,</span>
     <span class="n">report_data</span><span class="p">:</span> <span class="n">ResultCreate</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">ResultCreate</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Report test results back to Qase.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Report test results back to Qase."""</span>
     <span class="n">create_result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">api_retry</span><span class="p">(</span><span class="n">ResultsApi</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="p">)</span><span class="o">.</span><span class="n">create_result</span><span class="p">)</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">create_result</span><span class="p">(</span>
         <span class="n">code</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_project_code</span><span class="p">,</span>

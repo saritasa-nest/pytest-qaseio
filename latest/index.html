@@ -934,9 +934,9 @@ field ID to store the <a href="#set-run-source-url">URL of the run source</a></p
 case url:</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span>
 
-<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">qase</span><span class="p">(</span><span class="s2">&quot;https://app.qase.io/case/DEMO-1&quot;</span><span class="p">)</span>
+<span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">qase</span><span class="p">(</span><span class="s2">"https://app.qase.io/case/DEMO-1"</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">test_demo</span><span class="p">():</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Check qaseio plugin works as expected.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Check qaseio plugin works as expected."""</span>
 </code></pre></div>
 <p>Each pytest item should be associated with a single Qase case.
 Avoid parametrizing a test/fixture when its parameters requires multiple
@@ -945,15 +945,15 @@ single case.
 In the meantime, it's OK to use parametrization for testing multiple cases
 using single pytest item, example:</p>
 <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">parametrize</span><span class="p">(</span>
-    <span class="n">argnames</span><span class="o">=</span><span class="s2">&quot;feature_enabled&quot;</span><span class="p">,</span>
+    <span class="n">argnames</span><span class="o">=</span><span class="s2">"feature_enabled"</span><span class="p">,</span>
     <span class="n">argvalues</span><span class="o">=</span><span class="p">[</span>
         <span class="n">pytest</span><span class="o">.</span><span class="n">param</span><span class="p">(</span>
             <span class="kc">False</span><span class="p">,</span>
-            <span class="n">marks</span><span class="o">=</span><span class="n">pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">qase</span><span class="p">(</span><span class="s2">&quot;https://app.qase.io/case/DEMO-1&quot;</span><span class="p">),</span>
+            <span class="n">marks</span><span class="o">=</span><span class="n">pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">qase</span><span class="p">(</span><span class="s2">"https://app.qase.io/case/DEMO-1"</span><span class="p">),</span>
         <span class="p">),</span>
         <span class="n">pytest</span><span class="o">.</span><span class="n">param</span><span class="p">(</span>
             <span class="kc">True</span><span class="p">,</span>
-            <span class="n">marks</span><span class="o">=</span><span class="n">pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">qase</span><span class="p">(</span><span class="s2">&quot;https://app.qase.io/case/DEMO-1&quot;</span><span class="p">),</span>
+            <span class="n">marks</span><span class="o">=</span><span class="n">pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">qase</span><span class="p">(</span><span class="s2">"https://app.qase.io/case/DEMO-1"</span><span class="p">),</span>
         <span class="p">),</span>
     <span class="p">],</span>
 <span class="p">)</span>
@@ -967,8 +967,8 @@ provide it using <code>--webdriver</code> flag. But you can also override
 Here's an example of custom hook:</p>
 <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">hookimpl</span><span class="p">(</span><span class="n">tryfirst</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">pytest_qase_browser_name</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n">pytest</span><span class="o">.</span><span class="n">Config</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Try to get browser name from `webdriver` pytest option.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">config</span><span class="o">.</span><span class="n">getoption</span><span class="p">(</span><span class="s2">&quot;--webdriver&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">"""Try to get browser name from `webdriver` pytest option."""</span>
+    <span class="k">return</span> <span class="n">config</span><span class="o">.</span><span class="n">getoption</span><span class="p">(</span><span class="s2">"--webdriver"</span><span class="p">)</span>
 </code></pre></div>
 <p>Also, by default, debug message for failed tests is generated based on selenium
 webdriver. So if you are using another framework, you need to prepare your own
@@ -977,23 +977,23 @@ protocol and override <code>pytest_get_debug_info</code> hook.</p>
 <p>Playwright example:</p>
 <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">hookimpl</span><span class="p">(</span><span class="n">tryfirst</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">pytest_get_debug_info</span><span class="p">(</span><span class="n">item</span><span class="p">:</span> <span class="n">pytest</span><span class="o">.</span><span class="n">Function</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DebugInfo</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return object with test debug information based on Playwright objects.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Return object with test debug information based on Playwright objects."""</span>
     <span class="k">return</span> <span class="n">PlaywrightDebugInfo</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
 
 <span class="o">...</span>
 <span class="k">class</span><span class="w"> </span><span class="nc">PlaywrightDebugInfo</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Representation of playwright debug information.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Representation of playwright debug information."""</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">:</span> <span class="n">pytest</span><span class="o">.</span><span class="n">Function</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">page</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">funcargs</span><span class="p">[</span><span class="s1">&#39;page&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">page</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">funcargs</span><span class="p">[</span><span class="s1">'page'</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">page</span><span class="o">.</span><span class="n">url</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">test_name</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">name</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">generate_debug_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_storage</span><span class="p">:</span> <span class="n">FileStorage</span><span class="p">,</span> <span class="n">folder</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-      <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+      <span class="k">return</span> <span class="sa">f</span><span class="s2">"""</span>
 <span class="s2">          * TEST NAME: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">test_name</span><span class="si">}</span>
 <span class="s2">          * URL: [URL](</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="si">}</span><span class="s2">)</span>
-<span class="s2">      &quot;&quot;&quot;</span>
+<span class="s2">      """</span>
 </code></pre></div>
 <p>By default, pytest-qaseio generates Qase.io test run name based on <code>RUN_NAME_TEMPLATE</code>.
 But if you want to specify your own name, use <code>--qase-run-name</code> option.
@@ -1002,8 +1002,8 @@ hook.</p>
 <p>Example:</p>
 <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">hookimpl</span><span class="p">(</span><span class="n">tryfirst</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">pytest_get_run_name</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n">pytest</span><span class="o">.</span><span class="n">Config</span><span class="p">,</span> <span class="n">env</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">browser</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return name for test run to use in Qase.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">getoption</span><span class="p">(</span><span class="s2">&quot;--qase-run-name&quot;</span><span class="p">)</span><span class="si">}</span><span class="s2"> [</span><span class="si">{</span><span class="n">browser</span><span class="si">}</span><span class="s2">] [</span><span class="si">{</span><span class="n">env</span><span class="si">}</span><span class="s2">]&quot;</span>
+<span class="w">    </span><span class="sd">"""Return name for test run to use in Qase."""</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">getoption</span><span class="p">(</span><span class="s2">"--qase-run-name"</span><span class="p">)</span><span class="si">}</span><span class="s2"> [</span><span class="si">{</span><span class="n">browser</span><span class="si">}</span><span class="s2">] [</span><span class="si">{</span><span class="n">env</span><span class="si">}</span><span class="s2">]"</span>
 </code></pre></div>
 <p>To enable plugin use flag <code>--qase-enabled</code>.</p>
 <div class="highlight"><pre><span></span><code>pytest<span class="w"> </span>tests/<span class="w"> </span>--qase-enabled<span class="w"> </span>--webdriver<span class="o">=</span>chrome
@@ -1014,14 +1014,14 @@ info from browser. To make it possible, prepare fixture that provides webdriver
 and use the following snippet to set <code>_webdriver</code> attribute for each test:</p>
 <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span><span class="p">(</span><span class="n">autouse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">annotate_node_with_driver</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">:</span> <span class="n">SubRequest</span><span class="p">):</span>
-<span class="w">  </span><span class="sd">&quot;&quot;&quot;Add webdriver instance to test, that later will be used to debug info.</span>
+<span class="w">  </span><span class="sd">"""Add webdriver instance to test, that later will be used to debug info.</span>
 
 <span class="sd">  This fixture detects whether a test or its parent is using a selenium</span>
 <span class="sd">  webdriver, and marks the node with the webdriver instance.</span>
 
-<span class="sd">  &quot;&quot;&quot;</span>
+<span class="sd">  """</span>
   <span class="k">for</span> <span class="n">fixture_name</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">fixturenames</span><span class="p">:</span>
-    <span class="k">if</span> <span class="n">fixture_name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;webdriver&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span>
+    <span class="k">if</span> <span class="n">fixture_name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">"webdriver"</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span>
       <span class="n">request</span><span class="o">.</span><span class="n">getfixturevalue</span><span class="p">(</span><span class="n">fixture_name</span><span class="p">),</span> <span class="n">selenium_webdriver</span><span class="o">.</span><span class="n">Remote</span><span class="p">,</span>
     <span class="p">):</span>
       <span class="n">request</span><span class="o">.</span><span class="n">node</span><span class="o">.</span><span class="n">_webdriver</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">getfixturevalue</span><span class="p">(</span><span class="n">fixture_name</span><span class="p">)</span>
@@ -1043,14 +1043,14 @@ If you don't want to upload files, just set <code>--qase-file-storage=None</code
   <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">credentials</span><span class="p">):</span> <span class="o">...</span>
 
   <span class="k">def</span><span class="w"> </span><span class="nf">save_file_obj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Upload file to S3 and get it&#39;s url.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Upload file to S3 and get it's url."""</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">s3_client</span><span class="o">.</span><span class="n">put_object</span><span class="p">(</span>
         <span class="n">Body</span><span class="o">=</span><span class="n">content</span><span class="p">,</span>
         <span class="n">Bucket</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bucket</span><span class="p">,</span>
         <span class="n">Key</span><span class="o">=</span><span class="n">filename</span><span class="p">,</span>
         <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">s3_client</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">endpoint_url</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">bucket</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">s3_client</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">endpoint_url</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">bucket</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">"</span>
 </code></pre></div>
 <div class="highlight"><span class="filename">conftest.py</span><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span>
 
@@ -1060,9 +1060,9 @@ If you don't want to upload files, just set <code>--qase-file-storage=None</code
 
 <span class="nd">@pytest</span><span class="o">.</span><span class="n">hookimpl</span><span class="p">(</span><span class="n">tryfirst</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">pytest_qase_file_storages</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">pytest_qaseio</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">FileStorage</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Override file storages to use custom S3 bucket.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Override file storages to use custom S3 bucket."""</span>
     <span class="k">return</span> <span class="p">{</span>
-        <span class="s2">&quot;s3&quot;</span><span class="p">:</span> <span class="n">S3FileStorage</span><span class="p">(),</span>
+        <span class="s2">"s3"</span><span class="p">:</span> <span class="n">S3FileStorage</span><span class="p">(),</span>
     <span class="p">}</span>
 </code></pre></div>
 <p>Run tests</p>

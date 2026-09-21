@@ -1258,14 +1258,14 @@
 <span class="normal">296</span>
 <span class="normal">297</span>
 <span class="normal">298</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">QasePlugin</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Pytest plugin for reporting tests result to Qase.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Pytest plugin for reporting tests result to Qase."""</span>
 
     <span class="c1"># We use .pytest-qaseio.lock to lock process, in other words make other</span>
     <span class="c1"># workers wait, until worker that locked file will create run and store</span>
-    <span class="c1"># run&#39;s id in .pytest-qaseio. After other</span>
+    <span class="c1"># run's id in .pytest-qaseio. After other</span>
     <span class="c1"># workers load run by id from .pytest-qaseio.</span>
-    <span class="n">__run_file</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;.pytest-qaseio&quot;</span><span class="p">)</span>
-    <span class="n">__run_file_lock</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="s2">&quot;.pytest-qaseio.lock&quot;</span><span class="p">)</span>
+    <span class="n">__run_file</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="s2">".pytest-qaseio"</span><span class="p">)</span>
+    <span class="n">__run_file_lock</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="s2">".pytest-qaseio.lock"</span><span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
@@ -1273,19 +1273,19 @@
         <span class="n">file_storage</span><span class="p">:</span> <span class="n">storage</span><span class="o">.</span><span class="n">FileStorage</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
         <span class="n">config</span><span class="p">:</span> <span class="n">pytest</span><span class="o">.</span><span class="n">Config</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Save used browser for run&#39;s name and folder name.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Save used browser for run's name and folder name."""</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_config</span> <span class="o">=</span> <span class="n">config</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="n">api_client</span><span class="o">.</span><span class="n">QaseClient</span><span class="p">(</span>
-            <span class="n">token</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;QASE_TOKEN&quot;</span><span class="p">],</span>
-            <span class="n">project_code</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;QASE_PROJECT_CODE&quot;</span><span class="p">],</span>
-            <span class="n">retries</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">getoption</span><span class="p">(</span><span class="s2">&quot;--qase-api-retries&quot;</span><span class="p">),</span>
+            <span class="n">token</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">"QASE_TOKEN"</span><span class="p">],</span>
+            <span class="n">project_code</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">"QASE_PROJECT_CODE"</span><span class="p">],</span>
+            <span class="n">retries</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">getoption</span><span class="p">(</span><span class="s2">"--qase-api-retries"</span><span class="p">),</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_cases_ids_from_api</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">load_cases_ids</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_current_run</span><span class="p">:</span> <span class="n">Run</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_converter</span> <span class="o">=</span> <span class="n">converter</span><span class="o">.</span><span class="n">QaseConverter</span><span class="p">(</span>
             <span class="n">browser</span><span class="o">=</span><span class="n">browser</span><span class="p">,</span>
-            <span class="n">env</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;ENVIRONMENT&quot;</span><span class="p">],</span>
-            <span class="n">project_code</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;QASE_PROJECT_CODE&quot;</span><span class="p">],</span>
+            <span class="n">env</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">"ENVIRONMENT"</span><span class="p">],</span>
+            <span class="n">project_code</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">"QASE_PROJECT_CODE"</span><span class="p">],</span>
             <span class="n">file_storage</span><span class="o">=</span><span class="n">file_storage</span><span class="p">,</span>
             <span class="n">config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">,</span>
         <span class="p">)</span>
@@ -1296,8 +1296,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_qase_results</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">ResultCreate</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">pytest_sessionstart</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">:</span> <span class="n">pytest</span><span class="o">.</span><span class="n">Session</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Clear previously saved run, prepare lock file.&quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">session</span><span class="o">.</span><span class="n">config</span><span class="p">,</span> <span class="s2">&quot;workerinput&quot;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">"""Clear previously saved run, prepare lock file."""</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">session</span><span class="o">.</span><span class="n">config</span><span class="p">,</span> <span class="s2">"workerinput"</span><span class="p">):</span>
             <span class="c1"># Do nothing if it is not master thread</span>
             <span class="k">return</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__run_file</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">missing_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -1308,7 +1308,7 @@
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">items</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">pytest</span><span class="o">.</span><span class="n">Function</span><span class="p">],</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create test run in qase.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Create test run in qase."""</span>
         <span class="k">with</span> <span class="n">filelock</span><span class="o">.</span><span class="n">FileLock</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__run_file_lock</span><span class="p">):</span>
             <span class="k">try</span><span class="p">:</span>
                 <span class="n">run_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tests</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_converter</span><span class="o">.</span><span class="n">prepare_run_data</span><span class="p">(</span>
@@ -1316,23 +1316,23 @@
                     <span class="n">items</span><span class="o">=</span><span class="n">items</span><span class="p">,</span>
                 <span class="p">)</span>
 
-                <span class="c1"># Specifying plan allows to create run &quot;from template&quot;.</span>
+                <span class="c1"># Specifying plan allows to create run "from template".</span>
                 <span class="c1"># New run will contain all cases from plan + cases that</span>
                 <span class="c1"># specified in tests</span>
-                <span class="k">if</span> <span class="n">plan_id</span> <span class="o">:=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;QASE_PLAN_ID&quot;</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">plan_id</span> <span class="o">:=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"QASE_PLAN_ID"</span><span class="p">):</span>
                     <span class="n">run_data</span><span class="o">.</span><span class="n">plan_id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">plan_id</span><span class="p">)</span>
 
-                <span class="k">if</span> <span class="n">environment_id</span> <span class="o">:=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;QASE_ENVIRONMENT_ID&quot;</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">environment_id</span> <span class="o">:=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"QASE_ENVIRONMENT_ID"</span><span class="p">):</span>
                     <span class="n">run_data</span><span class="o">.</span><span class="n">environment_id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">environment_id</span><span class="p">)</span>
 
                 <span class="k">if</span> <span class="n">qase_url_custom_field_id</span> <span class="o">:=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span>
-                    <span class="s2">&quot;QASE_URL_CUSTOM_FIELD_ID&quot;</span><span class="p">,</span>
+                    <span class="s2">"QASE_URL_CUSTOM_FIELD_ID"</span><span class="p">,</span>
                 <span class="p">):</span>
                     <span class="n">run_data</span><span class="o">.</span><span class="n">custom_field</span> <span class="o">=</span> <span class="p">{</span>
                         <span class="c1"># This should be provided from script that runs test,</span>
                         <span class="c1"># f.e jenkins script</span>
-                        <span class="n">qase_url_custom_field_id</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;RUN_SOURCE_URL&quot;</span><span class="p">)</span>
-                        <span class="ow">or</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                        <span class="n">qase_url_custom_field_id</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"RUN_SOURCE_URL"</span><span class="p">)</span>
+                        <span class="ow">or</span> <span class="s2">""</span><span class="p">,</span>
                     <span class="p">}</span>
 
                 <span class="bp">self</span><span class="o">.</span><span class="n">_current_run</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_run_from_file</span><span class="p">()</span>
@@ -1342,23 +1342,23 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">_current_run</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">create_run</span><span class="p">(</span>
                     <span class="n">run_data</span><span class="o">=</span><span class="n">run_data</span><span class="p">,</span>
                 <span class="p">)</span>
-                <span class="k">with</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__run_file</span><span class="p">)</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">lock_file</span><span class="p">:</span>
+                <span class="k">with</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__run_file</span><span class="p">)</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">"w"</span><span class="p">)</span> <span class="k">as</span> <span class="n">lock_file</span><span class="p">:</span>
                     <span class="n">lock_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_current_run</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
             <span class="k">except</span> <span class="n">plugin_exceptions</span><span class="o">.</span><span class="n">BaseQasePluginException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
                 <span class="n">pytest</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">message</span><span class="p">)</span>
 
     <span class="nd">@pytest</span><span class="o">.</span><span class="n">hookimpl</span><span class="p">(</span><span class="n">tryfirst</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">hookwrapper</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">def</span><span class="w"> </span><span class="nf">pytest_runtest_makereport</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">:</span> <span class="n">pytest</span><span class="o">.</span><span class="n">Function</span><span class="p">):</span>  <span class="c1"># noqa: ANN201</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Represent standard pytest hook on test completion.</span>
+<span class="w">        </span><span class="sd">"""Represent standard pytest hook on test completion.</span>
 
 <span class="sd">        At this hook we will report passed, skipped and failed tests.</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="sd">        """</span>
         <span class="n">provided_report</span> <span class="o">=</span> <span class="k">yield</span>
         <span class="n">report</span><span class="p">:</span> <span class="n">pytest</span><span class="o">.</span><span class="n">TestReport</span> <span class="o">=</span> <span class="n">provided_report</span><span class="o">.</span><span class="n">get_result</span><span class="p">()</span>
         <span class="n">should_report</span> <span class="o">=</span> <span class="ow">not</span> <span class="p">(</span>
             <span class="c1"># Passed tests should be reported only on call</span>
-            <span class="n">report</span><span class="o">.</span><span class="n">passed</span> <span class="ow">and</span> <span class="n">report</span><span class="o">.</span><span class="n">when</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;setup&quot;</span><span class="p">,</span> <span class="s2">&quot;teardown&quot;</span><span class="p">)</span>
+            <span class="n">report</span><span class="o">.</span><span class="n">passed</span> <span class="ow">and</span> <span class="n">report</span><span class="o">.</span><span class="n">when</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"setup"</span><span class="p">,</span> <span class="s2">"teardown"</span><span class="p">)</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">should_report</span><span class="p">:</span>
             <span class="k">return</span>
@@ -1385,24 +1385,24 @@
                 <span class="k">return</span>
             <span class="c1"># Qase closes runs, once every case got result.</span>
             <span class="c1"># So if try to report any other result,</span>
-            <span class="c1"># we&#39;ll get an error `Test run is not active`.</span>
+            <span class="c1"># we'll get an error `Test run is not active`.</span>
             <span class="n">terminal_reporter</span><span class="p">:</span> <span class="n">pytest</span><span class="o">.</span><span class="n">TerminalReporter</span> <span class="o">=</span> <span class="p">(</span>
                 <span class="n">item</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">pluginmanager</span><span class="o">.</span><span class="n">get_plugin</span><span class="p">(</span>
-                    <span class="s2">&quot;terminalreporter&quot;</span><span class="p">,</span>  <span class="c1"># type: ignore</span>
+                    <span class="s2">"terminalreporter"</span><span class="p">,</span>  <span class="c1"># type: ignore</span>
                 <span class="p">)</span>
             <span class="p">)</span>
             <span class="n">terminal_reporter</span><span class="o">.</span><span class="n">ensure_newline</span><span class="p">()</span>
             <span class="n">terminal_reporter</span><span class="o">.</span><span class="n">section</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">error</span><span class="si">}</span><span class="s2">. &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;Seems that Qase closed run, &quot;</span>
-                <span class="sa">f</span><span class="s2">&quot;and we are unable to report failed </span><span class="si">{</span><span class="n">item</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-                <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;=&quot;</span><span class="p">,</span>
+                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">error</span><span class="si">}</span><span class="s2">. "</span>
+                <span class="sa">f</span><span class="s2">"Seems that Qase closed run, "</span>
+                <span class="sa">f</span><span class="s2">"and we are unable to report failed </span><span class="si">{</span><span class="n">item</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
+                <span class="n">sep</span><span class="o">=</span><span class="s2">"="</span><span class="p">,</span>
             <span class="p">)</span>
 
     <span class="k">def</span><span class="w"> </span><span class="nf">_load_run_from_file</span><span class="p">(</span>
         <span class="bp">self</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Run</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Load run id and then load it from qase.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">"""Load run id and then load it from qase."""</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">__run_file</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
             <span class="k">return</span> <span class="kc">None</span>
         <span class="k">with</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__run_file</span><span class="p">)</span><span class="o">.</span><span class="n">open</span><span class="p">()</span> <span class="k">as</span> <span class="n">lock_file</span><span class="p">:</span>
@@ -1474,19 +1474,19 @@
     <span class="n">file_storage</span><span class="p">:</span> <span class="n">storage</span><span class="o">.</span><span class="n">FileStorage</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">config</span><span class="p">:</span> <span class="n">pytest</span><span class="o">.</span><span class="n">Config</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Save used browser for run&#39;s name and folder name.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Save used browser for run's name and folder name."""</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_config</span> <span class="o">=</span> <span class="n">config</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="n">api_client</span><span class="o">.</span><span class="n">QaseClient</span><span class="p">(</span>
-        <span class="n">token</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;QASE_TOKEN&quot;</span><span class="p">],</span>
-        <span class="n">project_code</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;QASE_PROJECT_CODE&quot;</span><span class="p">],</span>
-        <span class="n">retries</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">getoption</span><span class="p">(</span><span class="s2">&quot;--qase-api-retries&quot;</span><span class="p">),</span>
+        <span class="n">token</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">"QASE_TOKEN"</span><span class="p">],</span>
+        <span class="n">project_code</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">"QASE_PROJECT_CODE"</span><span class="p">],</span>
+        <span class="n">retries</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">getoption</span><span class="p">(</span><span class="s2">"--qase-api-retries"</span><span class="p">),</span>
     <span class="p">)</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_cases_ids_from_api</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">load_cases_ids</span><span class="p">()</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_current_run</span><span class="p">:</span> <span class="n">Run</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">_converter</span> <span class="o">=</span> <span class="n">converter</span><span class="o">.</span><span class="n">QaseConverter</span><span class="p">(</span>
         <span class="n">browser</span><span class="o">=</span><span class="n">browser</span><span class="p">,</span>
-        <span class="n">env</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;ENVIRONMENT&quot;</span><span class="p">],</span>
-        <span class="n">project_code</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;QASE_PROJECT_CODE&quot;</span><span class="p">],</span>
+        <span class="n">env</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">"ENVIRONMENT"</span><span class="p">],</span>
+        <span class="n">project_code</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">"QASE_PROJECT_CODE"</span><span class="p">],</span>
         <span class="n">file_storage</span><span class="o">=</span><span class="n">file_storage</span><span class="p">,</span>
         <span class="n">config</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_config</span><span class="p">,</span>
     <span class="p">)</span>
@@ -1564,7 +1564,7 @@
     <span class="bp">self</span><span class="p">,</span>
     <span class="n">items</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">pytest</span><span class="o">.</span><span class="n">Function</span><span class="p">],</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create test run in qase.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Create test run in qase."""</span>
     <span class="k">with</span> <span class="n">filelock</span><span class="o">.</span><span class="n">FileLock</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__run_file_lock</span><span class="p">):</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">run_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_tests</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_converter</span><span class="o">.</span><span class="n">prepare_run_data</span><span class="p">(</span>
@@ -1572,23 +1572,23 @@
                 <span class="n">items</span><span class="o">=</span><span class="n">items</span><span class="p">,</span>
             <span class="p">)</span>
 
-            <span class="c1"># Specifying plan allows to create run &quot;from template&quot;.</span>
+            <span class="c1"># Specifying plan allows to create run "from template".</span>
             <span class="c1"># New run will contain all cases from plan + cases that</span>
             <span class="c1"># specified in tests</span>
-            <span class="k">if</span> <span class="n">plan_id</span> <span class="o">:=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;QASE_PLAN_ID&quot;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">plan_id</span> <span class="o">:=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"QASE_PLAN_ID"</span><span class="p">):</span>
                 <span class="n">run_data</span><span class="o">.</span><span class="n">plan_id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">plan_id</span><span class="p">)</span>
 
-            <span class="k">if</span> <span class="n">environment_id</span> <span class="o">:=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;QASE_ENVIRONMENT_ID&quot;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">environment_id</span> <span class="o">:=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"QASE_ENVIRONMENT_ID"</span><span class="p">):</span>
                 <span class="n">run_data</span><span class="o">.</span><span class="n">environment_id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">environment_id</span><span class="p">)</span>
 
             <span class="k">if</span> <span class="n">qase_url_custom_field_id</span> <span class="o">:=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span>
-                <span class="s2">&quot;QASE_URL_CUSTOM_FIELD_ID&quot;</span><span class="p">,</span>
+                <span class="s2">"QASE_URL_CUSTOM_FIELD_ID"</span><span class="p">,</span>
             <span class="p">):</span>
                 <span class="n">run_data</span><span class="o">.</span><span class="n">custom_field</span> <span class="o">=</span> <span class="p">{</span>
                     <span class="c1"># This should be provided from script that runs test,</span>
                     <span class="c1"># f.e jenkins script</span>
-                    <span class="n">qase_url_custom_field_id</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;RUN_SOURCE_URL&quot;</span><span class="p">)</span>
-                    <span class="ow">or</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                    <span class="n">qase_url_custom_field_id</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"RUN_SOURCE_URL"</span><span class="p">)</span>
+                    <span class="ow">or</span> <span class="s2">""</span><span class="p">,</span>
                 <span class="p">}</span>
 
             <span class="bp">self</span><span class="o">.</span><span class="n">_current_run</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_load_run_from_file</span><span class="p">()</span>
@@ -1598,7 +1598,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_current_run</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="o">.</span><span class="n">create_run</span><span class="p">(</span>
                 <span class="n">run_data</span><span class="o">=</span><span class="n">run_data</span><span class="p">,</span>
             <span class="p">)</span>
-            <span class="k">with</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__run_file</span><span class="p">)</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">lock_file</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__run_file</span><span class="p">)</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">"w"</span><span class="p">)</span> <span class="k">as</span> <span class="n">lock_file</span><span class="p">:</span>
                 <span class="n">lock_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_current_run</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
         <span class="k">except</span> <span class="n">plugin_exceptions</span><span class="o">.</span><span class="n">BaseQasePluginException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
             <span class="n">pytest</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">message</span><span class="p">)</span>
@@ -1677,16 +1677,16 @@
 <span class="normal">285</span>
 <span class="normal">286</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">hookimpl</span><span class="p">(</span><span class="n">tryfirst</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">hookwrapper</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">pytest_runtest_makereport</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">:</span> <span class="n">pytest</span><span class="o">.</span><span class="n">Function</span><span class="p">):</span>  <span class="c1"># noqa: ANN201</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Represent standard pytest hook on test completion.</span>
+<span class="w">    </span><span class="sd">"""Represent standard pytest hook on test completion.</span>
 
 <span class="sd">    At this hook we will report passed, skipped and failed tests.</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">provided_report</span> <span class="o">=</span> <span class="k">yield</span>
     <span class="n">report</span><span class="p">:</span> <span class="n">pytest</span><span class="o">.</span><span class="n">TestReport</span> <span class="o">=</span> <span class="n">provided_report</span><span class="o">.</span><span class="n">get_result</span><span class="p">()</span>
     <span class="n">should_report</span> <span class="o">=</span> <span class="ow">not</span> <span class="p">(</span>
         <span class="c1"># Passed tests should be reported only on call</span>
-        <span class="n">report</span><span class="o">.</span><span class="n">passed</span> <span class="ow">and</span> <span class="n">report</span><span class="o">.</span><span class="n">when</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;setup&quot;</span><span class="p">,</span> <span class="s2">&quot;teardown&quot;</span><span class="p">)</span>
+        <span class="n">report</span><span class="o">.</span><span class="n">passed</span> <span class="ow">and</span> <span class="n">report</span><span class="o">.</span><span class="n">when</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"setup"</span><span class="p">,</span> <span class="s2">"teardown"</span><span class="p">)</span>
     <span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">should_report</span><span class="p">:</span>
         <span class="k">return</span>
@@ -1713,18 +1713,18 @@
             <span class="k">return</span>
         <span class="c1"># Qase closes runs, once every case got result.</span>
         <span class="c1"># So if try to report any other result,</span>
-        <span class="c1"># we&#39;ll get an error `Test run is not active`.</span>
+        <span class="c1"># we'll get an error `Test run is not active`.</span>
         <span class="n">terminal_reporter</span><span class="p">:</span> <span class="n">pytest</span><span class="o">.</span><span class="n">TerminalReporter</span> <span class="o">=</span> <span class="p">(</span>
             <span class="n">item</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">pluginmanager</span><span class="o">.</span><span class="n">get_plugin</span><span class="p">(</span>
-                <span class="s2">&quot;terminalreporter&quot;</span><span class="p">,</span>  <span class="c1"># type: ignore</span>
+                <span class="s2">"terminalreporter"</span><span class="p">,</span>  <span class="c1"># type: ignore</span>
             <span class="p">)</span>
         <span class="p">)</span>
         <span class="n">terminal_reporter</span><span class="o">.</span><span class="n">ensure_newline</span><span class="p">()</span>
         <span class="n">terminal_reporter</span><span class="o">.</span><span class="n">section</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">error</span><span class="si">}</span><span class="s2">. &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;Seems that Qase closed run, &quot;</span>
-            <span class="sa">f</span><span class="s2">&quot;and we are unable to report failed </span><span class="si">{</span><span class="n">item</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-            <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;=&quot;</span><span class="p">,</span>
+            <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">error</span><span class="si">}</span><span class="s2">. "</span>
+            <span class="sa">f</span><span class="s2">"Seems that Qase closed run, "</span>
+            <span class="sa">f</span><span class="s2">"and we are unable to report failed </span><span class="si">{</span><span class="n">item</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
+            <span class="n">sep</span><span class="o">=</span><span class="s2">"="</span><span class="p">,</span>
         <span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -1755,8 +1755,8 @@
 <span class="normal">188</span>
 <span class="normal">189</span>
 <span class="normal">190</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">pytest_sessionstart</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">session</span><span class="p">:</span> <span class="n">pytest</span><span class="o">.</span><span class="n">Session</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Clear previously saved run, prepare lock file.&quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">session</span><span class="o">.</span><span class="n">config</span><span class="p">,</span> <span class="s2">&quot;workerinput&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Clear previously saved run, prepare lock file."""</span>
+    <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">session</span><span class="o">.</span><span class="n">config</span><span class="p">,</span> <span class="s2">"workerinput"</span><span class="p">):</span>
         <span class="c1"># Do nothing if it is not master thread</span>
         <span class="k">return</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">__run_file</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">missing_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -1797,7 +1797,7 @@
 <span class="normal">45</span>
 <span class="normal">46</span>
 <span class="normal">47</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">pytest_addhooks</span><span class="p">(</span><span class="n">pluginmanager</span><span class="p">:</span> <span class="n">pytest</span><span class="o">.</span><span class="n">PytestPluginManager</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add hooks for plugin.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Add hooks for plugin."""</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">.</span><span class="w"> </span><span class="kn">import</span> <span class="n">hooks</span>
 
     <span class="n">pluginmanager</span><span class="o">.</span><span class="n">add_hookspecs</span><span class="p">(</span><span class="n">hooks</span><span class="p">)</span>
@@ -1846,27 +1846,27 @@
 <span class="normal">38</span>
 <span class="normal">39</span>
 <span class="normal">40</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">pytest_addoption</span><span class="p">(</span><span class="n">parser</span><span class="p">:</span> <span class="n">pytest</span><span class="o">.</span><span class="n">Parser</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Add custom args to command line.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Add custom args to command line."""</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">addoption</span><span class="p">(</span>
-        <span class="s2">&quot;--qase-enabled&quot;</span><span class="p">,</span>
-        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
+        <span class="s2">"--qase-enabled"</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s2">"store_true"</span><span class="p">,</span>
         <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Store run result in qase&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">"Store run result in qase"</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">addoption</span><span class="p">(</span>
-        <span class="s2">&quot;--qase-file-storage&quot;</span><span class="p">,</span>
-        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;qase&quot;</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Choose file storage to upload debug files&quot;</span><span class="p">,</span>
+        <span class="s2">"--qase-file-storage"</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">"qase"</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">"Choose file storage to upload debug files"</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">addoption</span><span class="p">(</span>
-        <span class="s2">&quot;--qase-run-name&quot;</span><span class="p">,</span>
-        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Specify run title to use in Qase&quot;</span><span class="p">,</span>
+        <span class="s2">"--qase-run-name"</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">"Specify run title to use in Qase"</span><span class="p">,</span>
     <span class="p">)</span>
     <span class="n">parser</span><span class="o">.</span><span class="n">addoption</span><span class="p">(</span>
-        <span class="s2">&quot;--qase-api-retries&quot;</span><span class="p">,</span>
+        <span class="s2">"--qase-api-retries"</span><span class="p">,</span>
         <span class="n">default</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
-        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Specify number of retries for Qase API requests&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">"Specify number of retries for Qase API requests"</span><span class="p">,</span>
     <span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -1921,18 +1921,18 @@ Get file storage for qase plugin.</p>
 <span class="normal">142</span>
 <span class="normal">143</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">hookimpl</span><span class="p">(</span><span class="n">trylast</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">pytest_configure</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n">pytest</span><span class="o">.</span><span class="n">Config</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Configure pytest-qaseio plugin.</span>
+<span class="w">    </span><span class="sd">"""Configure pytest-qaseio plugin.</span>
 
 <span class="sd">    Add `qase` marker for pytest.</span>
 <span class="sd">    If qase enabled, register qase plugin.</span>
 <span class="sd">    Get file storage for qase plugin.</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    """</span>
     <span class="n">config</span><span class="o">.</span><span class="n">addinivalue_line</span><span class="p">(</span>
-        <span class="s2">&quot;markers&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;qase(test_case_url): Mark test for qase&quot;</span><span class="p">,</span>
+        <span class="s2">"markers"</span><span class="p">,</span>
+        <span class="s2">"qase(test_case_url): Mark test for qase"</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="n">qase_enabled</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">getoption</span><span class="p">(</span><span class="s2">&quot;--qase-enabled&quot;</span><span class="p">)</span>
+    <span class="n">qase_enabled</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">getoption</span><span class="p">(</span><span class="s2">"--qase-enabled"</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">qase_enabled</span><span class="p">:</span>
         <span class="k">return</span>
 
@@ -1944,7 +1944,7 @@ Get file storage for qase plugin.</p>
             <span class="n">file_storage</span><span class="o">=</span><span class="n">_get_file_storage</span><span class="p">(</span><span class="n">config</span><span class="p">),</span>
             <span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span>
         <span class="p">),</span>
-        <span class="n">name</span><span class="o">=</span><span class="s2">&quot;qase_plugin&quot;</span><span class="p">,</span>
+        <span class="n">name</span><span class="o">=</span><span class="s2">"qase_plugin"</span><span class="p">,</span>
     <span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
@@ -1977,10 +1977,10 @@ Get file storage for qase plugin.</p>
 <span class="normal">93</span>
 <span class="normal">94</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">hookimpl</span><span class="p">(</span><span class="n">trylast</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">pytest_get_debug_info</span><span class="p">(</span><span class="n">item</span><span class="p">:</span> <span class="n">pytest</span><span class="o">.</span><span class="n">Function</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DebugInfo</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Try to get selenium debug info object.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Try to get selenium debug info object."""</span>
     <span class="k">return</span> <span class="p">(</span>
         <span class="n">SeleniumDebugInfo</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">_webdriver</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
-        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="s2">&quot;_webdriver&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="s2">"_webdriver"</span><span class="p">)</span>
         <span class="k">else</span> <span class="kc">None</span>
     <span class="p">)</span>
 </code></pre></div></td></tr></table></div>
@@ -2026,19 +2026,19 @@ Get file storage for qase plugin.</p>
 <span class="normal">113</span>
 <span class="normal">114</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">hookimpl</span><span class="p">(</span><span class="n">trylast</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">pytest_get_run_name</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n">pytest</span><span class="o">.</span><span class="n">Config</span><span class="p">,</span> <span class="n">env</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">browser</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Return name for test run to use in Qase.</span>
+<span class="w">    </span><span class="sd">"""Return name for test run to use in Qase.</span>
 
 <span class="sd">    Default option if `--qase-run-name` not specified:</span>
 <span class="sd">        (Dev) Automated Test Run Edge 07/23/2025 18:06:37</span>
 
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">qase_run_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">getoption</span><span class="p">(</span><span class="s2">&quot;--qase-run-name&quot;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">qase_run_name</span> <span class="ow">or</span> <span class="n">qase_run_name</span> <span class="o">==</span> <span class="s2">&quot;none&quot;</span><span class="p">:</span>
+<span class="sd">    """</span>
+    <span class="n">qase_run_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">getoption</span><span class="p">(</span><span class="s2">"--qase-run-name"</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">qase_run_name</span> <span class="ow">or</span> <span class="n">qase_run_name</span> <span class="o">==</span> <span class="s2">"none"</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">constants</span><span class="o">.</span><span class="n">RUN_NAME_TEMPLATE</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
             <span class="n">env</span><span class="o">=</span><span class="n">env</span><span class="o">.</span><span class="n">capitalize</span><span class="p">(),</span>
             <span class="n">browser</span><span class="o">=</span><span class="n">browser</span><span class="o">.</span><span class="n">capitalize</span><span class="p">(),</span>
             <span class="n">date</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(</span><span class="n">tz</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">UTC</span><span class="p">)</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span>
-                <span class="s2">&quot;%m/</span><span class="si">%d</span><span class="s2">/%Y %H:%M:%S&quot;</span><span class="p">,</span>
+                <span class="s2">"%m/</span><span class="si">%d</span><span class="s2">/%Y %H:%M:%S"</span><span class="p">,</span>
             <span class="p">),</span>
         <span class="p">)</span>
     <span class="k">return</span> <span class="n">qase_run_name</span>
@@ -2069,8 +2069,8 @@ Get file storage for qase plugin.</p>
 <span class="normal">83</span>
 <span class="normal">84</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">hookimpl</span><span class="p">(</span><span class="n">trylast</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">pytest_qase_browser_name</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n">pytest</span><span class="o">.</span><span class="n">Config</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Try to get browser name from `webdriver` pytest option.&quot;&quot;&quot;</span>
-    <span class="k">return</span> <span class="n">config</span><span class="o">.</span><span class="n">getoption</span><span class="p">(</span><span class="s2">&quot;--webdriver&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">"""Try to get browser name from `webdriver` pytest option."""</span>
+    <span class="k">return</span> <span class="n">config</span><span class="o">.</span><span class="n">getoption</span><span class="p">(</span><span class="s2">"--webdriver"</span><span class="p">)</span>
 </code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -2103,11 +2103,11 @@ Get file storage for qase plugin.</p>
 <span class="normal">77</span>
 <span class="normal">78</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">hookimpl</span><span class="p">(</span><span class="n">trylast</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">pytest_qase_file_storages</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">storage</span><span class="o">.</span><span class="n">FileStorage</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Provide mapping of available file storages for qase debug files.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Provide mapping of available file storages for qase debug files."""</span>
     <span class="k">return</span> <span class="p">{</span>
-        <span class="s2">&quot;qase&quot;</span><span class="p">:</span> <span class="n">storage</span><span class="o">.</span><span class="n">QaseFileStorage</span><span class="p">(</span>
-            <span class="n">qase_token</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;QASE_TOKEN&quot;</span><span class="p">],</span>
-            <span class="n">qase_project_code</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;QASE_PROJECT_CODE&quot;</span><span class="p">],</span>
+        <span class="s2">"qase"</span><span class="p">:</span> <span class="n">storage</span><span class="o">.</span><span class="n">QaseFileStorage</span><span class="p">(</span>
+            <span class="n">qase_token</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">"QASE_TOKEN"</span><span class="p">],</span>
+            <span class="n">qase_project_code</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">"QASE_PROJECT_CODE"</span><span class="p">],</span>
         <span class="p">),</span>
     <span class="p">}</span>
 </code></pre></div></td></tr></table></div>

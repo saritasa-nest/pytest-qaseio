@@ -9,7 +9,6 @@ default_install_hook_types: [
   post-merge,
   post-rewrite,
 ]
-fail_fast: true
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
@@ -49,7 +48,7 @@ repos:
       - id: gitleaks
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.16.1
+    rev: v0.16.10
     hooks:
       - id: ruff-check
         args: [
@@ -58,7 +57,7 @@ repos:
       - id: ruff-format
 
   - repo: https://github.com/streetsidesoftware/cspell-cli
-    rev: v10.0.1
+    rev: v10.3.0
     hooks:
       - id: cspell
 
@@ -68,7 +67,7 @@ repos:
       - id: add-trailing-comma
 
   - repo: https://github.com/astral-sh/uv-pre-commit
-    rev: 0.12.2
+    rev: 0.12.23
     hooks:
       - id: uv-lock
       - id: uv-sync
@@ -96,7 +95,7 @@ repos:
       - id: yamllint
 
   - repo: https://github.com/renovatebot/pre-commit-hooks
-    rev: 44.13.2
+    rev: 44.132.5
     hooks:
       - id: renovate-config-validator
         language: bun
@@ -109,14 +108,14 @@ repos:
     hooks:
       - id: mypy
         name: Run mypy
-        entry: inv mypy.run
+        entry: uv run inv mypy.run
         language: system
         pass_filenames: false
         types: [ file ]
         stages: [ pre-push ]
       - id: doc-build-verify
         name: Verify that docs could be build
-        entry: inv docs.build
+        entry: uv run inv docs.build
         language: system
         pass_filenames: false
         types: [ file ]

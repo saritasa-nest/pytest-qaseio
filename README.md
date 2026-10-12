@@ -59,6 +59,7 @@ case url:
 ```python
 import pytest
 
+
 @pytest.mark.qase("https://app.qase.io/case/DEMO-1")
 def test_demo():
     """Check qaseio plugin works as expected."""
@@ -100,7 +101,6 @@ Here's an example of custom hook:
 def pytest_qase_browser_name(config: pytest.Config) -> str:
     """Try to get browser name from `webdriver` pytest option."""
     return config.getoption("--webdriver")
-
 ```
 
 Also, by default, debug message for failed tests is generated based on selenium
@@ -116,21 +116,25 @@ def pytest_get_debug_info(item: pytest.Function) -> DebugInfo:
     """Return object with test debug information based on Playwright objects."""
     return PlaywrightDebugInfo(item)
 
+
 ...
+
+
 class PlaywrightDebugInfo:
     """Representation of playwright debug information."""
 
     def __init__(self, item: pytest.Function):
-        self.page = item.funcargs['page']
+        self.page = item.funcargs["page"]
         self.url = self.page.url
         self.test_name = item.name
 
-    def generate_debug_comment(self, file_storage: FileStorage, folder: str) -> str:
-      return f"""
+    def generate_debug_comment(
+        self, file_storage: FileStorage, folder: str
+    ) -> str:
+        return f"""
           * TEST NAME: {self.test_name}
           * URL: [URL]({self.url})
       """
-
 ```
 
 By default, pytest-qaseio generates Qase.io test run name based on `RUN_NAME_TEMPLATE`.
@@ -144,7 +148,7 @@ Example:
 @pytest.hookimpl(tryfirst=True)
 def pytest_get_run_name(config: pytest.Config, env: str, browser: str) -> str:
     """Return name for test run to use in Qase."""
-    return f"{config.getoption("--qase-run-name")} [{browser}] [{env}]"
+    return f"{config.getoption('--qase-run-name')} [{browser}] [{env}]"
 ```
 
 To enable plugin use flag `--qase-enabled`.
@@ -162,17 +166,18 @@ and use the following snippet to set `_webdriver` attribute for each test:
 ```python
 @pytest.fixture(autouse=True)
 def annotate_node_with_driver(self, request: SubRequest):
-  """Add webdriver instance to test, that later will be used to debug info.
+    """Add webdriver instance to test, that later will be used to debug info.
 
-  This fixture detects whether a test or its parent is using a selenium
-  webdriver, and marks the node with the webdriver instance.
+    This fixture detects whether a test or its parent is using a selenium
+    webdriver, and marks the node with the webdriver instance.
 
-  """
-  for fixture_name in request.fixturenames:
-    if fixture_name.endswith("webdriver") and isinstance(
-      request.getfixturevalue(fixture_name), selenium_webdriver.Remote,
-    ):
-      request.node._webdriver = request.getfixturevalue(fixture_name)
+    """
+    for fixture_name in request.fixturenames:
+        if fixture_name.endswith("webdriver") and isinstance(
+            request.getfixturevalue(fixture_name),
+            selenium_webdriver.Remote,
+        ):
+            request.node._webdriver = request.getfixturevalue(fixture_name)
 ```
 
 ## File storage
@@ -195,18 +200,17 @@ Example:
 
 ```python title="storages.py"
 class S3FileStorage:
+    def __init__(self, **credentials): ...
 
-  def __init__(self, **credentials): ...
-
-  def save_file_obj(self, content: bytes, filename: str, **kwargs) -> str:
-    """Upload file to S3 and get it's url."""
-    self.s3_client.put_object(
-        Body=content,
-        Bucket=self.bucket,
-        Key=filename,
-        **kwargs,
-    )
-    return f"{self.s3_client.meta.endpoint_url}/{self.bucket}/{filename}"
+    def save_file_obj(self, content: bytes, filename: str, **kwargs) -> str:
+        """Upload file to S3 and get it's url."""
+        self.s3_client.put_object(
+            Body=content,
+            Bucket=self.bucket,
+            Key=filename,
+            **kwargs,
+        )
+        return f"{self.s3_client.meta.endpoint_url}/{self.bucket}/{filename}"
 ```
 
 ```python title="conftest.py"
@@ -216,8 +220,11 @@ import pytest_qaseio
 
 from storages import S3FileStorage
 
+
 @pytest.hookimpl(tryfirst=True)
-def pytest_qase_file_storages() -> dict[str, pytest_qaseio.storage.FileStorage]:
+def pytest_qase_file_storages() -> dict[
+    str, pytest_qaseio.storage.FileStorage
+]:
     """Override file storages to use custom S3 bucket."""
     return {
         "s3": S3FileStorage(),
@@ -236,7 +243,7 @@ You can also override `qase_file_storage` to set storage for part of tests
 ```python
 @pytest.fixture
 def qase_file_storage() -> pytest_qaseio.storage.FileProtocol:
-  return S3FileStorage()
+    return S3FileStorage()
 ```
 
 ## Pytest options

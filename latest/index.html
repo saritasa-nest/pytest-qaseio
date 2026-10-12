@@ -934,6 +934,7 @@ field ID to store the <a href="#set-run-source-url">URL of the run source</a></p
 case url:</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span>
 
+
 <span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">qase</span><span class="p">(</span><span class="s2">"https://app.qase.io/case/DEMO-1"</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">test_demo</span><span class="p">():</span>
 <span class="w">    </span><span class="sd">"""Check qaseio plugin works as expected."""</span>
@@ -980,17 +981,22 @@ protocol and override <code>pytest_get_debug_info</code> hook.</p>
 <span class="w">    </span><span class="sd">"""Return object with test debug information based on Playwright objects."""</span>
     <span class="k">return</span> <span class="n">PlaywrightDebugInfo</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
 
+
 <span class="o">...</span>
+
+
 <span class="k">class</span><span class="w"> </span><span class="nc">PlaywrightDebugInfo</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""Representation of playwright debug information."""</span>
 
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">:</span> <span class="n">pytest</span><span class="o">.</span><span class="n">Function</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">page</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">funcargs</span><span class="p">[</span><span class="s1">'page'</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">page</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">funcargs</span><span class="p">[</span><span class="s2">"page"</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">page</span><span class="o">.</span><span class="n">url</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">test_name</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">name</span>
 
-    <span class="k">def</span><span class="w"> </span><span class="nf">generate_debug_comment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_storage</span><span class="p">:</span> <span class="n">FileStorage</span><span class="p">,</span> <span class="n">folder</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-      <span class="k">return</span> <span class="sa">f</span><span class="s2">"""</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">generate_debug_comment</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">file_storage</span><span class="p">:</span> <span class="n">FileStorage</span><span class="p">,</span> <span class="n">folder</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"""</span>
 <span class="s2">          * TEST NAME: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">test_name</span><span class="si">}</span>
 <span class="s2">          * URL: [URL](</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="si">}</span><span class="s2">)</span>
 <span class="s2">      """</span>
@@ -1003,7 +1009,7 @@ hook.</p>
 <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">hookimpl</span><span class="p">(</span><span class="n">tryfirst</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">pytest_get_run_name</span><span class="p">(</span><span class="n">config</span><span class="p">:</span> <span class="n">pytest</span><span class="o">.</span><span class="n">Config</span><span class="p">,</span> <span class="n">env</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">browser</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
 <span class="w">    </span><span class="sd">"""Return name for test run to use in Qase."""</span>
-    <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">getoption</span><span class="p">(</span><span class="s2">"--qase-run-name"</span><span class="p">)</span><span class="si">}</span><span class="s2"> [</span><span class="si">{</span><span class="n">browser</span><span class="si">}</span><span class="s2">] [</span><span class="si">{</span><span class="n">env</span><span class="si">}</span><span class="s2">]"</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">config</span><span class="o">.</span><span class="n">getoption</span><span class="p">(</span><span class="s1">'--qase-run-name'</span><span class="p">)</span><span class="si">}</span><span class="s2"> [</span><span class="si">{</span><span class="n">browser</span><span class="si">}</span><span class="s2">] [</span><span class="si">{</span><span class="n">env</span><span class="si">}</span><span class="s2">]"</span>
 </code></pre></div>
 <p>To enable plugin use flag <code>--qase-enabled</code>.</p>
 <div class="highlight"><pre><span></span><code>pytest<span class="w"> </span>tests/<span class="w"> </span>--qase-enabled<span class="w"> </span>--webdriver<span class="o">=</span>chrome
@@ -1014,17 +1020,18 @@ info from browser. To make it possible, prepare fixture that provides webdriver
 and use the following snippet to set <code>_webdriver</code> attribute for each test:</p>
 <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span><span class="p">(</span><span class="n">autouse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">annotate_node_with_driver</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">:</span> <span class="n">SubRequest</span><span class="p">):</span>
-<span class="w">  </span><span class="sd">"""Add webdriver instance to test, that later will be used to debug info.</span>
+<span class="w">    </span><span class="sd">"""Add webdriver instance to test, that later will be used to debug info.</span>
 
-<span class="sd">  This fixture detects whether a test or its parent is using a selenium</span>
-<span class="sd">  webdriver, and marks the node with the webdriver instance.</span>
+<span class="sd">    This fixture detects whether a test or its parent is using a selenium</span>
+<span class="sd">    webdriver, and marks the node with the webdriver instance.</span>
 
-<span class="sd">  """</span>
-  <span class="k">for</span> <span class="n">fixture_name</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">fixturenames</span><span class="p">:</span>
-    <span class="k">if</span> <span class="n">fixture_name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">"webdriver"</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span>
-      <span class="n">request</span><span class="o">.</span><span class="n">getfixturevalue</span><span class="p">(</span><span class="n">fixture_name</span><span class="p">),</span> <span class="n">selenium_webdriver</span><span class="o">.</span><span class="n">Remote</span><span class="p">,</span>
-    <span class="p">):</span>
-      <span class="n">request</span><span class="o">.</span><span class="n">node</span><span class="o">.</span><span class="n">_webdriver</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">getfixturevalue</span><span class="p">(</span><span class="n">fixture_name</span><span class="p">)</span>
+<span class="sd">    """</span>
+    <span class="k">for</span> <span class="n">fixture_name</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">fixturenames</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">fixture_name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">"webdriver"</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span>
+            <span class="n">request</span><span class="o">.</span><span class="n">getfixturevalue</span><span class="p">(</span><span class="n">fixture_name</span><span class="p">),</span>
+            <span class="n">selenium_webdriver</span><span class="o">.</span><span class="n">Remote</span><span class="p">,</span>
+        <span class="p">):</span>
+            <span class="n">request</span><span class="o">.</span><span class="n">node</span><span class="o">.</span><span class="n">_webdriver</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">getfixturevalue</span><span class="p">(</span><span class="n">fixture_name</span><span class="p">)</span>
 </code></pre></div>
 <h2 id="file-storage">File storage<a class="headerlink" href="#file-storage" title="Permanent link">&para;</a></h2>
 <p><code>pytest-qaseio</code> plugin provides additional debug information in comment for
@@ -1039,18 +1046,17 @@ If you don't want to upload files, just set <code>--qase-file-storage=None</code
 <p><strong>Note</strong>: Keep in mind that <code>None</code> choice is reserved for disabling storages.</p>
 <p>Example:</p>
 <div class="highlight"><span class="filename">storages.py</span><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">S3FileStorage</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">credentials</span><span class="p">):</span> <span class="o">...</span>
 
-  <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">credentials</span><span class="p">):</span> <span class="o">...</span>
-
-  <span class="k">def</span><span class="w"> </span><span class="nf">save_file_obj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Upload file to S3 and get it's url."""</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">s3_client</span><span class="o">.</span><span class="n">put_object</span><span class="p">(</span>
-        <span class="n">Body</span><span class="o">=</span><span class="n">content</span><span class="p">,</span>
-        <span class="n">Bucket</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bucket</span><span class="p">,</span>
-        <span class="n">Key</span><span class="o">=</span><span class="n">filename</span><span class="p">,</span>
-        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
-    <span class="p">)</span>
-    <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">s3_client</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">endpoint_url</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">bucket</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">"</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">save_file_obj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">content</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">"""Upload file to S3 and get it's url."""</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">s3_client</span><span class="o">.</span><span class="n">put_object</span><span class="p">(</span>
+            <span class="n">Body</span><span class="o">=</span><span class="n">content</span><span class="p">,</span>
+            <span class="n">Bucket</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bucket</span><span class="p">,</span>
+            <span class="n">Key</span><span class="o">=</span><span class="n">filename</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">s3_client</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">endpoint_url</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">bucket</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">"</span>
 </code></pre></div>
 <div class="highlight"><span class="filename">conftest.py</span><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span>
 
@@ -1058,8 +1064,11 @@ If you don't want to upload files, just set <code>--qase-file-storage=None</code
 
 <span class="kn">from</span><span class="w"> </span><span class="nn">storages</span><span class="w"> </span><span class="kn">import</span> <span class="n">S3FileStorage</span>
 
+
 <span class="nd">@pytest</span><span class="o">.</span><span class="n">hookimpl</span><span class="p">(</span><span class="n">tryfirst</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">pytest_qase_file_storages</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">pytest_qaseio</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">FileStorage</span><span class="p">]:</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">pytest_qase_file_storages</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span>
+    <span class="nb">str</span><span class="p">,</span> <span class="n">pytest_qaseio</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">FileStorage</span>
+<span class="p">]:</span>
 <span class="w">    </span><span class="sd">"""Override file storages to use custom S3 bucket."""</span>
     <span class="k">return</span> <span class="p">{</span>
         <span class="s2">"s3"</span><span class="p">:</span> <span class="n">S3FileStorage</span><span class="p">(),</span>
@@ -1072,7 +1081,7 @@ If you don't want to upload files, just set <code>--qase-file-storage=None</code
 (or for all in global <code>conftests.py</code>):</p>
 <div class="highlight"><pre><span></span><code><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">qase_file_storage</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">pytest_qaseio</span><span class="o">.</span><span class="n">storage</span><span class="o">.</span><span class="n">FileProtocol</span><span class="p">:</span>
-  <span class="k">return</span> <span class="n">S3FileStorage</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">S3FileStorage</span><span class="p">()</span>
 </code></pre></div>
 <h2 id="pytest-options">Pytest options<a class="headerlink" href="#pytest-options" title="Permanent link">&para;</a></h2>
 <p>Plugin provides two pytest options:</p>
